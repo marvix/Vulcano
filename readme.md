@@ -1,8 +1,6 @@
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
 <p align="center">
-[![Build Status](https://travis-ci.org/fsclaro/Vulcan.svg?branch=master)](https://travis-ci.org/fsclaro/Vulcan)
-
 <a href="https://travis-ci.org/fsclaro/Vulcan.svg?branch=master"><img src="https://travis-ci.org/fsclaro/Vulcan.svg?branch=master" alt="Build Status"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
