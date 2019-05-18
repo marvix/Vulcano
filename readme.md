@@ -12,11 +12,11 @@ Coming soon!
 
 Coming soon!
 
-# Packages included
+## Packages included
 
 Coming soon!
 
-# Cloning this project
+## Cloning this project
 
 To use this project, you must type the following line in your command terminal
 ```bash
@@ -38,14 +38,14 @@ Thank you for considering contributing to the Vulcano Project! The contribution 
 
 If you have good ideas to make this project better, read the [contribution guidelines](https://github.com/fsclaro/vulcano/blob/master/_docs/CONTRIBUTING.md) on contributions and send me an email to [fsclaro@gmail.com](mailto:fsclaro@gmail.com)
 
-# Code of Conduct
+## Code of Conduct
 
 It is very important that you read our [code of conduct](https://github.com/fsclaro/vulcano/blob/master/_docs/CODE_OF_CONDUCT.md) so that there is a healthy coexistence among all members participating in this project.
 
-# Security Vulnerabilities
+## Security Vulnerabilities
 
 If you discover a security vulnerability within this project, please send an e-mail to _*Fernando Salles Claro*_ at [fsclaro@gmail.com](mailto:fsclaro@gmail.com). All security vulnerabilities will be promptly addressed.
 
-# License
+## License
 
 This project is open-sourced software licensed under the [MIT license](https://github.com/fsclaro/vulcano/blob/master/_docs/LICENSE.md).
