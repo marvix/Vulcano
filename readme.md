@@ -4,7 +4,7 @@
 <a href="https://travis-ci.org/fsclaro/Vulcan.svg?branch=master"><img src="https://travis-ci.org/fsclaro/Vulcan.svg?branch=master" alt="Build Status"></a>
 </p>
 
-## About Vulcano Project
+## About this project
 
 Coming soon!
 
@@ -12,11 +12,12 @@ Coming soon!
 
 Coming soon!
 
-# Packages included:
+# Packages included
 
 Coming soon!
 
 # Cloning this project
+
 To use this project, you must type the following line in your command terminal
 ```bash
 git clone https://github.com/fsclaro/vulvano.git
@@ -24,11 +25,11 @@ git clone https://github.com/fsclaro/vulvano.git
 
 After cloned, run command bellow in terminal:
 ```bash
-- mysql -e 'create database vulcano;'
-- composer install
-- php artisan key:generate
-- php artisan migrate
-- php artisan db:seed
+mysql -e 'create database vulcano;'
+composer install
+php artisan key:generate
+php artisan migrate
+php artisan db:seed
 ```
 
 ## Contributing
@@ -43,7 +44,7 @@ It is very important that you read our [code of conduct](https://github.com/fscl
 
 # Security Vulnerabilities
 
-If you discover a security vulnerability within this project, please send an e-mail to ^Fernando Salles Claro^ at fsclaro@gmail.com. All security vulnerabilities will be promptly addressed.
+If you discover a security vulnerability within this project, please send an e-mail to _*Fernando Salles Claro*_ at [fsclaro@gmail.com](mailto:fsclaro@gmail.com). All security vulnerabilities will be promptly addressed.
 
 # License
 
