@@ -6,11 +6,15 @@
 
 ## About this project
 
-Coming soon!
+The **Vulcano Project** is intended to be a starting point for other projects based on the Laravel framework. Containing in this boilerplate several packages that can aid and accelerate the construction of your web projects.
 
-## Prerequisites
+### Laravel Environment
 
-Coming soon!
+- PHP Version: 7.1
+- Laravel Version: 5.8.*
+- Timezone: America/Sao_Paulo
+- Locale: pt-br
+- Database: MySQL
 
 ## Packages included
 
@@ -28,11 +32,18 @@ You will need a mysql server installed e configured, then execute the command be
 mysql -e 'create database <YOUR_DATABASE_NAME>;' -u <YOUR_MYSQL_USERNAME> -p
 ```
 
-Edit the *.env* file to modify the parameter below, according your database environment
+Edit the *.env* file to modify the parameters below, according your database environment
 ```bash
 DB_DATABASE=<YOUR_DATABASE_NAME>
 DB_USERNAME=<YOUR_MYSQL_USERNAME>
 DB_PASSWORD=<PASSWORD_OF_YOUR_MYSQL_USERNAME>
+```
+
+The default values are
+```bash
+DB_DATABASE=vulcano
+DB_USERNAME=homestead
+DB_PASSWORD=secret
 ```
 
 After, run commands bellow in terminal:
@@ -42,6 +53,11 @@ php artisan key:generate
 php artisan migrate
 php artisan db:seed
 ```
+
+## Internalization
+
+This project is configured for the Brazilian Portuguese Language with the *timezone* configured for **America/Sao_Paulo** and *locale* for **pt-br**. If you are of another nationality, simply edit the *config/app.php* file and customize the *timezone* and *locale* parameters according to your need.
+
 
 ## Contributing
 
