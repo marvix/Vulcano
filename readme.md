@@ -8,15 +8,43 @@
 
 Coming soon!
 
+## Prerequisites
+
+Coming soon!
+
+# Packages included:
+
+Coming soon!
+
+# Cloning this project
+To use this project, you must type the following line in your command terminal
+```bash
+git clone https://github.com/fsclaro/vulvano.git
+```
+
+After cloned, run command bellow in terminal:
+```bash
+- mysql -e 'create database vulcano;'
+- composer install
+- php artisan key:generate
+- php artisan migrate
+- php artisan db:seed
+```
 
 ## Contributing
 
 Thank you for considering contributing to the Vulcano Project! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Security Vulnerabilities
+If you have good ideas to make this project better, read the [contribution guidelines](https://github.com/fsclaro/vulcano/blob/master/_docs/CONTRIBUTING.md) on contributions and send me an email to [fsclaro@gmail.com](mailto:fsclaro@gmail.com)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [fsclaro@gmail.com](mailto:fsclaro@gmail.com). All security vulnerabilities will be promptly addressed.
+# Code of Conduct
 
-## License
+It is very important that you read our [code of conduct](https://github.com/fsclaro/vulcano/blob/master/_docs/CODE_OF_CONDUCT.md) so that there is a healthy coexistence among all members participating in this project.
 
-The Vulcano Boilerplate is open-source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# Security Vulnerabilities
+
+If you discover a security vulnerability within this project, please send an e-mail to ^Fernando Salles Claro^ at fsclaro@gmail.com. All security vulnerabilities will be promptly addressed.
+
+# License
+
+This project is open-sourced software licensed under the [MIT license](https://github.com/fsclaro/vulcano/blob/master/_docs/LICENSE.md).
