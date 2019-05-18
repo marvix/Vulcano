@@ -2,12 +2,10 @@ language: php
 
 php:
   - 7.1
-  - 7.2
-  - 7.3
 
 services:
   - mysql
-  
+
 before_script:
   - mysql -e 'create database vulcan;'
   - composer self-update
