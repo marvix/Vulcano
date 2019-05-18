@@ -1,4 +1,4 @@
-<p align="center"><img src="https://github.com/fsclaro/vulcan/public/img/logos/project_logo.png"></p>
+<p align="center"><img src="https://github.com/fsclaro/Vulcano/blob/master/public/img/logos/project_logo.png"></p>
 
 <p align="center">
 <a href="https://travis-ci.org/fsclaro/Vulcan.svg?branch=master"><img src="https://travis-ci.org/fsclaro/Vulcan.svg?branch=master" alt="Build Status"></a>
