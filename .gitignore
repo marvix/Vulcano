@@ -10,3 +10,6 @@ npm-debug.log
 yarn-error.log
 public/img/logos/.DS_Store
 .DS_Store
+.php_cs.cache
+.phpstorm.meta.php
+_ide_helper.php

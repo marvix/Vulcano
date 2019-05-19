@@ -10,15 +10,32 @@ The **Vulcano Project** is intended to be a starting point for other projects ba
 
 ### Laravel Environment
 
-- PHP Version: 7.1
+- PHP Version: ^7.1
 - Laravel Version: 5.8.*
 - Timezone: America/Sao_Paulo
-- Locale: pt-br
+- Locale: pt_BR
 - Database: MySQL
 
-## Packages included
+## Third-party Packages included
 
-Coming soon!
+- arcanedev/log-viewer: ^4.7
+- arcanedev/no-captcha: ^9.0
+- creativeorange/gravatar: ^1.0
+- davejamesmiller/laravel-breadcrumbs: ^5.2
+- igorescobar/jquery-mask-plugin: ^1.14
+- jenssegers/date: ^3.5
+- jeroennoten/laravel-adminlte: ^1.25
+- laravel/socialite: ^4.1
+- renatomarinho/laravel-page-speed: ^1.8
+- yajra/laravel-datatables-oracle: ^9.2
+
+## Third-party Packages for Development Mode included
+
+- barryvdh/laravel-debugbar:^3.2,
+- barryvdh/laravel-ide-helper: ^2.6,
+- beyondcode/laravel-dump-server: ^1.0,
+- deployer/deployer: ^6.4,
+- matt-allan/laravel-code-style: ^0.3.0
 
 ## Cloning this project
 
