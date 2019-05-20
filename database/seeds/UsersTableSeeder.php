@@ -20,7 +20,7 @@ class UsersTableSeeder extends Seeder
             'active' => true,
             'super_admin' => true,
             'gender' => 'N',
-            'avatar' => null,
+            'avatar' => 'img/avatar/avatar_001.png',
             'remember_token' => str_random(10),
             'created_at' => now()
         ]);
