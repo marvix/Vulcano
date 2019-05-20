@@ -68,9 +68,13 @@ After, run commands bellow in terminal:
 ```bash
 composer install
 php artisan key:generate
-php artisan migrate
-php artisan db:seed
+php artisan migrate --seed
 ```
+
+## Default Login User
+This boilerplate have a default admin user with credentials
+- Login: admin@admin.com
+- Password: admin1234
 
 ## Internalization
 
