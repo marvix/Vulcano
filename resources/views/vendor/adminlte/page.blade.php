@@ -85,8 +85,34 @@
         </header>
 
         @if(config('adminlte.layout') != 'top-nav')
+
         <!-- Left side column. contains the logo and sidebar -->
         <aside class="main-sidebar">
+
+                    <!-- exibe o nome e o avatar do usuário na parte superior do menu lateral -->
+            <div class="user-panel">
+                <div class="pull-left image">
+                    @if(Gravatar::exists(Auth::user()->email))
+                    <img src="{{ Gravatar::get(Auth::user()->email) }}" alt="avatar" class="img-circle">
+                    @else
+                        @if(Auth::user()->gender == "N")
+                            <img src="{{ asset('img/avatar/avatar_001.png') }}" alt="avatar" class="img-circle">
+                        @elseif (Auth::user()->gender == "M")
+                            <img src="{{ asset('img/avatar/avatar_002.png') }}" alt="avatar" class="img-circle">
+                        @else
+                            <img src="{{ asset('img/avatar/avatar_003.png') }}" alt="avatar" class="img-circle">
+                        @endif
+                    @endif
+                </div>
+
+                <div class="pull-left info">
+                    <p>{{ str_limit(Auth::user()->name,22) }}</p>
+                    <a href="#">
+                        <i class="fa fa-circle text-lime"></i>
+                        Online
+                    </a>
+                </div>
+            </div>
 
             <!-- sidebar: style can be found in sidebar.less -->
             <section class="sidebar">

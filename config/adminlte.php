@@ -105,33 +105,28 @@ return [
     | Font Awesome. A string instead of an array represents a header in sidebar
     | layout. The 'can' is a filter on Laravel's built in Gate functionality.
     |
+    | Parameters:
+    | - text
+    | - route or url
+    | - icon
+    | - can
+    | - submenu
+    | - icon_color
     */
 
     'menu' => [
-        'MAIN NAVIGATION',
+        'PRINCIPAL',
         [
-            'text' => 'Blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
+            'text' => 'Dashboard',
+            'route'  => 'home',
+            'icon' => 'dashboard'
         ],
         [
-            'text'        => 'Pages',
-            'url'         => 'admin/pages',
-            'icon'        => 'file',
-            'label'       => 4,
-            'label_color' => 'success',
-        ],
-        'ACCOUNT SETTINGS',
-        [
-            'text' => 'Profile',
-            'url'  => 'admin/settings',
+            'text' => 'Meus Dados',
+//            'route'  => 'profile.edit',
             'icon' => 'user',
         ],
-        [
-            'text' => 'Change Password',
-            'url'  => 'admin/settings',
-            'icon' => 'lock',
-        ],
+        'GESTÃO',
         [
             'text'    => 'Multilevel',
             'icon'    => 'share',
@@ -170,18 +165,21 @@ return [
                 ],
             ],
         ],
-        'LABELS',
+        'ADMINISTRAÇÃO',
         [
-            'text'       => 'Important',
-            'icon_color' => 'red',
+            'text' => 'Usuários',
+//            'route'  => 'users.index',
+            'icon' => 'users',
         ],
         [
-            'text'       => 'Warning',
-            'icon_color' => 'yellow',
+            'text' => 'Permissões',
+//            'route'  => 'users.index',
+            'icon' => 'lock',
         ],
         [
-            'text'       => 'Information',
-            'icon_color' => 'aqua',
+            'text' => 'Papéis',
+//            'route'  => 'users.index',
+            'icon' => 'address-book-o',
         ],
     ],
 
