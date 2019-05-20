@@ -1,17 +1,70 @@
+@php
+    $img = rand(1,6);
+@endphp
+
 @extends('adminlte::master')
 
 @section('adminlte_css')
+    <style>
+        .background {
+            background: url("{{ asset('img/background/back0').$img.'.png' }}");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            background-color: #fff;
+            margin: 0;
+            margin-bottom: 0;
+            bottom: 0;
+            height: 600px;
+        }
+
+        .footer {
+            background-color: rgba(0,0,0,0.5);
+            border-top: solid 1px #424242;
+            color: #ACACAC;
+            left: 0px;
+            right: 0px;
+            bottom:0px;
+            margin-left: auto;
+            margin-right: auto;
+            position: fixed;
+            height: 50px;
+        }
+        .brand {
+            font-family: Raleway, sans-serif;
+            font-weight: 700;
+        }
+    </style>
+
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/css/auth.css') }}">
     @yield('css')
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,600,700" rel="stylesheet" type="text/css">
+
 @stop
 
-@section('body_class', 'login-page')
+@section('body_class', 'login-page background')
 
 @section('body')
-    <div class="login-box">
-        <div class="login-logo">
-            <a href="{{ url(config('adminlte.dashboard_url', 'home')) }}">{!! config('adminlte.logo', '<b>Admin</b>LTE') !!}</a>
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="{{ url('/') }}" class="navbar-brand">
+                    <span class="brand">{{ config('adminlte.title') }}</span>
+                </a>
+            </div>
         </div>
+    </nav>
+
+    <div class="login-box">
         <!-- /.login-logo -->
         <div class="login-box-body">
             <p class="login-box-msg">{{ trans('adminlte::adminlte.password_reset_message') }}</p>
@@ -30,6 +83,7 @@
                         </span>
                     @endif
                 </div>
+
                 <div class="form-group has-feedback {{ $errors->has('password') ? 'has-error' : '' }}">
                     <input type="password" name="password" class="form-control"
                            placeholder="{{ trans('adminlte::adminlte.password') }}">
@@ -40,6 +94,7 @@
                         </span>
                     @endif
                 </div>
+
                 <div class="form-group has-feedback {{ $errors->has('password_confirmation') ? 'has-error' : '' }}">
                     <input type="password" name="password_confirmation" class="form-control"
                            placeholder="{{ trans('adminlte::adminlte.retype_password') }}">
@@ -50,13 +105,27 @@
                         </span>
                     @endif
                 </div>
-                <button type="submit"
-                        class="btn btn-primary btn-block btn-flat"
-                >{{ trans('adminlte::adminlte.reset_password') }}</button>
+
+                <button type="submit" class="btn btn-primary btn-block btn-flat">
+                    {{ trans('adminlte::adminlte.reset_password') }}
+                </button>
             </form>
         </div>
         <!-- /.login-box-body -->
     </div><!-- /.login-box -->
+
+    <!-- Rodapé da página -->
+    <div class="row">
+        <footer class="main-footer footer">
+            <div class="pull-left hidden-xs" style="margin-left:10px">
+                {!! env('FOOTER_LEFT') !!}
+            </div>
+            <div class="pull-right hidden-xs" style="margin-right:10px">
+                {!! env('FOOTER_RIGHT') !!}
+            </div>
+        </footer>
+    </div>
+
 @stop
 
 @section('adminlte_js')
