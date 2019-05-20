@@ -28,6 +28,7 @@ The **Vulcano Project** is intended to be a starting point for other projects ba
 - laravel/socialite: ^4.1
 - renatomarinho/laravel-page-speed: ^1.8
 - yajra/laravel-datatables-oracle: ^9.2
+- lucascudo/laravel-pt-BR-localization: ^1.0
 
 ## Third-party Packages for Development Mode included
 
@@ -91,3 +92,13 @@ If you discover a security vulnerability within this project, please send an e-m
 ## License
 
 This project is open-sourced software licensed under the [MIT license](https://github.com/fsclaro/vulcano/blob/master/_docs/LICENSE.md).
+
+## Credits
+
+The background images at [Unplash](https://unsplash.com) by authors/photographers:
+- [Janita Top](https://unsplash.com/@janitatop)
+- [David Emrich](https://unsplash.com/@otoriii)
+- [Iswanto Arif](https://unsplash.com/@iswanto)
+- [Philipp Wüthrich](https://unsplash.com/@phiwut)
+- [Alessandro Valenzano](https://unsplash.com/@alessvalenzano)
+- [Boris Baldinger](https://unsplash.com/@borisbaldinger)
