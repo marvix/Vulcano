@@ -72,7 +72,7 @@ php artisan migrate --seed
 ```
 
 ## Default Login User
-This boilerplate have a default admin user with credentials
+This boilerplate have a default admin user with the credentials
 - Login: admin@admin.com
 - Password: admin1234
 
