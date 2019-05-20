@@ -13,11 +13,11 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 2',
+    'title' => 'Vulcano',
 
-    'title_prefix' => '',
+    'title_prefix' => '[',
 
-    'title_postfix' => '',
+    'title_postfix' => ']',
 
     /*
     |--------------------------------------------------------------------------
@@ -30,9 +30,9 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
+    'logo' => '<b>Vulcano</b>',
 
-    'logo_mini' => '<b>A</b>LT',
+    'logo_mini' => '<b>V</b>ul',
 
     /*
     |--------------------------------------------------------------------------
