@@ -20,6 +20,7 @@
         "laravel/framework": "5.8.*",
         "laravel/socialite": "^4.1",
         "laravel/tinker": "^1.0",
+        "lucascudo/laravel-pt-br-localization": "^1.0",
         "renatomarinho/laravel-page-speed": "^1.8",
         "yajra/laravel-datatables-oracle": "^9.2"
     },
