@@ -181,6 +181,12 @@ return [
 //            'route'  => 'users.index',
             'icon' => 'address-book-o',
         ],
+        'SUPORTE',
+        [
+            'text' => 'LogViewer',
+            'url' => '/log-viewer',
+            'icon' => 'eye'
+        ],
     ],
 
     /*

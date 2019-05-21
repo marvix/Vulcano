@@ -30,7 +30,8 @@ return [
      |    'pl', 'pt-BR', 'ro', 'ru', 'sv', 'th', 'tr', 'zh-TW', 'zh'
      */
 
-    'locale'        => 'auto',
+    #'locale'        => 'auto',
+    'locale'        => 'pt-BR',
 
     /* -----------------------------------------------------------------
      |  Theme
