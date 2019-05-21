@@ -18,7 +18,7 @@ class UsersTableSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => bcrypt('admin1234'),
             'active' => true,
-            'super_admin' => true,
+            'isAdmin' => true,
             'gender' => 'N',
             'avatar' => 'img/avatar/avatar_001.png',
             'remember_token' => str_random(10),

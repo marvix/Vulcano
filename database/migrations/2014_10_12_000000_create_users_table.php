@@ -22,8 +22,8 @@ class CreateUsersTable extends Migration
             $table->string('password');
 
             $table->boolean('active')->default(true);
-            $table->boolean('super_admin')->default(false);
-            $table->string('gender')->default('N');
+            $table->boolean('isAdmin')->default(false);
+            $table->string('gender')->default('N'); // M-Male F-Femme N-None
             $table->string('avatar')->nullable();
 
             $table->rememberToken();
