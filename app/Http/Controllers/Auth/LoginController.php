@@ -44,10 +44,10 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function redirectToProvider()
-    {
-        return Socialite::driver('github')->redirect();
-    }
+    // public function redirectToProvider()
+    // {
+    //     return Socialite::driver('github')->redirect();
+    // }
 
 
 
