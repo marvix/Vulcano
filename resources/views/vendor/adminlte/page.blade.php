@@ -14,6 +14,7 @@
 ][config('adminlte.layout')] : '') . (config('adminlte.collapse_sidebar') ? ' sidebar-collapse ' : ''))
 
 @section('body')
+
     <div class="wrapper">
 
         <!-- Main Header -->
@@ -89,19 +90,15 @@
         <!-- Left side column. contains the logo and sidebar -->
         <aside class="main-sidebar">
 
-                    <!-- exibe o nome e o avatar do usuário na parte superior do menu lateral -->
+            <!-- exibe o nome e o avatar do usuário na parte superior do menu lateral -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    @if(Gravatar::exists(Auth::user()->email))
-                    <img src="{{ Gravatar::get(Auth::user()->email) }}" alt="avatar" class="img-circle">
+                    @if(auth()->user()->hasMedia('avatars'))
+                        <img src="{{ asset(Auth::user()->getFirstMediaUrl('avatars')) }}" alt="avatar" class="img-circle">
+                    @elseif(Gravatar::exists(Auth::user()->email))
+                        <img src="{{ Gravatar::get(Auth::user()->email) }}" alt="avatar" class="img-circle">
                     @else
-                        @if(Auth::user()->gender == "N")
-                            <img src="{{ asset('img/avatar/avatar_001.png') }}" alt="avatar" class="img-circle">
-                        @elseif (Auth::user()->gender == "M")
-                            <img src="{{ asset('img/avatar/avatar_002.png') }}" alt="avatar" class="img-circle">
-                        @else
-                            <img src="{{ asset('img/avatar/avatar_003.png') }}" alt="avatar" class="img-circle">
-                        @endif
+                        <img src="{{ asset('img/avatar/no-photo.png') }}" alt="avatar" class="img-circle">
                     @endif
                 </div>
 
