@@ -13,6 +13,7 @@
         "arcanedev/no-captcha": "^9.0",
         "creativeorange/gravatar": "^1.0",
         "davejamesmiller/laravel-breadcrumbs": "^5.2",
+        "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
         "igorescobar/jquery-mask-plugin": "^1.14",
         "jenssegers/date": "^3.5",
@@ -23,6 +24,7 @@
         "laravel/tinker": "^1.0",
         "lucascudo/laravel-pt-br-localization": "^1.0",
         "renatomarinho/laravel-page-speed": "^1.8",
+        "spatie/laravel-medialibrary": "^7.0.0",
         "yajra/laravel-datatables-oracle": "^9.2"
     },
     "require-dev": {
@@ -88,6 +90,10 @@
         "cache-all": [
             "@php artisan config:cache",
             "@php artisan route:cache"
+        ],
+        "ide-helper": [
+            "@php artisan ide-helper:generate",
+            "@php artisan ide-helper:meta"
         ],
         "format": [
             "./vendor/bin/php-cs-fixer fix app/  --show-progress=estimating",
