@@ -123,69 +123,57 @@ return [
         ],
         [
             'text' => 'Meus Dados',
-//            'route'  => 'profile.edit',
+            'route'  => 'profile.edit',
             'icon' => 'user',
         ],
+
         'GESTÃO',
         [
             'text'    => 'Multilevel',
             'icon'    => 'share',
-            'submenu' => [
-                [
-                    'text' => 'Level One',
-                    'url'  => '#',
-                ],
-                [
-                    'text'    => 'Level One',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'Level Two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'Level Two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'Level Three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'Level Three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'Level One',
-                    'url'  => '#',
-                ],
-            ],
         ],
+
         'ADMINISTRAÇÃO',
         [
-            'text' => 'Usuários',
-//            'route'  => 'users.index',
-            'icon' => 'users',
+            'text' => 'Acesso',
+            'icon' => 'share',
+            'submenu' => [
+                [
+                    'text' => 'Usuários',
+                    'route'  => 'users.index',
+                    'icon' => 'users',
+                ],
+                [
+                    'text' => 'Permissões',
+        //            'route'  => 'permissions.index',
+                    'icon' => 'lock',
+                ],
+                [
+                    'text' => 'Papéis',
+        //            'route'  => 'roles.index',
+                    'icon' => 'address-book-o',
+                ],
+            ]
         ],
-        [
-            'text' => 'Permissões',
-//            'route'  => 'users.index',
-            'icon' => 'lock',
-        ],
-        [
-            'text' => 'Papéis',
-//            'route'  => 'users.index',
-            'icon' => 'address-book-o',
-        ],
+
         'SUPORTE',
         [
-            'text' => 'LogViewer',
-            'url' => '/log-viewer',
-            'icon' => 'eye'
+            'text' => 'Logs',
+            'icon' => 'shield',
+            'submenu' => [
+                [
+                    'text' => 'LogViewer',
+                    'url' => '/log-viewer',
+                    'icon' => 'eye',
+                    'target' => '_blank'
+                ],
+                [
+                    'text' => 'Telescope',
+                    'route' => 'telescope',
+                    'icon' => 'eye',
+                    'target' => '_blank'
+                ],
+            ],
         ],
     ],
 
