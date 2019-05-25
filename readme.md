@@ -22,13 +22,18 @@ The **Vulcano Project** is intended to be a starting point for other projects ba
 - arcanedev/no-captcha: ^9.0
 - creativeorange/gravatar: ^1.0
 - davejamesmiller/laravel-breadcrumbs: ^5.2
+- doctrine/dbal: ^2.9
 - igorescobar/jquery-mask-plugin: ^1.14
 - jenssegers/date: ^3.5
 - jeroennoten/laravel-adminlte: ^1.25
 - laravel/socialite: ^4.1
-- renatomarinho/laravel-page-speed: ^1.8
-- yajra/laravel-datatables-oracle: ^9.2
+- laravel/telescope: ^2.0
 - lucascudo/laravel-pt-BR-localization: ^1.0
+- renatomarinho/laravel-page-speed: ^1.8
+- spatie/laravel-medialibrary: ^7.0.0
+- yajra/laravel-datatables-oracle: ^9.2
+
+
 
 ## Third-party Packages for Development Mode included
 
@@ -72,9 +77,15 @@ php artisan migrate --seed
 ```
 
 ## Default Login User
-This boilerplate have a default admin user with the credentials
-- Login: admin@admin.com
+This boilerplate have a default admin user and normal user with the credentials
+- Login: admin@vulcano.com
 - Password: admin1234
+
+and
+
+- Login: user@vulcano.com
+- Password: user1234
+
 
 ## Internalization
 
