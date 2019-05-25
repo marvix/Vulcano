@@ -26,6 +26,7 @@ Route::get('/home', 'HomeController@index')->name('home');
  */
 Route::get('/profile/edit', 'UsersController@editProfile')->name('profile.edit');
 Route::put('/profile/{id}', 'UsersController@updateProfile')->name('profile.update');
+Route::get('/profile/deleteAvatarProfile/', 'UsersController@deleteAvatarProfile')->name('delete.avatar.profile');
 
 /*
  * ----------------------------------------------------------------------------
@@ -42,10 +43,3 @@ Route::delete('/users/{id}/delete', 'UsersController@destroy')->name('users.dest
 Route::get('/users/deleteavataruser/{id}', 'UsersController@deleteAvatarUser')->name('delete.avatar.user');
 Route::get('/users/active/{id}', 'UsersController@activeUser')->name('users.active');
 Route::get('/users/desactive/{id}', 'UsersController@desactiveUser')->name('users.desactive');
-
-/*
- * ----------------------------------------------------------------------------
- * Rotas para tratamento dos avatares dos usuários
- * ----------------------------------------------------------------------------
- */
-Route::get('/profile/deleteAvatarProfile/', 'UsersController@deleteAvatarProfile')->name('delete.avatar.profile');
