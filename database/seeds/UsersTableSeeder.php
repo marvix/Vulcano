@@ -14,13 +14,36 @@ class UsersTableSeeder extends Seeder
         // cria um usuário administrador
         DB::table('users')->insert([
             'name' => 'Admin',
-            'email' => 'admin@admin.com',
+            'email' => 'admin@vulcano.com',
             'email_verified_at' => now(),
             'password' => bcrypt('admin1234'),
             'active' => true,
             'isAdmin' => true,
             'gender' => 'N',
-            'avatar' => 'img/avatar/avatar_001.png',
+            'remember_token' => str_random(10),
+            'created_at' => now()
+        ]);
+
+        DB::table('users')->insert([
+            'name' => 'Usuário Normal',
+            'email' => 'user@vulcano.com',
+            'email_verified_at' => now(),
+            'password' => bcrypt('user1234'),
+            'active' => true,
+            'isAdmin' => false,
+            'gender' => 'N',
+            'remember_token' => str_random(10),
+            'created_at' => now()
+        ]);
+
+        DB::table('users')->insert([
+            'name' => 'Fernando',
+            'email' => 'fsclaro@gmail.com',
+            'email_verified_at' => now(),
+            'password' => bcrypt('123456'),
+            'active' => true,
+            'isAdmin' => true,
+            'gender' => 'M',
             'remember_token' => str_random(10),
             'created_at' => now()
         ]);
