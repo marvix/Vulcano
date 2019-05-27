@@ -77,7 +77,7 @@ php artisan migrate --seed
 ```
 
 ## Default Login User
-This boilerplate have a default admin user and normal user with the credentials
+This boilerplate have a default *admin user* and a *normal user* with the credentials
 - Login: admin@vulcano.com
 - Password: admin1234
 
