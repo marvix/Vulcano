@@ -111,6 +111,7 @@ return [
     | - icon
     | - can
     | - submenu
+    | - target
     | - icon_color
     */
 
@@ -129,49 +130,55 @@ return [
 
         'GESTÃO',
         [
-            'text'    => 'Multilevel',
+            'text'    => 'Cadastro',
             'icon'    => 'share',
         ],
 
-        'ADMINISTRAÇÃO',
         [
-            'text' => 'Acesso',
+            'header' => 'ADMINISTRAÇÃO DO SITE',
+            'can' => 'menu_admin'
+        ],
+        [
+            'text' => 'Usuários e Permissões',
             'icon' => 'share',
+            'can' => 'menu_users',
             'submenu' => [
                 [
                     'text' => 'Usuários',
                     'route'  => 'users.index',
                     'icon' => 'users',
-                ],
-                [
-                    'text' => 'Permissões',
-        //            'route'  => 'permissions.index',
-                    'icon' => 'lock',
+                    'can' => 'user_show',
                 ],
                 [
                     'text' => 'Papéis',
-        //            'route'  => 'roles.index',
                     'icon' => 'address-book-o',
+                    'can' => 'menu_roles'
                 ],
-            ]
+                [
+                    'text' => 'Permissões',
+                    'icon' => 'lock',
+                    'can' => 'menu_permissions'
+                ],
+            ],
         ],
-
-        'SUPORTE',
         [
-            'text' => 'Logs',
+            'text' => 'Logs do Sistema',
             'icon' => 'shield',
+            'can' => 'menu_logs',
             'submenu' => [
                 [
                     'text' => 'LogViewer',
                     'url' => '/log-viewer',
                     'icon' => 'eye',
-                    'target' => '_blank'
+                    'target' => '_blank',
+                    'can' => 'menu_logviewer'
                 ],
                 [
                     'text' => 'Telescope',
                     'route' => 'telescope',
                     'icon' => 'eye',
-                    'target' => '_blank'
+                    'target' => '_blank',
+                    'can' => 'menu_telescope'
                 ],
             ],
         ],
