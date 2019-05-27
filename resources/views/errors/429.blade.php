@@ -1,5 +1,6 @@
 @extends('errors::minimal')
 
-@section('title', __('Too Many Requests'))
+@section('title', __('Muitas Requisições Realizadas'))
 @section('code', '429')
-@section('message', __('Too Many Requests'))
+@section('message', __('Muitas Requisições Realizadas'))
+@section('text', __('Foram identificadas muitas requisições ao sistema.'))
