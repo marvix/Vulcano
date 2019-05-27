@@ -10,7 +10,7 @@
 
 <ol class="breadcrumb">
     <li>
-        <a href="{{ route('home') }}">Dashboard</a>
+        <a href="{{ route('home') }}"><i class='fa fa-dashboard'></i> Dashboard</a>
     </li>
     <li class="active">Lista de Usuários</li>
 </ol>
@@ -20,17 +20,17 @@
 @section('content')
 
 @if (session('message'))
-    <div class="alert alert-{{ session('type') }} alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        @if(session('type') == 'success')
-        <span style="font-size:24px;">Eba!!!</span>
-        @else
-        <span style="font-size:24px;">Whops!!!</span>
-        @endif
-        <br/>{{ session('message') }}
-    </div>
+<div class="alert alert-{{ session('type') }} alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    @if(session('type') == 'success')
+    <span style="font-size:24px;">Eba!!!</span>
+    @else
+    <span style="font-size:24px;">Whops!!!</span>
+    @endif
+    <br />{{ session('message') }}
+</div>
 @endif
 
 <div class="panel panel-default">
@@ -86,7 +86,7 @@
                     </td>
                     <td class="text-center">
                         @php
-                            $avatar = $user->getFirstMediaUrl('avatars');
+                        $avatar = $user->getFirstMediaUrl('avatars');
                         @endphp
 
                         @if($avatar)
@@ -99,50 +99,46 @@
                     </td>
                     <td style="width:155px;">
                         @if(Auth::user()->isAdmin)
-                            @if (Auth::user()->id != $user->id)
-                                <!-- ativar o usuário -->
-                                @if(!$user->active)
-                                <a class='btn btn-active btn-sm' style="float:left; margin-right: 2px;"
-                                href='{{ route("users.active", $user->id) }}' role='button' alt="Ativa o usuário" title="Ativa o usuário">
-                                    <i class='fa fa-toggle-off'></i>
-                                </a>
-                                @else
-                                <!-- desativar o usuário -->
-                                <a class='btn btn-desactive btn-sm' style="float:left; margin-right: 2px;"
-                                href='{{ route("users.desactive", $user->id) }}' role='button' alt="Desativa o usuário" title="Desativa o usuário">
-                                    <i class='fa fa-toggle-on'></i>
-                                </a>
-                                @endif
-                            @endif
+                        @if (Auth::user()->id != $user->id)
+                        <!-- ativar o usuário -->
+                        @if(!$user->active)
+                        <a class='btn btn-active btn-sm' style="float:left; margin-right: 2px;" href='{{ route("users.active", $user->id) }}' role='button' alt="Ativa o usuário" title="Ativa o usuário">
+                            <i class='fa fa-toggle-off'></i>
+                        </a>
+                        @else
+                        <!-- desativar o usuário -->
+                        <a class='btn btn-desactive btn-sm' style="float:left; margin-right: 2px;" href='{{ route("users.desactive", $user->id) }}' role='button' alt="Desativa o usuário" title="Desativa o usuário">
+                            <i class='fa fa-toggle-on'></i>
+                        </a>
+                        @endif
+                        @endif
                         @endif
 
                         <!-- visualização de dados-->
-                        <a class='btn btn-info btn-sm' style="float:left; margin-right: 2px;"
-                           href='{{ route("users.show", $user->id) }}' role='button' alt="Visualiza os dados do usuário" title="Visualiza os dados do usuário">
+                        <a class='btn btn-info btn-sm' style="float:left; margin-right: 2px;" href='{{ route("users.show", $user->id) }}' role='button' alt="Visualiza os dados do usuário" title="Visualiza os dados do usuário">
                             <i class='fa fa-eye'></i>
                         </a>
 
                         <!-- somente administradores podem editar e/ou excluir usuários -->
                         @if(Auth::user()->isAdmin)
 
-                            <!-- o usuário não pode se editar e nem se excluir -->
-                            @if (Auth::user()->id != $user->id)
-                            <!-- edição de dados -->
-                            <a class='btn btn-warning btn-sm'  style="float:left;margin-right: 2px;"
-                            href='{{ route("users.edit", $user->id) }}' role='button' alt="Edita os dados do usuário" title="Edita os dados do usuário">
-                                <i class='fa fa-pencil'></i>
-                            </a>
+                        <!-- o usuário não pode se editar e nem se excluir -->
+                        @if (Auth::user()->id != $user->id)
+                        <!-- edição de dados -->
+                        <a class='btn btn-warning btn-sm' style="float:left;margin-right: 2px;" href='{{ route("users.edit", $user->id) }}' role='button' alt="Edita os dados do usuário" title="Edita os dados do usuário">
+                            <i class='fa fa-pencil'></i>
+                        </a>
 
-                            <!-- exclusão do registro -->
-                            <form action="{{ route('users.destroy', $user->id) }}" method="post">
-                                <input type="hidden" name="_method" value="DELETE">
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <!-- exclusão do registro -->
+                        <form action="{{ route('users.destroy', $user->id) }}" method="post">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-                                <button type='submit' class='btn btn-danger btn-sm'  style="float:left" alt="Exclui o usuário" title="Exclui o usuário">
-                                    <i class='fa fa-trash'></i>
-                                </button>
-                            </form>
-                            @endif
+                            <button type='submit' class='btn btn-danger btn-sm' style="float:left" alt="Exclui o usuário" title="Exclui o usuário">
+                                <i class='fa fa-trash'></i>
+                            </button>
+                        </form>
+                        @endif
 
                         @endif
                     </td>
@@ -162,9 +158,8 @@
 
 @section('js')
 <script>
-$(document).ready(function() {
-    $('#table-usuarios').DataTable(
-        {
+    $(document).ready(function() {
+        $('#table-usuarios').DataTable({
             "paging": false,
             "info": false,
             "searching": false,
@@ -172,14 +167,13 @@ $(document).ready(function() {
                 "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
             },
             "processing": true,
-        }
-    );
-});
+        });
+    });
 </script>
 @stop
 
 @section('css')
-    <style>
+<style>
     .btn-active {
         background-color: #32cd32;
         color: #fff;
@@ -199,6 +193,5 @@ $(document).ready(function() {
         background-color: #00f;
         color: #fff;
     }
-
-    </style>
+</style>
 @stop

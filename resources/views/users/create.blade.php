@@ -9,7 +9,7 @@
 
 <ol class="breadcrumb">
     <li>
-        <a href="{{ route('home') }}">Dashboard</a>
+        <a href="{{ route('home') }}"><i class='fa fa-dashboard'></i> Dashboard</a>
     </li>
     <li>
         <a href="{{ route('users.index') }}">Usuários</a>
@@ -21,17 +21,17 @@
 @section('content')
 
 @if (session('message'))
-    <div class="alert alert-{{ session('type') }} alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        @if(session('type') == 'success')
-        <span style="font-size:24px;">Eba!!!</span>
-        @else
-        <span style="font-size:24px;">Whops!!!</span>
-        @endif
-        <br/>{{ session('message') }}
-    </div>
+<div class="alert alert-{{ session('type') }} alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    @if(session('type') == 'success')
+    <span style="font-size:24px;">Eba!!!</span>
+    @else
+    <span style="font-size:24px;">Whops!!!</span>
+    @endif
+    <br />{{ session('message') }}
+</div>
 @endif
 
 
@@ -50,9 +50,9 @@
                 <!-- avatar -->
                 <div class="image text-center">
                     <label for="avatar">Seu Avatar</label>
-                    <br/>
+                    <br />
 
-                    <img src="{{ asset('img/avatar/no-photo.png') }}" width="100px" alt="avatar" class="img-circle">
+                    <img src="{{ asset('img/avatar/no-photo.png') }}" width="140px" alt="avatar" class="img-circle">
 
                     <div class="row">&nbsp;</div>
 
@@ -74,8 +74,7 @@
                             <span class="text-red">*</span>
                         </label>
 
-                        <input type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                            id="name" name="name" value="{{ old('name') }}" required>
+                        <input type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" id="name" name="name" value="{{ old('name') }}" required>
 
                         @if($errors->has('name'))
                         <span class='invalid-feedback text-red'>
@@ -170,8 +169,7 @@
                             <span class="text-red">*</span>
                         </label>
 
-                        <input type="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}"
-                            id="password" name="password" required value="{{ old('password') }}">
+                        <input type="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" id="password" name="password" required value="{{ old('password') }}">
 
                         @if($errors->has('password'))
                         <span class='invalid-feedback text-red'>
@@ -195,19 +193,19 @@
 @stop
 
 @section('css')
-    <style>
-        .div-avatar {
-            position:relative;
-            overflow:hidden;
-        }
-        .input-avatar {
-            position:absolute;
-            font-size:20px;
-            opacity:0;
-            right:0;
-            top:0;
-        }
+<style>
+    .div-avatar {
+        position: relative;
+        overflow: hidden;
+    }
 
-    </style>
+    .input-avatar {
+        position: absolute;
+        font-size: 20px;
+        opacity: 0;
+        right: 0;
+        top: 0;
+    }
+</style>
 
 @stop
