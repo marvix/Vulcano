@@ -35,17 +35,5 @@ class UsersTableSeeder extends Seeder
             'remember_token' => str_random(10),
             'created_at' => now()
         ]);
-
-        DB::table('users')->insert([
-            'name' => 'Fernando',
-            'email' => 'fsclaro@gmail.com',
-            'email_verified_at' => now(),
-            'password' => bcrypt('123456'),
-            'active' => true,
-            'isAdmin' => true,
-            'gender' => 'M',
-            'remember_token' => str_random(10),
-            'created_at' => now()
-        ]);
     }
 }
