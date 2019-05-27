@@ -7,14 +7,16 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\File;
-use Spatie\MediaLibrary\Media;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements HasMedia
 {
-    use Notifiable, HasMediaTrait;
+    use Notifiable, HasMediaTrait, HasRoles;
 
     /**
+     * ------------------------------------------------------------------------
      * The attributes that are mass assignable.
+     * ------------------------------------------------------------------------
      *
      * @var array
      */
@@ -23,7 +25,9 @@ class User extends Authenticatable implements HasMedia
     ];
 
     /**
+     * ------------------------------------------------------------------------
      * The attributes that should be hidden for arrays.
+     * ------------------------------------------------------------------------
      *
      * @var array
      */
@@ -32,7 +36,9 @@ class User extends Authenticatable implements HasMedia
     ];
 
     /**
+     * ------------------------------------------------------------------------
      * The attributes that should be cast to native types.
+     * ------------------------------------------------------------------------
      *
      * @var array
      */
@@ -40,7 +46,15 @@ class User extends Authenticatable implements HasMedia
         'email_verified_at' => 'datetime',
     ];
 
-    public function registerMediaCollections() {
+    /**
+     * ------------------------------------------------------------------------
+     * Define parâmetros do media library para os avatares dos usuários
+     * ------------------------------------------------------------------------
+     *
+     * @return void
+     */
+    public function registerMediaCollections()
+    {
         $this->addMediaCollection('avatars')
             ->singleFile()
             ->acceptsFile(function (File $file) {
@@ -49,5 +63,4 @@ class User extends Authenticatable implements HasMedia
                     || $file->mimeType === 'image/jpg';
             });
     }
-
 }
