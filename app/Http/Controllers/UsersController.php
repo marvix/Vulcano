@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\User;
-use Auth;
 use DB;
+use Auth;
+use App\User;
+use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
@@ -30,7 +30,7 @@ class UsersController extends Controller
     public function index()
     {
         // Verifica se o usuário tem direito de acesso
-        abort_unless(auth()->user()->hasPermissionTo("user_show"), 403);
+        abort_unless(auth()->user()->hasPermissionTo('user_show'), 403);
 
         // Obtém todos os registros da tabela de usuários
         $users = User::orderBy('id', 'asc')->paginate(5);
@@ -50,7 +50,7 @@ class UsersController extends Controller
     public function create()
     {
         // Verifica se o usuário tem direito de acesso
-        abort_unless(auth()->user()->hasPermissionTo("user_create"), 403);
+        abort_unless(auth()->user()->hasPermissionTo('user_create'), 403);
 
         // Chama a view com o formulário para inserir um novo registro
         return view('users.create');
@@ -68,7 +68,7 @@ class UsersController extends Controller
     public function store(Request $request)
     {
         // Verifica se o usuário tem direito de acesso
-        abort_unless(auth()->user()->hasPermissionTo("user_create"), 403);
+        abort_unless(auth()->user()->hasPermissionTo('user_create'), 403);
 
         // Cria as regras de validação dos dados do formulário
         $rules = [
@@ -125,7 +125,7 @@ class UsersController extends Controller
     public function show($id)
     {
         // Verifica se o usuário tem direito de acesso
-        abort_unless(auth()->user()->hasPermissionTo("user_show"), 403);
+        abort_unless(auth()->user()->hasPermissionTo('user_show'), 403);
 
         // Localiza e retorna os dados de um registro pelo ID
         $user = User::findOrFail($id);
@@ -150,7 +150,7 @@ class UsersController extends Controller
     public function edit($id)
     {
         // Verifica se o usuário tem direito de acesso
-        abort_unless(auth()->user()->hasPermissionTo("user_edit"), 403);
+        abort_unless(auth()->user()->hasPermissionTo('user_edit'), 403);
 
         // Localiza o registro pelo seu ID
         $user = User::findOrFail($id);
@@ -179,12 +179,12 @@ class UsersController extends Controller
     public function update(Request $request, $id)
     {
         // Verifica se o usuário tem direito de acesso
-        abort_unless(auth()->user()->hasPermissionTo("user_edit"), 403);
+        abort_unless(auth()->user()->hasPermissionTo('user_edit'), 403);
 
         // Cria as regras de validação dos dados do formulário
         $rules = [
             'name' => 'required|min:5|max:30',
-            'email' => 'required|email|unique:users,email,' . $id,
+            'email' => 'required|email|unique:users,email,'.$id,
             'isadmin' => 'required',
             'active' => 'required',
         ];
@@ -240,7 +240,7 @@ class UsersController extends Controller
     public function destroy($id)
     {
         // Verifica se o usuário tem direito de acesso
-        abort_unless(auth()->user()->hasPermissionTo("user_delete"), 403);
+        abort_unless(auth()->user()->hasPermissionTo('user_delete'), 403);
 
         // Retorna o registro pelo ID fornecido
         $user = User::findOrFail($id);
@@ -268,7 +268,7 @@ class UsersController extends Controller
     public function deleteAvatarUser($id)
     {
         // Verifica se o usuário tem direito de acesso
-        abort_unless(auth()->user()->hasPermissionTo("user_edit"), 403);
+        abort_unless(auth()->user()->hasPermissionTo('user_edit'), 403);
 
         $user = User::find($id);
         $user->clearMediaCollection('avatars');
@@ -289,7 +289,7 @@ class UsersController extends Controller
     public function activeUser($id)
     {
         // Verifica se o usuário tem direito de acesso
-        abort_unless(auth()->user()->hasPermissionTo("user_active"), 403);
+        abort_unless(auth()->user()->hasPermissionTo('user_active'), 403);
 
         DB::table('users')
             ->where('id', $id)
@@ -311,7 +311,7 @@ class UsersController extends Controller
     public function desactiveUser($id)
     {
         // Verifica se o usuário tem direito de acesso
-        abort_unless(auth()->user()->hasPermissionTo("user_active"), 403);
+        abort_unless(auth()->user()->hasPermissionTo('user_active'), 403);
 
         DB::table('users')
             ->where('id', $id)
@@ -331,7 +331,7 @@ class UsersController extends Controller
     public function editProfile()
     {
         // Verifica se o usuário tem direito de acesso
-        abort_unless(auth()->user()->hasPermissionTo("profile_edit"), 403);
+        abort_unless(auth()->user()->hasPermissionTo('profile_edit'), 403);
 
         // Obtém os dados do usuário autenticado
         $user = auth()->user();
@@ -358,7 +358,7 @@ class UsersController extends Controller
     public function updateProfile(Request $request, $id)
     {
         // Verifica se o usuário tem direito de acesso
-        abort_unless(auth()->user()->hasPermissionTo("profile_edit"), 403);
+        abort_unless(auth()->user()->hasPermissionTo('profile_edit'), 403);
 
         // Cria as regras de validação dos dados do formulário
         $rules = [
@@ -409,7 +409,7 @@ class UsersController extends Controller
     public function deleteAvatarProfile()
     {
         // Verifica se o usuário tem direito de acesso
-        abort_unless(auth()->user()->hasPermissionTo("profile_edit"), 403);
+        abort_unless(auth()->user()->hasPermissionTo('profile_edit'), 403);
 
         $user = auth()->user();
         $user->clearMediaCollection('avatars');

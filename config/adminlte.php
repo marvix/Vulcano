@@ -120,7 +120,7 @@ return [
         [
             'text' => 'Dashboard',
             'route'  => 'home',
-            'icon' => 'dashboard'
+            'icon' => 'dashboard',
         ],
         [
             'text' => 'Meus Dados',
@@ -136,7 +136,7 @@ return [
 
         [
             'header' => 'ADMINISTRAÇÃO DO SITE',
-            'can' => 'menu_admin'
+            'can' => 'menu_admin',
         ],
         [
             'text' => 'Usuários e Permissões',
@@ -152,12 +152,12 @@ return [
                 [
                     'text' => 'Papéis',
                     'icon' => 'address-book-o',
-                    'can' => 'menu_roles'
+                    'can' => 'menu_roles',
                 ],
                 [
                     'text' => 'Permissões',
                     'icon' => 'lock',
-                    'can' => 'menu_permissions'
+                    'can' => 'menu_permissions',
                 ],
             ],
         ],
@@ -171,14 +171,14 @@ return [
                     'url' => '/log-viewer',
                     'icon' => 'eye',
                     'target' => '_blank',
-                    'can' => 'menu_logviewer'
+                    'can' => 'menu_logviewer',
                 ],
                 [
                     'text' => 'Telescope',
                     'route' => 'telescope',
                     'icon' => 'eye',
                     'target' => '_blank',
-                    'can' => 'menu_telescope'
+                    'can' => 'menu_telescope',
                 ],
             ],
         ],

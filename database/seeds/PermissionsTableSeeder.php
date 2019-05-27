@@ -1,9 +1,9 @@
 <?php
 
+use App\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use App\User;
 
 class PermissionsTableSeeder extends Seeder
 {
@@ -17,7 +17,7 @@ class PermissionsTableSeeder extends Seeder
         // Define os papéis
         $roles = [
             'admin',
-            'user'
+            'user',
         ];
 
         // Define as permissões
@@ -40,7 +40,7 @@ class PermissionsTableSeeder extends Seeder
             'menu_permissions',
             'menu_logs',
             'menu_logviewer',
-            'menu_telescope'
+            'menu_telescope',
         ];
 
         // Cria os papéis
@@ -79,7 +79,7 @@ class PermissionsTableSeeder extends Seeder
                 'menu_permissions',
                 'menu_logs',
                 'menu_logviewer',
-                'menu_telescope'
+                'menu_telescope',
             ]
         );
         // Usuário user

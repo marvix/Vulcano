@@ -21,7 +21,7 @@ class UsersTableSeeder extends Seeder
             'isAdmin' => true,
             'gender' => 'N',
             'remember_token' => str_random(10),
-            'created_at' => now()
+            'created_at' => now(),
         ]);
 
         DB::table('users')->insert([
@@ -33,7 +33,7 @@ class UsersTableSeeder extends Seeder
             'isAdmin' => false,
             'gender' => 'N',
             'remember_token' => str_random(10),
-            'created_at' => now()
+            'created_at' => now(),
         ]);
     }
 }

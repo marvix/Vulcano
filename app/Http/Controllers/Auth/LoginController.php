@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Socialite;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Socialite;
 
 class LoginController extends Controller
 {
@@ -38,7 +38,6 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-
     /**
      * Redirect the user to the GitHub authentication page.
      *
@@ -48,8 +47,6 @@ class LoginController extends Controller
     // {
     //     return Socialite::driver('github')->redirect();
     // }
-
-
 
     /**
      * Obtain the user information from GitHub.

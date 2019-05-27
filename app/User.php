@@ -2,12 +2,12 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\File;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Notifications\Notifiable;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements HasMedia
 {
@@ -16,7 +16,7 @@ class User extends Authenticatable implements HasMedia
     /**
      * ------------------------------------------------------------------------
      * The attributes that are mass assignable.
-     * ------------------------------------------------------------------------
+     * ------------------------------------------------------------------------.
      *
      * @var array
      */
@@ -27,7 +27,7 @@ class User extends Authenticatable implements HasMedia
     /**
      * ------------------------------------------------------------------------
      * The attributes that should be hidden for arrays.
-     * ------------------------------------------------------------------------
+     * ------------------------------------------------------------------------.
      *
      * @var array
      */
@@ -38,7 +38,7 @@ class User extends Authenticatable implements HasMedia
     /**
      * ------------------------------------------------------------------------
      * The attributes that should be cast to native types.
-     * ------------------------------------------------------------------------
+     * ------------------------------------------------------------------------.
      *
      * @var array
      */
@@ -49,7 +49,7 @@ class User extends Authenticatable implements HasMedia
     /**
      * ------------------------------------------------------------------------
      * Define parâmetros do media library para os avatares dos usuários
-     * ------------------------------------------------------------------------
+     * ------------------------------------------------------------------------.
      *
      * @return void
      */

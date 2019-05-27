@@ -3,9 +3,9 @@
 namespace App\Exceptions;
 
 use Exception;
+use Spatie\MediaLibrary\Exceptions\FileCannotBeAdded;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Spatie\MediaLibrary\Exceptions\FileCannotBeAdded\FileUnacceptableForCollection;
-use Spatie\MediaLibrary\Exceptions\FileCannotBeAdded;
 
 class Handler extends ExceptionHandler
 {
@@ -50,14 +50,14 @@ class Handler extends ExceptionHandler
     {
 
         // Se o tipo de arquivo não for permitido...
-        if ($exception instanceOf FileUnacceptableForCollection) {
+        if ($exception instanceof FileUnacceptableForCollection) {
             return redirect()
                 ->back()
                 ->with('message', 'Somente imagens JPEG, JPG ou PNG são permitidas.')
                 ->with('type', 'danger');
         }
         // Se a imagem não pode ser carregada ...
-        if ($exception instanceOf FileCannotBeAdded) {
+        if ($exception instanceof FileCannotBeAdded) {
             return redirect()
                 ->back()
                 ->with('message', 'Algo deu errado. A imagem não pode ser selecionada. Tente novamente.')
