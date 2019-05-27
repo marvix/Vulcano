@@ -24,6 +24,7 @@
         "laravel/tinker": "^1.0",
         "renatomarinho/laravel-page-speed": "^1.8",
         "spatie/laravel-medialibrary": "^7.0.0",
+        "spatie/laravel-permission": "^2.37",
         "yajra/laravel-datatables-oracle": "^9.2"
     },
     "require-dev": {
