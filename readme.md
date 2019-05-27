@@ -11,7 +11,7 @@ The **Vulcano Project** is intended to be a starting point for other projects ba
 ## Laravel Environment
 
 - PHP Version: ^7.1
-- Laravel Version: 5.8.*
+- Laravel Version: 5.8.18
 - Timezone: America/Sao_Paulo
 - Locale: pt_BR
 - Database: MySQL
@@ -32,7 +32,7 @@ The **Vulcano Project** is intended to be a starting point for other projects ba
 - renatomarinho/laravel-page-speed: ^1.8
 - spatie/laravel-medialibrary: ^7.0.0
 - spatie/laravel-permission: ^2.37
-- yajra/laravel-datatables-oracle: ^9.2
+- yajra/laravel-datatables-oracle: ^9.3
 
 ## Third-party Packages for Development Mode included
 
