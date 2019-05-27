@@ -31,6 +31,7 @@ The **Vulcano Project** is intended to be a starting point for other projects ba
 - lucascudo/laravel-pt-BR-localization: ^1.0
 - renatomarinho/laravel-page-speed: ^1.8
 - spatie/laravel-medialibrary: ^7.0.0
+- spatie/laravel-permission: ^2.37
 - yajra/laravel-datatables-oracle: ^9.2
 
 
