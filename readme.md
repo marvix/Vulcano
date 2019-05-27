@@ -8,7 +8,7 @@
 
 The **Vulcano Project** is intended to be a starting point for other projects based on the Laravel framework. Containing in this boilerplate several packages that can aid and accelerate the construction of your web projects.
 
-### Laravel Environment
+## Laravel Environment
 
 - PHP Version: ^7.1
 - Laravel Version: 5.8.*
@@ -33,8 +33,6 @@ The **Vulcano Project** is intended to be a starting point for other projects ba
 - spatie/laravel-medialibrary: ^7.0.0
 - spatie/laravel-permission: ^2.37
 - yajra/laravel-datatables-oracle: ^9.2
-
-
 
 ## Third-party Packages for Development Mode included
 
@@ -87,6 +85,30 @@ and
 - Login: user@vulcano.com
 - Password: user1234
 
+## New composer commands
+### 1) *composer clear-all*, execute:
+* artisan clear-compiled
+* artisan cache:clear
+* artisan route:clear
+* artisan view:clear
+* artisan config:clear
+* composer dumpautoload -o
+
+### 2) *composer cache-all*, execute:
+* artisan config:cache
+* artisan route:cache
+
+### 3) *composer ide-helper*, execute:
+* artisan ide-helper:generate
+* artisan ide-helpder:meta
+
+### 4) *composer format*, execute:
+* php-cs-fixer fix app/ --show-progress=estimating
+* php-cs-fixer fix config/ --show-progress=estimating
+* php-cs-fixer fix database/ --show-progress=estimating
+* php-cs-fixer fix resources/ --show-progress=estimating
+* php-cs-fixer fix routes/ --show-progress=estimating
+* php-cs-fixer fix tests/ --show-progress=estimating
 
 ## Internalization
 
