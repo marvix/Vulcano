@@ -1,4 +1,4 @@
-@extends('errors::minimal')
+@extends('errors::vulcano')
 
 @section('title', __('Página Expirada'))
 @section('code', '419')

@@ -1,4 +1,4 @@
-@extends('errors::minimal')
+@extends('errors::vulcano')
 
 @section('title', __('Muitas Requisições Realizadas'))
 @section('code', '429')

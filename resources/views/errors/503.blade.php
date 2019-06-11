@@ -1,4 +1,4 @@
-@extends('errors::minimal')
+@extends('errors::vulcano')
 
 @section('title', __('Serviço Indisponível'))
 @section('code', '503')

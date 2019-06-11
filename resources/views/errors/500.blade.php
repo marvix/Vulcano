@@ -1,4 +1,4 @@
-@extends('errors::minimal')
+@extends('errors::vulcano')
 
 @section('title', __('Erro do Servidor'))
 @section('code', '500')
