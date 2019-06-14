@@ -2,22 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Permission;
+use App\Module;
 use Illuminate\Http\Request;
 
-class PermissionsController extends Controller
+class ModulesController extends Controller
 {
-    /**
-     * ------------------------------------------------------------------------
-     * Somente usuários autenticados poderão acessar os métodos do
-     * controller
-     * ------------------------------------------------------------------------.
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -25,14 +14,7 @@ class PermissionsController extends Controller
      */
     public function index()
     {
-        // Verifica se o usuário tem direito de acesso
-        abort_unless(auth()->user()->hasPermission('permissions_show'), 403);
-
-        // Obtém todos os registros da tabela de usuários
-        $permissions = Permission::orderBy('id', 'asc')->paginate(5);
-
-        //  Chama a view passando os dados retornados da tabela
-        return view('permissions.index', ['permissions' => $permissions]);
+        //
     }
 
     /**
@@ -59,10 +41,10 @@ class PermissionsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Module  $module
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Module $module)
     {
         //
     }
@@ -70,10 +52,10 @@ class PermissionsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Module  $module
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Module $module)
     {
         //
     }
@@ -82,10 +64,10 @@ class PermissionsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Module  $module
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Module $module)
     {
         //
     }
@@ -93,10 +75,10 @@ class PermissionsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Module  $module
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Module $module)
     {
         //
     }

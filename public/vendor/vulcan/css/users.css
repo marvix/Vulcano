@@ -1,0 +1,19 @@
+.btn-active {
+    background-color: #32cd32;
+    color: #fff;
+}
+
+.btn-active:hover {
+    background-color: #30b730;
+    color: #fff;
+}
+
+.btn-desactive {
+    background-color: #9370db;
+    color: #fff;
+}
+
+.btn-desactive:hover {
+    background-color: #6a5acd;
+    color: #fff;
+}

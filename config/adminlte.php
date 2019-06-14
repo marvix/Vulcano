@@ -130,40 +130,62 @@ return [
 
         'GESTÃO',
         [
-            'text'    => 'Cadastro',
-            'icon'    => 'share',
+            'text'    => 'Cadastro 1',
+            'icon'    => 'database',
+        ],
+        [
+            'text'    => 'Cadastro 2',
+            'icon'    => 'database',
+        ],
+        [
+            'text'    => 'Cadastro 3',
+            'icon'    => 'database',
         ],
 
         [
             'header' => 'ADMINISTRAÇÃO DO SITE',
-            'can' => 'menu_admin',
+  //          'can' => 'user_access',
         ],
         [
             'text' => 'Usuários e Permissões',
             'icon' => 'share',
-            'can' => 'menu_users',
+            'can' => 'user_access',
             'submenu' => [
                 [
                     'text' => 'Usuários',
                     'route'  => 'users.index',
                     'icon' => 'users',
-                    'can' => 'user_show',
+                    'can' => 'user_access',
                 ],
                 [
                     'text' => 'Papéis',
-                    'icon' => 'address-book-o',
+                    'icon' => 'briefcase',
+                    'route' => 'roles.index',
                     'can' => 'menu_roles',
                 ],
                 [
                     'text' => 'Permissões',
                     'icon' => 'lock',
                     'can' => 'menu_permissions',
+                    'route' => 'permissions.index',
+                ],
+                [
+                    'text' => 'Associa Permissões a Papéis',
+                    'icon' => 'lock',
+                    'can' => 'menu_permissions',
+                    //                'route' => 'permissions.index'
                 ],
             ],
         ],
         [
+            'text' => 'Configurações do Sistema',
+            'icon' => 'cogs',
+            'can' => 'config_access',
+            'route' => 'config.index',
+        ],
+        [
             'text' => 'Logs do Sistema',
-            'icon' => 'shield',
+            'icon' => 'print',
             'can' => 'menu_logs',
             'submenu' => [
                 [
@@ -172,13 +194,6 @@ return [
                     'icon' => 'eye',
                     'target' => '_blank',
                     'can' => 'menu_logviewer',
-                ],
-                [
-                    'text' => 'Telescope',
-                    'route' => 'telescope',
-                    'icon' => 'eye',
-                    'target' => '_blank',
-                    'can' => 'menu_telescope',
                 ],
             ],
         ],
@@ -201,7 +216,8 @@ return [
         JeroenNoten\LaravelAdminLte\Menu\Filters\ActiveFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\SubmenuFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\ClassesFilter::class,
-        JeroenNoten\LaravelAdminLte\Menu\Filters\GateFilter::class,
+        // JeroenNoten\LaravelAdminLte\Menu\Filters\GateFilter::class,
+        App\Gates\VulcanoGateFilter::class,
     ],
 
     /*
@@ -219,5 +235,7 @@ return [
         'datatables' => true,
         'select2'    => true,
         'chartjs'    => true,
+        'bootstrap-select' => true,
+        'sweetalert2' => true,
     ],
 ];

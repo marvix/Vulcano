@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Socialite;
+use Auth;
+use Alert;
+use Session;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -22,14 +25,18 @@ class LoginController extends Controller
     use AuthenticatesUsers;
 
     /**
+     * ------------------------------------------------------------------------
      * Where to redirect users after login.
+     * ------------------------------------------------------------------------.
      *
      * @var string
      */
     protected $redirectTo = '/home';
 
     /**
+     * ------------------------------------------------------------------------
      * Create a new controller instance.
+     * ------------------------------------------------------------------------.
      *
      * @return void
      */
@@ -39,24 +46,35 @@ class LoginController extends Controller
     }
 
     /**
-     * Redirect the user to the GitHub authentication page.
+     * ------------------------------------------------------------------------
+     * Handle a login request to the application.
+     * ------------------------------------------------------------------------.
      *
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request  $request
+     * @return void
      */
-    // public function redirectToProvider()
-    // {
-    //     return Socialite::driver('github')->redirect();
-    // }
-
-    /**
-     * Obtain the user information from GitHub.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function handleProviderCallback()
+    public function login(Request $request)
     {
-        $user = Socialite::driver('github')->user();
+        $credentials = ['email' => $request->email, 'password' => $request->password];
 
-        // $user->token;
+        if (Auth::attempt($credentials, $request->remember)) {
+            if (Auth::user()->active == 1) {
+                Alert::success(Auth::user()->name.', bem vindo ao sistema')->autoclose(1000);
+                Session::put('skin', Auth::user()->skin);
+
+                return redirect()->route('home');
+            } else {
+                Alert::error('Lamento, mas este usuário não está ativo no sistema.')->persistent('Ok');
+
+                $this->logout($request);
+
+                return redirect()->route('login');
+            }
+        }
+        Alert::error('Usuário ou senha inválido. Tente novamente.')->persistent('Ok');
+
+        $this->logout($request);
+
+        return redirect()->route('login');
     }
 }

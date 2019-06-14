@@ -1,8 +1,5 @@
 <p align="center"><img src="https://github.com/fsclaro/Vulcano/blob/master/public/img/logos/project_logo.png" width="400px"></p>
 
-<!-- <p align="center">
-<a href="https://travis-ci.org/fsclaro/Vulcan.svg?branch=master"><img src="https://travis-ci.org/fsclaro/Vulcan.svg?branch=master" alt="Build Status"></a>
-</p> -->
 
 ## About this project
 
@@ -32,7 +29,6 @@ The **Vulcano Project** is intended to be a starting point for other projects ba
 - renatomarinho/laravel-page-speed: ^1.8
 - spatie/laravel-medialibrary: ^7.0.0
 - spatie/laravel-permission: ^2.37
-- yajra/laravel-datatables-oracle: ^9.3
 
 ## Third-party Packages for Development Mode included
 
@@ -134,9 +130,13 @@ This project is open-sourced software licensed under the [MIT license](https://g
 ## Credits
 
 The background images at [Unplash](https://unsplash.com) by authors/photographers:
-- [Janita Top](https://unsplash.com/@janitatop)
-- [David Emrich](https://unsplash.com/@otoriii)
-- [Iswanto Arif](https://unsplash.com/@iswanto)
-- [Philipp Wüthrich](https://unsplash.com/@phiwut)
+- [Adam Kedem](https://unsplash.com/@adamk)
 - [Alessandro Valenzano](https://unsplash.com/@alessvalenzano)
+- [Alexandre Chambon](https://unsplash.com/@goodspleen)
 - [Boris Baldinger](https://unsplash.com/@borisbaldinger)
+- [David Emrich](https://unsplash.com/@otoriii)
+- [Francesco Ungaro](https://unsplash.com/@francesco_ungaro)
+- [Iswanto Arif](https://unsplash.com/@iswanto)
+- [Janita Top](https://unsplash.com/@janitatop)
+- [Philipp Wüthrich](https://unsplash.com/@phiwut)
+- [Piermanuele Sberni](https://unsplash.com/@piermanuele_sberni)

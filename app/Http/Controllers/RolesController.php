@@ -2,10 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use Alert;
+//use App\Role;
+use App\Module;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class RolesController extends Controller
 {
+    /**
+     * ------------------------------------------------------------------------
+     * Somente usuários autenticados poderão acessar os métodos do
+     * controller
+     * ------------------------------------------------------------------------.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +28,14 @@ class RolesController extends Controller
      */
     public function index()
     {
-        //
+        // Verifica se o usuário tem direito de acesso
+        abort_unless(auth()->user()->hasPermission('roles_show'), 403);
+
+        // Obtém todos os registros da tabela de usuários
+        $roles = Role::orderBy('id', 'asc')->paginate(5);
+
+        //  Chama a view passando os dados retornados da tabela
+        return view('roles.index', ['roles' => $roles]);
     }
 
     /**
@@ -23,7 +45,11 @@ class RolesController extends Controller
      */
     public function create()
     {
-        //
+        // Verifica se o usuário tem direito de acesso
+        abort_unless(auth()->user()->hasPermission('roles_create'), 403);
+
+        // Chama a view com o formulário para inserir um novo registro
+        return view('roles.create');
     }
 
     /**
@@ -34,7 +60,33 @@ class RolesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Verifica se o usuário tem direito de acesso
+        abort_unless(auth()->user()->hasPermission('user_create'), 403);
+
+        // Cria as regras de validação dos dados do formulário
+        $rules = [
+            'name' => 'required|min:5|max:191',
+            'is_superadmin' => 'required',
+            'description' => 'required|min:6|max:191',
+        ];
+
+        // Primeiro, vamos validar os dados do formulário
+        $request->validate($rules);
+
+        // Cria um novo registro
+        $role = new Role();
+        $role->name = $request->name;
+        $role->description = $request->description;
+        $role->is_superadmin = $request->is_superadmin;
+        $role->guard_name = 'web';
+
+        // Salva os dados na tabela
+        $role->save();
+
+        // Retorna para view index com uma flash message
+        Alert::success('Papel cadastrado.', 'Sucesso', 'Success')->autoclose(1000);
+
+        return redirect()->route('roles.index');
     }
 
     /**
@@ -45,7 +97,14 @@ class RolesController extends Controller
      */
     public function show($id)
     {
-        //
+        // Verifica se o usuário tem direito de acesso
+        abort_unless(auth()->user()->hasPermission('roles_show'), 403);
+
+        // Localiza e retorna os dados de um registro pelo ID
+        $role = Role::findOrFail($id);
+
+        // Chama a view para exibir os dados na tela
+        return view('roles.show', ['role' => $role]);
     }
 
     /**
@@ -56,7 +115,24 @@ class RolesController extends Controller
      */
     public function edit($id)
     {
-        //
+        // Verifica se o usuário tem direito de acesso
+        abort_unless(auth()->user()->hasPermission('roles_edit'), 403);
+
+        // Localiza o registro pelo seu ID
+        $role = Role::findOrFail($id);
+
+        // Obtém todas os módulos do sistema
+        $modules = Module::all();
+
+        // Obtém todas as permissões de um determinado papel
+        $role_permissions = $role->permissions()->get();
+        $permissions = [];
+        foreach ($role_permissions as $rp) {
+            $permissions[] = $rp->name;
+        }
+
+        // Chama a view com o formulário para edição do registro
+        return view('roles.edit', ['role' => $role, 'permissions' => $permissions, 'modules' => $modules]);
     }
 
     /**
@@ -68,7 +144,76 @@ class RolesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // Verifica se o usuário tem direito de acesso
+        abort_unless(auth()->user()->hasPermission('roles_edit'), 403);
+
+        // Cria as regras de validação dos dados do formulário
+        $rules = [
+            'name' => 'required|min:5|max:191',
+            'is_superadmin' => 'required',
+            'description' => 'required|min:6|max:191',
+        ];
+
+        // Primeiro, vamos validar os dados do formulário
+        $request->validate($rules);
+
+        // Le os dados do papel
+        $role = Role::findOrFail($id);
+        $role->name = $request->name;
+        $role->description = $request->description;
+        $role->is_superadmin = $request->is_superadmin;
+        $role->guard_name = 'web';
+
+        // Salva os dados na tabela
+        $role->save();
+
+        $permission = [];
+        for ($i = 0; $i < count($request->module); $i++) {
+            if (isset($request->acessar[$i])) {
+                $permission[] = $request->acessar[$i];
+            }
+            if (isset($request->criar[$i])) {
+                $permission[] = $request->criar[$i];
+            }
+            if (isset($request->editar[$i])) {
+                $permission[] = $request->editar[$i];
+            }
+            if (isset($request->visualizar[$i])) {
+                $permission[] = $request->visualizar[$i];
+            }
+            if (isset($request->excluir[$i])) {
+                $permission[] = $request->excluir[$i];
+            }
+        }
+
+        $role->syncPermissions($permission);
+        // Salva as permissões deste papel
+        // for ($i=0; $i < count($request->criar); $i++) {
+        //     $permissao = $request->criar[$i];
+        //     $role->givePermissionTo($permissao);
+        // }
+
+        // for ($i = 0; $i < count($request->editar); $i++) {
+        //     $permissao = $request->editar[$i];
+        //     $role->givePermissionTo($permissao);
+        // }
+
+        // for ($i = 0; $i < count($request->visualizar); $i++) {
+        //     $permissao = $request->visualizar[$i];
+        //     $role->givePermissionTo($permissao);
+        // }
+
+        // for ($i = 0; $i < count($request->excluir); $i++) {
+        //     $permissao = $request->excluir[$i];
+        //     $role->givePermissionTo($permissao);
+        // }
+
+        //        $role->syncPermissions($request->deletar);
+
+        // Retorna para view index com uma flash message
+        Alert::success('Dados atualizados.', 'Sucesso', 'Success')->autoclose(1000);
+
+        return redirect()->route('roles.index');
     }
 
     /**
@@ -80,5 +225,31 @@ class RolesController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * ------------------------------------------------------------------------
+     * Utilizado para excluir um registro da tabela
+     * ------------------------------------------------------------------------.
+     *
+     * @param int $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getDelete($id)
+    {
+        // Verifica se o usuário tem direito de acesso
+        abort_unless(auth()->user()->hasPermission('roles_delete'), 403);
+
+        // Retorna o registro pelo ID fornecido
+        $role = Role::findOrFail($id);
+        $role->delete();
+
+        // Retorna para view index com uma flash message
+        Alert::success("Papel <span class='text-red text-bold'>excluído</span>.", 'Sucesso', 'Success')
+            ->html()
+            ->autoclose(1000);
+
+        return redirect()->route('roles.index');
     }
 }

@@ -20,11 +20,9 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-
             $table->boolean('active')->default(true);
-            $table->boolean('isAdmin')->default(false);
             $table->string('gender')->default('N'); // M-Male F-Femme N-None
-
+            $table->string('skin')->default('blue');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

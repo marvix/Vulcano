@@ -6,22 +6,29 @@ use Spatie\MediaLibrary\File;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements HasMedia
 {
-    use Notifiable, HasMediaTrait, HasRoles;
+    use Notifiable, HasMediaTrait, HasRoles, SoftDeletes;
 
-    /**
-     * ------------------------------------------------------------------------
-     * The attributes that are mass assignable.
-     * ------------------------------------------------------------------------.
-     *
-     * @var array
-     */
+    protected $table = 'users';
+
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
+
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'password',
+        'active',
+        'gender',
+        'skin',
     ];
 
     /**
@@ -62,5 +69,46 @@ class User extends Authenticatable implements HasMedia
                     || $file->mimeType === 'image/png'
                     || $file->mimeType === 'image/jpg';
             });
+    }
+
+    /**
+     * Verifica se o usuário é superadmin.
+     *
+     * @return bool
+     */
+    public function isSuperAdmin()
+    {
+        $roles = $this->roles;
+
+        $isSuperAdmin = false;
+        foreach ($roles as $role) {
+            if ($role->is_superadmin) {
+                $isSuperAdmin = true;
+            }
+        }
+
+        return $isSuperAdmin;
+    }
+
+    /**
+     * Verifica se o usuário locado possui uma determinada permissão.
+     *
+     * @param string $permission
+     * @return bool
+     */
+    public function hasPermission($permission)
+    {
+        if ($this->isSuperAdmin()) {
+            return true;
+        }
+
+        $permissions = $this->getPermissionsViaRoles();
+        foreach ($permissions as $p) {
+            if ($p->name == $permission) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

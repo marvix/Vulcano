@@ -4,8 +4,13 @@ namespace App\Http\Controllers;
 
 use DB;
 use Auth;
+use Hash;
+use Alert;
+use Session;
 use App\User;
+//use App\Role;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class UsersController extends Controller
 {
@@ -21,6 +26,22 @@ class UsersController extends Controller
     }
 
     /**
+     * Define o nº de registros por página a serem exibidos.
+     *
+     * @return int $nroRecorByPage
+     */
+    public function nroRecordsByPage()
+    {
+        $nroRecordByPage = Session::get('records_by_page');
+
+        if ($nroRecordByPage) {
+            return $nroRecordByPage;
+        } else {
+            return 10;
+        }
+    }
+
+    /**
      * ------------------------------------------------------------------------
      * Utilizado para exibir uma lista de classificações
      * ------------------------------------------------------------------------.
@@ -30,10 +51,12 @@ class UsersController extends Controller
     public function index()
     {
         // Verifica se o usuário tem direito de acesso
-        abort_unless(auth()->user()->hasPermissionTo('user_show'), 403);
+        abort_unless(Auth::user()->hasPermission('user_show'), 403);
 
         // Obtém todos os registros da tabela de usuários
-        $users = User::orderBy('id', 'asc')->paginate(5);
+        $users = User::orderBy('id', 'desc')->paginate($this->nroRecordsByPage());
+
+        // dd($users,$users->hasAnyRole(Role::all()))  ;
 
         //  Chama a view passando os dados retornados da tabela
         return view('users.index', ['users' => $users]);
@@ -50,10 +73,13 @@ class UsersController extends Controller
     public function create()
     {
         // Verifica se o usuário tem direito de acesso
-        abort_unless(auth()->user()->hasPermissionTo('user_create'), 403);
+        abort_unless(auth()->user()->hasPermission('user_create'), 403);
+
+        // Obtém a lista de papéis
+        $roles = Role::where('name', '!=', 'Super Admin')->get();
 
         // Chama a view com o formulário para inserir um novo registro
-        return view('users.create');
+        return view('users.create', ['roles' => $roles]);
     }
 
     /**
@@ -68,37 +94,28 @@ class UsersController extends Controller
     public function store(Request $request)
     {
         // Verifica se o usuário tem direito de acesso
-        abort_unless(auth()->user()->hasPermissionTo('user_create'), 403);
+        abort_unless(auth()->user()->hasPermission('user_create'), 403);
 
         // Cria as regras de validação dos dados do formulário
         $rules = [
             'name' => 'required|min:5|max:30',
-            'email' => 'required|email|unique:users',
-            'isadmin' => 'required',
+            'email' => 'required|email|max:191|unique:users',
             'active' => 'required',
-            'password' => 'required|min:6',
-        ];
-
-        // Cria o array com as mensagens de erros
-        $messages = [
-            'name' => 'Forneça o nome do usuários.',
-            'email' => 'Forneça um e-mail válido.',
-            'isadmin' => 'Defina se o usuário será um administrador.',
-            'active' => 'Defina se o usuário está ativo no sistema',
-            'password' => 'Forneça uma senha válida para o usuário.',
+            'skin' => 'required|string',
+            'password' => 'required|min:6|max:191',
         ];
 
         // Primeiro, vamos validar os dados do formulário
-        $request->validate($rules, $messages);
+        $request->validate($rules);
 
         // Cria um novo registro
         $user = new User();
         $user->name = $request->name;
         $user->gender = $request->gender;
         $user->email = $request->email;
-        $user->isAdmin = $request->isadmin;
         $user->active = $request->active;
-        $user->password = bcrypt($request->password);
+        $user->password = Hash::make($request->password);
+        $user->skin = $request->skin;
 
         if (isset($request->avatar)) {
             $user->addMediaFromRequest('avatar')->toMediaCollection('avatars');
@@ -107,10 +124,13 @@ class UsersController extends Controller
         // Salva os dados na tabela
         $user->save();
 
+        // Atribui o papel para o usuário
+        $user->syncRoles($request->role);
+
         // Retorna para view index com uma flash message
-        return redirect()
-            ->route('users.index')
-            ->with('status', 'Registro criado com sucesso!');
+        Alert::success('Usuário cadastrado.', 'Sucesso', 'Success')->autoclose(1000);
+
+        return redirect()->route('users.index');
     }
 
     /**
@@ -125,7 +145,7 @@ class UsersController extends Controller
     public function show($id)
     {
         // Verifica se o usuário tem direito de acesso
-        abort_unless(auth()->user()->hasPermissionTo('user_show'), 403);
+        abort_unless(auth()->user()->hasPermission('user_show'), 403);
 
         // Localiza e retorna os dados de um registro pelo ID
         $user = User::findOrFail($id);
@@ -150,10 +170,11 @@ class UsersController extends Controller
     public function edit($id)
     {
         // Verifica se o usuário tem direito de acesso
-        abort_unless(auth()->user()->hasPermissionTo('user_edit'), 403);
+        abort_unless(auth()->user()->hasPermission('user_edit'), 403);
 
         // Localiza o registro pelo seu ID
         $user = User::findOrFail($id);
+        $roles = Role::all();
 
         // Obtém o avatar
         $avatar = $user->getFirstMediaUrl('avatars');
@@ -163,7 +184,7 @@ class UsersController extends Controller
         }
 
         // Chama a view com o formulário para edição do registro
-        return view('users.edit', ['user' => $user, 'avatar' => $avatar, 'avatar_id' => $avatar_id]);
+        return view('users.edit', ['user' => $user, 'avatar' => $avatar, 'avatar_id' => $avatar_id, 'roles' => $roles]);
     }
 
     /**
@@ -172,45 +193,41 @@ class UsersController extends Controller
      * ------------------------------------------------------------------------.
      *
      * @param \Illuminate\Http\Request $request
-     * @param int                      $id
+     * @param int $id
      *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         // Verifica se o usuário tem direito de acesso
-        abort_unless(auth()->user()->hasPermissionTo('user_edit'), 403);
+        abort_unless(auth()->user()->hasPermission('user_edit'), 403);
 
         // Cria as regras de validação dos dados do formulário
         $rules = [
             'name' => 'required|min:5|max:30',
-            'email' => 'required|email|unique:users,email,'.$id,
-            'isadmin' => 'required',
-            'active' => 'required',
-        ];
-
-        // Cria o array com as mensagens de erros
-        $messages = [
-            'name' => 'Forneça o nome do usuários.',
-            'email' => 'Forneça um e-mail válido.',
-            'isadmin' => 'Defina se o usuário será um administrador.',
-            'active' => 'Defina se o usuário está ativo no sistema',
+            'email' => 'required|email|max:191|unique:users,email,'.$id,
+            'gender' => 'required',
+            'role' => 'required',
+            'active' => 'nullable',
+            'skin' => 'required|string',
+            'password' => 'nullable|string|min:6|max:191',
         ];
 
         // Primeiro, vamos validar os dados do formulário
-        $request->validate($rules, $messages);
+        $request->validate($rules);
 
         // Le os dados do usuário
         $user = User::findOrFail($id);
         $user->name = $request->name;
         $user->gender = $request->gender;
-        $user->isAdmin = $request->isadmin;
         $user->active = $request->active;
         $user->email = $request->email;
+        $user->active = $request->active;
+        $user->skin = $request->skin;
 
         // Se foi digitada uma senha ...
-        if ($request->password != '') {
-            $user->password = bcrypt($request->password);
+        if ($request->password) {
+            $user->password = Hash::make($request->password);
         }
 
         if (isset($request->avatar)) {
@@ -218,14 +235,22 @@ class UsersController extends Controller
             $user->addMedia($request->avatar)->toMediaCollection('avatars');
         }
 
+        // Se o papel do usuário foi alterado, então atualiza o registro
+        if (count($user->roles) == 0) {
+            $user->syncRoles($request->role);
+        } else {
+            if ($user->roles[0] != $request->role) {
+                $user->syncRoles($request->role);
+            }
+        }
+
         // Salva os dados na tabela
         $user->save();
 
         // Retorna para view index com uma flash message
-        return redirect()
-            ->route('users.index')
-            ->with('message', 'Registro atualizado com sucesso!')
-            ->with('type', 'success');
+        Alert::success('Dados atualizados.', 'Sucesso', 'Success')->autoclose(1000);
+
+        return redirect()->route('users.index');
     }
 
     /**
@@ -240,7 +265,7 @@ class UsersController extends Controller
     public function destroy($id)
     {
         // Verifica se o usuário tem direito de acesso
-        abort_unless(auth()->user()->hasPermissionTo('user_delete'), 403);
+        abort_unless(auth()->user()->hasPermission('user_delete'), 403);
 
         // Retorna o registro pelo ID fornecido
         $user = User::findOrFail($id);
@@ -249,13 +274,41 @@ class UsersController extends Controller
         $user->clearMediaCollection('avatars');
         $user->delete();
 
-        $message = 'Registro excluído com sucesso';
-        $type = 'success';
+        // Retorna para view index com uma flash message
+        Alert::success("Usuário <span class='text-red text-bold'>excluído</span>.", 'Sucesso', 'Success')
+            ->html()
+            ->autoclose(1000);
+
+        return redirect()->route('users.index');
+    }
+
+    /**
+     * ------------------------------------------------------------------------
+     * Utilizado para excluir um registro da tabela
+     * ------------------------------------------------------------------------.
+     *
+     * @param int $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getDelete($id)
+    {
+        // Verifica se o usuário tem direito de acesso
+        abort_unless(auth()->user()->hasPermission('user_delete'), 403);
+
+        // Retorna o registro pelo ID fornecido
+        $user = User::findOrFail($id);
+
+        // Exclui o registro da tabela
+        $user->clearMediaCollection('avatars');
+        $user->delete();
 
         // Retorna para view index com uma flash message
-        return redirect()->back()
-            ->with('message', $message)
-            ->with('type', $type);
+        Alert::success("Usuário <span class='text-red text-bold'>excluído</span>.", 'Sucesso', 'Success')
+            ->html()
+            ->autoclose(1000);
+
+        return redirect()->route('users.index');
     }
 
     /**
@@ -268,15 +321,16 @@ class UsersController extends Controller
     public function deleteAvatarUser($id)
     {
         // Verifica se o usuário tem direito de acesso
-        abort_unless(auth()->user()->hasPermissionTo('user_edit'), 403);
+        abort_unless(auth()->user()->hasPermission('user_edit'), 403);
 
         $user = User::find($id);
         $user->clearMediaCollection('avatars');
 
-        return redirect()
-            ->back()
-            ->with('message', 'Avatar excluído com sucesso!!')
-            ->with('type', 'success');
+        Alert::success("O <span class='text-green text-bold'>avatar</span> deste usuário foi <span class='text-red text-bold'>excluído</span>.", 'Sucesso', 'Success')
+            ->html()
+            ->autoclose(1000);
+
+        return redirect()->back();
     }
 
     /**
@@ -289,16 +343,17 @@ class UsersController extends Controller
     public function activeUser($id)
     {
         // Verifica se o usuário tem direito de acesso
-        abort_unless(auth()->user()->hasPermissionTo('user_active'), 403);
+        abort_unless(auth()->user()->hasPermission('user_active'), 403);
 
         DB::table('users')
             ->where('id', $id)
             ->update(['active' => 1]);
 
-        return redirect()
-            ->route('users.index')
-            ->with('message', 'Usuário está ATIVO no sistema.')
-            ->with('type', 'success');
+        Alert::success("Este usuário agora está <span class='text-red text-bold'>ativo</span>.", 'Sucesso', 'Success')
+            ->html()
+            ->autoclose(1000);
+
+        return redirect()->route('users.index');
     }
 
     /**
@@ -311,112 +366,16 @@ class UsersController extends Controller
     public function desactiveUser($id)
     {
         // Verifica se o usuário tem direito de acesso
-        abort_unless(auth()->user()->hasPermissionTo('user_active'), 403);
+        abort_unless(auth()->user()->hasPermission('user_active'), 403);
 
         DB::table('users')
             ->where('id', $id)
             ->update(['active' => 0]);
 
-        return redirect()
-            ->route('users.index')
-            ->with('message', 'Usuário está INATIVO no sistema.')
-            ->with('type', 'success');
-    }
+        Alert::success("Este usuário agora está <span class='text-red text-bold'>inativo</span> no sistema.", 'Sucesso', 'Success')
+            ->html()
+            ->autoclose(1000);
 
-    /**
-     * ------------------------------------------------------------------------
-     * Edição dos dados do usuário logado.
-     * ------------------------------------------------------------------------.
-     */
-    public function editProfile()
-    {
-        // Verifica se o usuário tem direito de acesso
-        abort_unless(auth()->user()->hasPermissionTo('profile_edit'), 403);
-
-        // Obtém os dados do usuário autenticado
-        $user = auth()->user();
-
-        // Obtém
-        $avatar = auth()->user()->getFirstMediaUrl('avatars');
-
-        $avatar_id = null;
-        if ($avatar) {
-            $avatar_id = auth()->user()->getMedia('avatars')->first()->id;
-        }
-
-        return view('profiles.edit', ['user' => $user, 'avatar' => $avatar, 'avatar_id' => $avatar_id]);
-    }
-
-    /**
-     * ------------------------------------------------------------------------
-     * Grava os dados do usuário logado.
-     * ------------------------------------------------------------------------.
-     *
-     * @param Request $request
-     * @param int     $id
-     */
-    public function updateProfile(Request $request, $id)
-    {
-        // Verifica se o usuário tem direito de acesso
-        abort_unless(auth()->user()->hasPermissionTo('profile_edit'), 403);
-
-        // Cria as regras de validação dos dados do formulário
-        $rules = [
-            'name' => 'required|string|min:5',
-            'email' => 'required|email',
-        ];
-
-        // Cria o array com as mensagens de erros
-        $messages = [
-            'name' => 'Forneça seu nome.',
-            'email' => 'Forneça um e-mail válido',
-        ];
-
-        // Primeiro, vamos validar os dados do formulário
-        $request->validate($rules, $messages);
-
-        // Le os dados do usuário
-        $user = User::findOrFail($id);
-        $user->name = $request->name;
-        $user->gender = $request->gender;
-        $user->email = $request->email;
-
-        // Se foi digitada uma senha ...
-        if ($request->password != '') {
-            $user->password = bcrypt($request->password);
-        }
-
-        if (isset($request->avatar)) {
-            $user->clearMediaCollection('avatars');
-            $user->addMedia($request->avatar)->toMediaCollection('avatars');
-        }
-
-        // Salva os dados na tabela
-        $user->save();
-
-        // Retorna para view index com uma flash message
-        return redirect()
-            ->route('profile.edit')
-            ->with('message', 'Registro atualizado com sucesso!')
-            ->with('type', 'success');
-    }
-
-    /**
-     * ------------------------------------------------------------------------
-     * Deleta o avatar do usuário armazenado na tabela media
-     * ------------------------------------------------------------------------.
-     */
-    public function deleteAvatarProfile()
-    {
-        // Verifica se o usuário tem direito de acesso
-        abort_unless(auth()->user()->hasPermissionTo('profile_edit'), 403);
-
-        $user = auth()->user();
-        $user->clearMediaCollection('avatars');
-
-        return redirect()
-            ->route('profile.edit')
-            ->with('message', 'Avatar excluído com sucesso!')
-            ->with('type', 'success');
+        return redirect()->route('users.index');
     }
 }
