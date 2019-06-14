@@ -1,4 +1,4 @@
-<!-- <p align="center"><img src="https://github.com/fsclaro/Vulcano/blob/master/public/img/logos/project_logo.png" width="400px"></p> -->
+<p align="center"><img src="https://github.com/fsclaro/Vulcano/blob/master/public/img/logos/project_logo.png" width="400px"></p>
 
 
 ## About this project
@@ -73,13 +73,13 @@ php artisan migrate --seed
 ## Default Login User
 This boilerplate have 3 defaults users
 
-+----+---+---+
+|---|---|---|
 | User | Login | Password |
-+----+---+---+
+|---|---|---|
 | Super Admin | superman@vulcano.com | superman |
 | Admin | admin@vulcano.com | admin1234 |
 | User | user@vulcano.com | user1234 |
-+----+---+---+
+|---|---|---|
 
 
 ## New composer commands
