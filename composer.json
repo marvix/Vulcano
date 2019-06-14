@@ -19,6 +19,7 @@
         "jenssegers/date": "^3.5",
         "jeroennoten/laravel-adminlte": "^1.25",
         "laravel/framework": "5.8.*",
+        "laravel/socialite": "^4.1",
         "laravel/tinker": "^1.0",
         "renatomarinho/laravel-page-speed": "^1.8",
         "spatie/laravel-medialibrary": "^7.0.0",
