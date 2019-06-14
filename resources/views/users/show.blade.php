@@ -46,17 +46,16 @@
                 <tr>
                     <td class="col-sm-2">Gênero</td>
                     <td class="col-sm-10">
-                        @if($user->gender == "N") Preferiu não responder @endif
+                        @if($user->gender == "N") Preferiu não responder/Não se aplica @endif
                         @if($user->gender == "M") Masculino @endif
                         @if($user->gender == "F") Feminino @endif
                     </td>
                 </tr>
 
                 <tr>
-                    <td class="col-sm-2">Administrador?</td>
+                    <td class="col-sm-2">Papel</td>
                     <td class="col-sm-10">
-                        @if($user->isAdmin)<span class="label label-success">Sim</span>@endif
-                        @if(!$user->isAdmin)<span class="label label-danger">Não</span> @endif
+                        {{ $user->roles[0]->description }}
                     </td>
                 </tr>
 
@@ -70,7 +69,7 @@
 
                 <tr>
                     <td class='col-sm-2'>E-mail</td>
-                    <td class='col-sm-10'>{{ $user->email }}</td>
+                    <td class='col-sm-10'><a href="mailto:{{ $user->email }}">{{ $user->email }}</a></td>
                 </tr>
 
                 <tr>

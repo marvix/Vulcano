@@ -1,5 +1,6 @@
 @php
-$img = rand(1,5);
+use App\Helpers\Helper;
+$background = Helper::selectBackgroundImage('/img/errors/', 'error', '/error[0-9]+.jpg/');
 @endphp
 
 <!doctype html>
@@ -39,7 +40,7 @@ $img = rand(1,5);
         }
 
         .background {
-            background: url("{{ asset('img/errors/error0').$img.'.jpg' }}");
+            background: url("{{ $background }}");
             background-repeat: no-repeat;
             background-position: center;
             background-size: cover;

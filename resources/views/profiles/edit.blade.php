@@ -11,7 +11,9 @@
     <li>
         <a href="{{ route('home') }}"><i class='fa fa-dashboard'></i> Dashboard</a>
     </li>
-    <li class="active">Profile</li>
+    <li>
+        <a href="{{ route('users.index') }}">Usuários</a>
+    </li>
     <li class="active">Alteração de dados</li>
 </ol>
 
@@ -48,7 +50,7 @@
             <div class="col-sm-3">
                 <!-- avatar -->
                 <div class="image text-center">
-                    <label for="avatar">Seu Avatar</label>
+                    <label for="avatar">Avatar</label>
                     <br />
 
                     @php $canDeleteAvatar = false; @endphp
@@ -56,13 +58,13 @@
                     @if($avatar != "")
                     <img src="{{ asset($avatar) }}" width="140px" alt="avatar" class="img-circle">
                     <input type="hidden" name="avatar_id" value="{{ $avatar_id }}">
+
                     @php $canDeleteAvatar = true; @endphp
 
                     @elseif(Gravatar::exists($user->email))
-                    <img src="{{ Gravatar::get($user->email) }}" width="100px" alt="avatar" class="img-circle">
-
+                    <img src="{{ Gravatar::get($user->email) }}" width="140px" alt="avatar" class="img-circle">
                     @else
-                    <img src="{{ asset('img/avatar/no-photo.png') }}" width="100px" alt="avatar" class="img-circle">
+                    <img src="{{ asset('img/avatar/no-photo.png') }}" width="140px" alt="avatar" class="img-circle">
                     @endif
                     <div class="row">&nbsp;</div>
 
@@ -72,7 +74,7 @@
                             <span><i class="fa fa-photo"></i> Novo Avatar</span>
                         </div>
                         @if($canDeleteAvatar)
-                        <a href="{{ route('delete.avatar.profile') }}" class="btn btn-danger"><i class="fa fa-trash"></i> Excluir Avatar</a>
+                        <a href="{{ route('delete.avatar.user', $user->id) }}" class="btn btn-danger"><i class="fa fa-trash"></i> Excluir Avatar</a>
                         @endif
 
                     </div>
@@ -100,12 +102,16 @@
 
                 <!-- gender -->
                 <div class="form-group">
-                    <div class="input-group col-sm-4">
-                        <label for="level">Gênero
+                    <div class="input-group col-sm-5">
+                        <label for="gender">Gênero
                             <span class="text-red">*</span>
                         </label>
 
-                        <select class="form-control {{ $errors->has('gender') ? 'is-invalid' : '' }}" id="gender" name="gender" require>
+                        @if(Auth::user()->isSuperAdmin())
+                        <input type="hidden" name="gender" value="{{ $user->gender }}">
+                        @endif
+
+                        <select class="form-control {{ $errors->has('gender') ? 'is-invalid' : '' }}" id="gender" name="gender" @if(Auth::user()->isSuperAdmin()) disabled @else required @endif>
                             <option value="N" {{ $user->gender == "N" ? "selected" : "" }}>Prefiro não responder</option>
                             <option value="M" {{ $user->gender == "M" ? "selected" : "" }}>Masculino</option>
                             <option value="F" {{ $user->gender == "F" ? "selected" : "" }}>Feminino</option>
@@ -114,6 +120,49 @@
                         @if($errors->has('gender'))
                         <span class='invalid-feedback text-red'>
                             {{ $errors->first('gender') }}
+                        </span>
+                        @endif
+                    </div>
+                </div>
+
+                <!-- roles -->
+                <div class="form-group">
+                    <div class="input-group col-sm-7">
+                        <label for="level">Papel atribuído
+                            <span class="text-red">*</span>
+                        </label>
+
+                        <select class="form-control {{ $errors->has('role') ? 'is-invalid' : '' }}" id="roles" name="role" disabled>
+                            @foreach($roles as $role)
+                            <option value="{{ $role->id }}" @if($user->hasRole($role->id)) selected @endif>
+                                {{ $role->description }}
+                            </option>
+                            @endforeach
+                        </select>
+
+                        @if($errors->has('role'))
+                        <span class='invalid-feedback text-red'>
+                            {{ $errors->first('role') }}
+                        </span>
+                        @endif
+                    </div>
+                </div>
+
+                <!-- active -->
+                <div class="form-group">
+                    <div class="input-group col-sm-3">
+                        <label for="level">Deixar o usuário ativo?
+                            <span class="text-red">*</span>
+                        </label>
+
+                        <select class="form-control {{ $errors->has('active') ? 'is-invalid' : '' }}" id="active" name="active" disabled>
+                            <option value="1" {{ $user->active ? "selected" : "" }}>Sim</option>
+                            <option value="0" {{ !$user->active ? "selected" : "" }}>Não</option>
+                        </select>
+
+                        @if($errors->has('active'))
+                        <span class='invalid-feedback text-red'>
+                            {{ $errors->first('active') }}
                         </span>
                         @endif
                     </div>
@@ -135,6 +184,8 @@
                         @endif
                     </div>
                 </div>
+
+                @include('partials.skin_edit')
 
                 <!-- password -->
                 <div class="form-group">
@@ -180,4 +231,4 @@
     }
 </style>
 
-@stop
+<!-- @stops -->

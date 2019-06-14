@@ -16,5 +16,10 @@
 @stop
 
 @section('content')
-<span class="text-bold">Você agora está logado no sistema!!</span>
+<div class="jumbotron text-center bg-gray">
+    <div class="container">
+        <h1>Bem vindo</h1>
+        <h3>Você agora está logado no sistema!!</h3>
+    </div>
+</div>
 @stop

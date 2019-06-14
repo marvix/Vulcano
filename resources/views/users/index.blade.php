@@ -1,7 +1,6 @@
 @extends('adminlte::page')
 
 @section('title', config('adminlte.title'))
-<meta name="csrf_token" content="{{ csrf_token() }}" />
 
 @section('content_header')
 <span style="font-size:20px">
@@ -38,13 +37,17 @@
     <div class="panel-heading clearfix">
 
         <!-- somente administradores podem cadastrar usuários -->
-        @if(Auth::user()->isAdmin)
-        <div class="btn-group pull-right">
+        <div class="pull-right">
+            <a class="btn btn-info btn-sm" href="{{ route('users.index') }}">
+                <i class="glyphicon glyphicon-refresh"></i> Atualizar a Tela
+            </a>
+
+            @if(Auth::user()->hasPermission('user_create'))
             <a class="btn btn-success btn-sm" href="{{ route('users.create') }}">
                 <i class="fa fa-plus"></i> Inserir um novo registro
             </a>
+            @endif
         </div>
-        @endif
 
         <h5>Relação de Usuários do Sistema</h5>
     </div>
@@ -57,7 +60,8 @@
                     <th>ID</th>
                     <th>Usuário</th>
                     <th>E-mail</th>
-                    <th class='text-center'>Administrador?</th>
+                    <th class='text-center'>Papel</th>
+                    <th class='text-center'>Super Admin?</th>
                     <th class='text-center'>Ativo?</th>
                     <th class='text-center'>Avatar</th>
                     <th class='text-center'>Ações</th>
@@ -65,18 +69,33 @@
             </thead>
 
             <tbody>
-                @foreach($users as $user)
+                @foreach($users as $key => $user)
                 <tr>
+                    <!-- id -->
                     <td>{{ $user->id }}</td>
+
+                    <!-- name -->
                     <td>{{ $user->name }}</td>
+
+                    <!-- e-mail -->
                     <td>{{ $user->email }}</td>
+
+                    <!-- roles -->
                     <td class="text-center">
-                        @if($user->isAdmin)
-                        <span class="label label-success">Sim</span>
+                        @foreach($users[$key]->roles as $role)
+                        {{ $role->description }}
+                        @endforeach
+                    </td>
+
+                    <!-- super admin -->
+                    <td class="text-center">
+                        @if($user->isSuperAdmin())
+                        <a class="label label-success">Sim</a>
                         @else
-                        <span class="label label-danger">Não</span>
+                        Não
                         @endif
                     </td>
+                    <!-- active -->
                     <td class="text-center">
                         @if($user->active)
                         <span class="label label-success">Sim</span>
@@ -84,6 +103,8 @@
                         <span class="label label-danger">Não</span>
                         @endif
                     </td>
+
+                    <!-- avatar -->
                     <td class="text-center">
                         @php
                         $avatar = $user->getFirstMediaUrl('avatars');
@@ -97,49 +118,46 @@
                         <img src="{{ asset('img/avatar/no-photo.png') }}" class="img-circle" style="width:24px;">
                         @endif
                     </td>
-                    <td style="width:155px;">
-                        @if(Auth::user()->isAdmin)
-                        @if (Auth::user()->id != $user->id)
+
+                    <!-- ações -->
+                    <td style="width:100px;">
+                        <!-- ativa/desativa usuário -->
+                        @if(Auth::user()->isSuperAdmin() && Auth::user()->id != $user->id)
                         <!-- ativar o usuário -->
                         @if(!$user->active)
-                        <a class='btn btn-active btn-sm' style="float:left; margin-right: 2px;" href='{{ route("users.active", $user->id) }}' role='button' alt="Ativa o usuário" title="Ativa o usuário">
-                            <i class='fa fa-toggle-off'></i>
+                        <a class='btn btn-active btn-xs' style="float:left; margin-right: 2px;" href="javascript:active('{{route('users.active', $user->id)}}');" role='button' alt="Ativa o usuário" title="Ativa o usuário" id="user-active" name="user-active">
+                            <i class='glyphicon glyphicon-ok-circle'></i>
                         </a>
                         @else
                         <!-- desativar o usuário -->
-                        <a class='btn btn-desactive btn-sm' style="float:left; margin-right: 2px;" href='{{ route("users.desactive", $user->id) }}' role='button' alt="Desativa o usuário" title="Desativa o usuário">
-                            <i class='fa fa-toggle-on'></i>
+                        <a class='btn btn-desactive btn-xs' style="float:left; margin-right: 2px;" href="javascript:desactive('{{route('users.desactive', $user->id)}}');" role='button' alt="Desativa o usuário" title="Desativa o usuário">
+                            <i class='glyphicon glyphicon-ban-circle'></i>
                         </a>
                         @endif
                         @endif
-                        @endif
 
+                        @if(Auth::user()->hasPermission('user_show') && !$user->isSuperAdmin())
                         <!-- visualização de dados-->
-                        <a class='btn btn-info btn-sm' style="float:left; margin-right: 2px;" href='{{ route("users.show", $user->id) }}' role='button' alt="Visualiza os dados do usuário" title="Visualiza os dados do usuário">
+                        <a class='btn btn-info btn-xs' style="float:left; margin-right: 2px;" href='{{ route("users.show", $user->id) }}' role='button' alt="Visualiza os dados do usuário" title="Visualiza os dados do usuário">
                             <i class='fa fa-eye'></i>
                         </a>
-
-                        <!-- somente administradores podem editar e/ou excluir usuários -->
-                        @if(Auth::user()->isAdmin)
-
-                        <!-- o usuário não pode se editar e nem se excluir -->
-                        @if (Auth::user()->id != $user->id)
-                        <!-- edição de dados -->
-                        <a class='btn btn-warning btn-sm' style="float:left;margin-right: 2px;" href='{{ route("users.edit", $user->id) }}' role='button' alt="Edita os dados do usuário" title="Edita os dados do usuário">
-                            <i class='fa fa-pencil'></i>
-                        </a>
-
-                        <!-- exclusão do registro -->
-                        <form action="{{ route('users.destroy', $user->id) }}" method="post">
-                            <input type="hidden" name="_method" value="DELETE">
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-                            <button type='submit' class='btn btn-danger btn-sm' style="float:left" alt="Exclui o usuário" title="Exclui o usuário">
-                                <i class='fa fa-trash'></i>
-                            </button>
-                        </form>
                         @endif
 
+                        @if(Auth::user()->hasPermission('user_edit') && (Auth::user()->id != $user->id && !$user->isSuperAdmin()))
+                        <!-- edição de dados -->
+                        <a class='btn btn-warning btn-xs' style="float:left;margin-right: 2px;" href='{{ route("users.edit", $user->id)}}' role='button' alt="Edita os dados do usuário" title="Edita os dados do usuário">
+                            <i class='fa fa-pencil'></i>
+                        </a>
+                        @endif
+
+                        @if(Auth::user()->hasPermission('user_delete') && (Auth::user()->id != $user->id && !$user->isSuperAdmin()))
+                        <!-- exclusão do registro -->
+
+                        @php $rota = route("users.delete", $user->id); @endphp
+
+                        <a class="btn btn-xs btn-danger" style="float:left;margin-right: 2px;" title="Excluir este registro" href="javascript:;" onclick="deleteUser('{{ $rota }}');" role="button" alt="Exclui este usuário" title="Exclui este usuário">
+                            <i class="fa fa-trash"></i>
+                        </a>
                         @endif
                     </td>
                 </tr>
@@ -149,7 +167,7 @@
         </table>
     </div>
 
-    <div class="panel-footer">
+    <div class=" panel-footer">
         {{ $users->links()  }}
     </div>
 
@@ -157,41 +175,9 @@
 @stop
 
 @section('js')
-<script>
-    $(document).ready(function() {
-        $('#table-usuarios').DataTable({
-            "paging": false,
-            "info": false,
-            "searching": false,
-            "language": {
-                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
-            },
-            "processing": true,
-        });
-    });
-</script>
+<script src="{{ asset('vendor/vulcan/js/users.js') }}"></script>
 @stop
 
 @section('css')
-<style>
-    .btn-active {
-        background-color: #32cd32;
-        color: #fff;
-    }
-
-    .btn-active:hover {
-        background-color: #30b730;
-        color: #fff;
-    }
-
-    .btn-desactive {
-        background-color: #0065ff;
-        color: #fff;
-    }
-
-    .btn-desactive:hover {
-        background-color: #00f;
-        color: #fff;
-    }
-</style>
+<link rel="stylesheet" href="{{ asset('vendor/vulcan/css/users.css') }}">
 @stop

@@ -1,5 +1,6 @@
 @php
-$img = rand(1,6);
+use App\Helpers\Helper;
+$background = Helper::selectBackgroundImage('/img/background/', 'back', '/back[0-9]+.jpg/');
 @endphp
 
 <!doctype html>
@@ -23,6 +24,7 @@ $img = rand(1,6);
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet">
 
     <!-- Styles -->
     <style>
@@ -38,7 +40,7 @@ $img = rand(1,6);
         }
 
         .background {
-            background: url("{{ asset('img/background/back0').$img.'.jpg' }}");
+            background: url("{{ $background }}");
             background-repeat: no-repeat;
             background-position: center;
             background-size: cover;
@@ -60,11 +62,13 @@ $img = rand(1,6);
             margin-right: auto;
             position: fixed;
             height: 50px;
+            font-family: Roboto, sans-serif;
+            font-size: 15px;
         }
 
         .brand {
             font-family: Raleway, sans-serif;
-            font-weight: 700;
+            font-weight: 600;
         }
     </style>
 </head>
@@ -81,7 +85,13 @@ $img = rand(1,6);
                     <span class="icon-bar"></span>
                 </button>
                 <a href="#" class="navbar-brand">
-                    <span class="brand">{{ config('adminlte.title') }}</span>
+                    <span class="brand">
+                        @if (\Session::get('brand'))
+                        {!! \Session::get('brand') !!}
+                        @else
+                        {!! config('adminlte.title') !!}
+                        @endif
+                    </span>
                 </a>
             </div>
 
@@ -92,7 +102,9 @@ $img = rand(1,6);
                     <li><a href="{{ url('/home') }}">Painel de Controle</a></li>
                     @else
                     <li><a href="{{ route('login') }}">Login</a></li>
+                    @if(Route::has("register"))
                     <li><a href="{{ route('register') }}">Registrar-se</a></li>
+                    @endif
                     @endauth
                 </ul>
             </div>
@@ -108,11 +120,19 @@ $img = rand(1,6);
     <!-- Rodapé da página -->
     <div class="row">
         <footer class="main-footer footer">
-            <div class="pull-left hidden-xs" style="margin-left:10px;margin-top:15px;">
+            <div class="pull-left hidden-xs" style="margin-left:20px;margin-top:13px;">
+                @if(\Session::get('footer_left'))
+                {!! \Session::get('footer_left') !!}
+                @else
                 {!! env('FOOTER_LEFT') !!}
+                @endif
             </div>
-            <div class="pull-right hidden-xs" style="margin-right:10px;margin-top:15px;">
+            <div class="pull-right hidden-xs" style="margin-right:20px;margin-top:13px;">
+                @if(\Session::get('footer_right'))
+                {!! \Session::get('footer_right') !!}
+                @else
                 {!! env('FOOTER_RIGHT') !!}
+                @endif
             </div>
         </footer>
     </div>

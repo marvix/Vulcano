@@ -4,7 +4,7 @@
 
 @section('content_header')
 <span style="font-size:20px">
-    <i class='fa fa-database'></i> Inclusão de Usuários</h1>
+    <i class='fa fa-database'></i> Inclusão de novo Usuário</h1>
 </span>
 
 <ol class="breadcrumb">
@@ -14,7 +14,7 @@
     <li>
         <a href="{{ route('users.index') }}">Usuários</a>
     </li>
-    <li class="active">Inclusão</li>
+    <li class="active">Inclusão de dados</li>
 </ol>
 
 @stop
@@ -49,18 +49,19 @@
             <div class="col-sm-3">
                 <!-- avatar -->
                 <div class="image text-center">
-                    <label for="avatar">Seu Avatar</label>
+                    <label for="avatar">Avatar</label>
                     <br />
 
                     <img src="{{ asset('img/avatar/no-photo.png') }}" width="140px" alt="avatar" class="img-circle">
-
+                    <input type="hidden" name="avatar_id" }}>
                     <div class="row">&nbsp;</div>
 
                     <div class="btn-group-xs center-block" role="group">
                         <div class="btn btn-success  div-avatar">
                             <input type="file" id="avatar" name="avatar" class="input-avatar">
-                            <span><i class="fa fa-photo"></i> Escolher Avatar</span>
+                            <span><i class="fa fa-photo"></i> Novo Avatar</span>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -74,8 +75,10 @@
                             <span class="text-red">*</span>
                         </label>
 
-                        <input type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" id="name" name="name" value="{{ old('name') }}" required>
-
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                            <input type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" id="name" name="name" required value="{{ old('name') }}">
+                        </div>
                         @if($errors->has('name'))
                         <span class='invalid-feedback text-red'>
                             {{ $errors->first('name') }}
@@ -86,43 +89,44 @@
 
                 <!-- gender -->
                 <div class="form-group">
-                    <div class="input-group col-sm-4">
-                        <label for="level">Gênero
+                    <div class="input-group col-sm-5">
+                        <label for="gender">Gênero
                             <span class="text-red">*</span>
                         </label>
 
-                        <select class="form-control {{ $errors->has('gender') ? 'is-invalid' : '' }}" id="gender" name="gender" require>
+                        <select class="form-control {{ $errors->has('gender') ? 'is-invalid' : '' }}" id="gender" name="gender" required>
                             <option value="N">Prefiro não responder</option>
                             <option value="M">Masculino</option>
                             <option value="F">Feminino</option>
                         </select>
-
-                        @if($errors->has('gender'))
-                        <span class='invalid-feedback text-red'>
-                            {{ $errors->first('gender') }}
-                        </span>
-                        @endif
                     </div>
+                    @if($errors->has('gender'))
+                    <span class='invalid-feedback text-red'>
+                        {{ $errors->first('gender') }}
+                    </span>
+                    @endif
                 </div>
 
-                <!-- isAdmin -->
+                <!-- roles -->
                 <div class="form-group">
-                    <div class="input-group col-sm-3">
-                        <label for="level">Usuário é Administrador?
+                    <div class="input-group col-sm-7">
+                        <label for="level">Papel atribuído
                             <span class="text-red">*</span>
                         </label>
 
-                        <select class="form-control {{ $errors->has('isadmin') ? 'is-invalid' : '' }}" id="isadmin" name="isadmin" require>
-                            <option value="1">Sim</option>
-                            <option value="0" selected>Não</option>
+                        <select class="form-control {{ $errors->has('role') ? 'is-invalid' : '' }}" id="roles" name="role" required>
+                            @foreach($roles as $role)
+                            <option value="{{ $role->id }}">
+                                {{ $role->description }}
+                            </option>
+                            @endforeach
                         </select>
-
-                        @if($errors->has('isadmin'))
-                        <span class='invalid-feedback text-red'>
-                            {{ $errors->first('isadmin') }}
-                        </span>
-                        @endif
                     </div>
+                    @if($errors->has('role'))
+                    <span class='invalid-feedback text-red'>
+                        {{ $errors->first('role') }}
+                    </span>
+                    @endif
                 </div>
 
                 <!-- active -->
@@ -132,17 +136,16 @@
                             <span class="text-red">*</span>
                         </label>
 
-                        <select class="form-control {{ $errors->has('active') ? 'is-invalid' : '' }}" id="active" name="active" require>
+                        <select class="form-control {{ $errors->has('active') ? 'is-invalid' : '' }}" id="active" name="active" required>
                             <option value="1">Sim</option>
                             <option value="0" selected>Não</option>
                         </select>
-
-                        @if($errors->has('active'))
-                        <span class='invalid-feedback text-red'>
-                            {{ $errors->first('active') }}
-                        </span>
-                        @endif
                     </div>
+                    @if($errors->has('active'))
+                    <span class='invalid-feedback text-red'>
+                        {{ $errors->first('active') }}
+                    </span>
+                    @endif
                 </div>
 
                 <!-- email -->
@@ -152,8 +155,10 @@
                             <span class="text-red">*</span>
                         </label>
 
-                        <input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" id="email" name="email" value="{{ old('email') }}" required>
-
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                            <input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" id="email" name="email" required value="{{ old('email') }}">
+                        </div>
                         @if($errors->has('email'))
                         <span class='invalid-feedback text-red'>
                             {{ $errors->first('email') }}
@@ -162,6 +167,8 @@
                     </div>
                 </div>
 
+                @include('partials.skin')
+
                 <!-- password -->
                 <div class="form-group">
                     <div class="input-group col-sm-7">
@@ -169,14 +176,16 @@
                             <span class="text-red">*</span>
                         </label>
 
-                        <input type="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" id="password" name="password" required value="{{ old('password') }}">
-
-                        @if($errors->has('password'))
-                        <span class='invalid-feedback text-red'>
-                            {{ $errors->first('password') }}
-                        </span>
-                        @endif
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                            <input type="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" id="password" name="password" value="{{ old('password') }}" placeholder="A senha deve ter pelo menos 6 caracteres">
+                        </div>
                     </div>
+                    @if($errors->has('password'))
+                    <span class='invalid-feedback text-red'>
+                        {{ $errors->first('password') }}
+                    </span>
+                    @endif
                 </div>
             </div>
         </div> <!-- panel-body -->
@@ -208,4 +217,4 @@
     }
 </style>
 
-@stop
+<!-- @stops -->

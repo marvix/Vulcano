@@ -58,7 +58,9 @@
                     @if($avatar != "")
                     <img src="{{ asset($avatar) }}" width="140px" alt="avatar" class="img-circle">
                     <input type="hidden" name="avatar_id" value="{{ $avatar_id }}">
+
                     @php $canDeleteAvatar = true; @endphp
+
                     @elseif(Gravatar::exists($user->email))
                     <img src="{{ Gravatar::get($user->email) }}" width="140px" alt="avatar" class="img-circle">
                     @else
@@ -88,24 +90,31 @@
                             <span class="text-red">*</span>
                         </label>
 
-                        <input type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" id="name" name="name" value="{{ $user->name }}" required>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                            <input type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" id="name" name="name" value="{{ $user->name }}" required>
 
-                        @if($errors->has('name'))
-                        <span class='invalid-feedback text-red'>
-                            {{ $errors->first('name') }}
-                        </span>
-                        @endif
+                            @if($errors->has('name'))
+                            <span class='invalid-feedback text-red'>
+                                {{ $errors->first('name') }}
+                            </span>
+                            @endif
+                        </div>
                     </div>
                 </div>
 
                 <!-- gender -->
                 <div class="form-group">
-                    <div class="input-group col-sm-4">
-                        <label for="level">Gênero
+                    <div class="input-group col-sm-5">
+                        <label for="gender">Gênero
                             <span class="text-red">*</span>
                         </label>
 
-                        <select class="form-control {{ $errors->has('gender') ? 'is-invalid' : '' }}" id="gender" name="gender" require>
+                        @if(Auth::user()->isSuperAdmin())
+                        <input type="hidden" name="gender" value="{{ $user->gender }}">
+                        @endif
+
+                        <select class="form-control {{ $errors->has('gender') ? 'is-invalid' : '' }}" id="gender" name="gender" required>
                             <option value="N" {{ $user->gender == "N" ? "selected" : "" }}>Prefiro não responder</option>
                             <option value="M" {{ $user->gender == "M" ? "selected" : "" }}>Masculino</option>
                             <option value="F" {{ $user->gender == "F" ? "selected" : "" }}>Feminino</option>
@@ -119,22 +128,27 @@
                     </div>
                 </div>
 
-                @if(Auth::user()->isAdmin)
-                <!-- isAdmin -->
+                <!-- roles -->
                 <div class="form-group">
-                    <div class="input-group col-sm-3">
-                        <label for="level">Usuário é Administrador?
+                    <div class="input-group col-sm-7">
+                        <label for="level">Papel atribuído
                             <span class="text-red">*</span>
                         </label>
 
-                        <select class="form-control {{ $errors->has('isadmin') ? 'is-invalid' : '' }}" id="isadmin" name="isadmin" require>
-                            <option value="1" {{ $user->isAdmin ? "selected" : "" }}>Sim</option>
-                            <option value="0" {{ !$user->isAdmin ? "selected" : "" }}>Não</option>
+                        <select class="form-control {{ $errors->has('role') ? 'is-invalid' : '' }}" id="roles" name="role" @if(Auth::user()->hasPermission('user_edit')) required @else disabled @endif>
+                            @foreach($roles as $role)
+                            @if($role->is_superadmin)
+                            @continue
+                            @endif
+                            <option value="{{ $role->id }}" @if($user->hasRole($role->id)) selected @endif>
+                                {{ $role->description }}
+                            </option>
+                            @endforeach
                         </select>
 
-                        @if($errors->has('isadmin'))
+                        @if($errors->has('role'))
                         <span class='invalid-feedback text-red'>
-                            {{ $errors->first('isadmin') }}
+                            {{ $errors->first('role') }}
                         </span>
                         @endif
                     </div>
@@ -147,7 +161,7 @@
                             <span class="text-red">*</span>
                         </label>
 
-                        <select class="form-control {{ $errors->has('active') ? 'is-invalid' : '' }}" id="active" name="active" require>
+                        <select class="form-control {{ $errors->has('active') ? 'is-invalid' : '' }}" id="active" name="active" required>
                             <option value="1" {{ $user->active ? "selected" : "" }}>Sim</option>
                             <option value="0" {{ !$user->active ? "selected" : "" }}>Não</option>
                         </select>
@@ -159,7 +173,6 @@
                         @endif
                     </div>
                 </div>
-                @endif
 
                 <!-- email -->
                 <div class="form-group">
@@ -168,28 +181,36 @@
                             <span class="text-red">*</span>
                         </label>
 
-                        <input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" id="email" name="email" value="{{ $user->email }}" required>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                            <input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" id="email" name="email" value="{{ $user->email }}" required>
 
-                        @if($errors->has('email'))
-                        <span class='invalid-feedback text-red'>
-                            {{ $errors->first('email') }}
-                        </span>
-                        @endif
+                            @if($errors->has('email'))
+                            <span class='invalid-feedback text-red'>
+                                {{ $errors->first('email') }}
+                            </span>
+                            @endif
+                        </div>
                     </div>
                 </div>
+
+                @include('partials.skin_edit')
 
                 <!-- password -->
                 <div class="form-group">
                     <div class="input-group col-sm-7">
                         <label for="password">Senha</label>
 
-                        <input type="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" id="password" name="password" placeholder="Deixe em branco para não alterar a senha">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                            <input type="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" id="password" name="password" placeholder="Deixe em branco para não alterar a senha">
 
-                        @if($errors->has('password'))
-                        <span class='invalid-feedback text-red'>
-                            {{ $errors->first('password') }}
-                        </span>
-                        @endif
+                            @if($errors->has('password'))
+                            <span class='invalid-feedback text-red'>
+                                {{ $errors->first('password') }}
+                            </span>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
@@ -222,4 +243,4 @@
     }
 </style>
 
-@stop
+<!-- @stops -->
