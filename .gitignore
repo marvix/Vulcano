@@ -13,3 +13,4 @@ public/img/logos/.DS_Store
 .php_cs.cache
 .phpstorm.meta.php
 _ide_helper.php
+cghooks.lock
