@@ -23,4 +23,8 @@
         <h3>Você agora está logado no sistema!!</h3>
     </div>
 </div>
+
+<div class="row">
+        @widget('dashboard_widget')
+</div>
 @stop
