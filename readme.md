@@ -17,6 +17,7 @@ The **Vulcano Project** is intended to be a starting point for other projects ba
 
 - arcanedev/log-viewer: ^4.7
 - arcanedev/no-captcha: ^9.0
+- arrilot/laravel-widgets: ^3.13
 - creativeorange/gravatar: ^1.0
 - davejamesmiller/laravel-breadcrumbs: ^5.2
 - doctrine/dbal: ^2.9
@@ -41,7 +42,7 @@ The **Vulcano Project** is intended to be a starting point for other projects ba
 
 To use this project, you must type the following line in your command terminal
 ```bash
-git clone https://github.com/fsclaro/vulvano.git
+git clone https://github.com/fsclaro/Vulvano.git
 ```
 
 You will need a mysql server installed e configured, then execute the command below to create a database for the your project.
@@ -67,7 +68,9 @@ After, run commands bellow in terminal:
 ```bash
 composer install
 php artisan key:generate
-php artisan migrate --seed
+php artisan migrate
+php artisan db:seed
+php artisan storage:link
 ```
 
 ## Defaults Login Users
