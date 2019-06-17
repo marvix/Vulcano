@@ -1,12 +1,16 @@
 @extends('adminlte::master')
 
 @section('adminlte_css')
+
 @php
-    $skin = Session::get('skin');
-    if( empty($skin) ) {
-        $skin = config('adminlte.skin', 'blue');
-    }
+if(\Session::has('skin')) {
+    $skin = \Session::get('skin');
+}
+else {
+    $skin = "blue";
+}
 @endphp
+
 <link rel="stylesheet" href="{{ asset('vendor/adminlte/dist/css/skins/skin-' . $skin . '.min.css')}} ">
 @stack('css')
 @yield('css')
@@ -29,7 +33,11 @@
             <div class="container">
                 <div class="navbar-header">
                     <a href="{{ url(config('adminlte.dashboard_url', 'home')) }}" class="navbar-brand">
-                        {!! config('adminlte.logo', '<b>Admin</b>LTE') !!}
+                        @if(\Session::has('brand'))
+                        {!! \Session::get('brand') !!}
+                        @else
+                        Vulcano
+                        @endif
                     </a>
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
                         <i class="fa fa-bars"></i>
@@ -47,9 +55,21 @@
                 <!-- Logo -->
                 <a href="{{ url(config('adminlte.dashboard_url', 'home')) }}" class="logo">
                     <!-- mini logo for sidebar mini 50x50 pixels -->
-                    <span class="logo-mini">{!! config('adminlte.logo_mini', '<b>A</b>LT') !!}</span>
+                    <span class="logo-mini">
+                        @if(\Session::has('short_brand'))
+                        {!! \Session::get('short_brand') !!}
+                        @else
+                        Vul
+                        @endif
+                    </span>
                     <!-- logo for regular state and mobile devices -->
-                    <span class="logo-lg">{!! config('adminlte.logo', '<b>Admin</b>LTE') !!}</span>
+                    <span class="logo-lg">
+                        @if(\Session::has('brand'))
+                        {!! \Session::get('brand') !!}
+                        @else
+                        Vulcano
+                        @endif
+                    </span>
                 </a>
 
                 <!-- Header Navbar -->

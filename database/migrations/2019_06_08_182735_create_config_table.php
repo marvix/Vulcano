@@ -15,11 +15,13 @@ class CreateConfigTable extends Migration
     {
         Schema::create('config', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('order');
             $table->string('key');
             $table->string('slug_key');
             $table->string('value');
             $table->string('type')->nullable();
             $table->string('description')->nullable();
+            $table->string('dataenum')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

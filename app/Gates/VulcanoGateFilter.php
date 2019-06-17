@@ -12,7 +12,7 @@ class VulcanoGateFilter implements FilterInterface
     {
         $permission = [];
         if (isset($item['can'])) {
-            $permissions = explode(',', $item['can']);
+            $permissions = $item['can'];
         }
 
         if (isset($item['can'])) {

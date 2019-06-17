@@ -70,7 +70,7 @@ php artisan key:generate
 php artisan migrate --seed
 ```
 
-## Default Login User
+## Defaults Login Users
 This boilerplate have 3 defaults users
 
 | User        | Login                | Password  |

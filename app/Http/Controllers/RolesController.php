@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Alert;
-//use App\Role;
 use App\Module;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
@@ -61,7 +60,7 @@ class RolesController extends Controller
     public function store(Request $request)
     {
         // Verifica se o usuário tem direito de acesso
-        abort_unless(auth()->user()->hasPermission('user_create'), 403);
+        abort_unless(auth()->user()->hasPermission('roles_create'), 403);
 
         // Cria as regras de validação dos dados do formulário
         $rules = [
@@ -187,28 +186,6 @@ class RolesController extends Controller
         }
 
         $role->syncPermissions($permission);
-        // Salva as permissões deste papel
-        // for ($i=0; $i < count($request->criar); $i++) {
-        //     $permissao = $request->criar[$i];
-        //     $role->givePermissionTo($permissao);
-        // }
-
-        // for ($i = 0; $i < count($request->editar); $i++) {
-        //     $permissao = $request->editar[$i];
-        //     $role->givePermissionTo($permissao);
-        // }
-
-        // for ($i = 0; $i < count($request->visualizar); $i++) {
-        //     $permissao = $request->visualizar[$i];
-        //     $role->givePermissionTo($permissao);
-        // }
-
-        // for ($i = 0; $i < count($request->excluir); $i++) {
-        //     $permissao = $request->excluir[$i];
-        //     $role->givePermissionTo($permissao);
-        // }
-
-        //        $role->syncPermissions($request->deletar);
 
         // Retorna para view index com uma flash message
         Alert::success('Dados atualizados.', 'Sucesso', 'Success')->autoclose(1000);

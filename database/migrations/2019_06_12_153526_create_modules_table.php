@@ -17,7 +17,8 @@ class CreateModulesTable extends Migration
             $table->bigIncrements('id');
             $table->string('prefix');
             $table->string('description');
-            $table->string('model');
+//            $table->string('model')->nullable();
+            $table->string('access')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

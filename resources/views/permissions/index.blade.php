@@ -42,12 +42,12 @@
                 <i class="glyphicon glyphicon-refresh"></i> Atualizar a Tela
             </a>
 
-            @can('permissions_create')
+            @if(Auth::user()->hasPermission('permissions_create'))
             <a class="btn btn-success btn-sm" href="{{ route('permissions.create') }}">
                 <i class="fa fa-plus"></i> Inserir um novo registro
             </a>
+            @endif
         </div>
-        @endcan
 
         <h5>Relação de Permissões do Sistema</h5>
     </div>
@@ -78,21 +78,21 @@
 
                     <!-- ações -->
                     <td style="width:100px;">
-                        @if(Auth::user()->hasRole('Super Admin'))
+                        @if(Auth::user()->hasPermission('permissions_show'))
                         <!-- visualização de dados-->
                         <a class='btn btn-info btn-xs' style="float:left; margin-right: 2px;" href='{{ route("permissions.show", $p->id) }}' role='button' alt="Visualiza os detalhes da permissão" title="Visualiza os detalhes da permissão">
                             <i class='fa fa-eye'></i>
                         </a>
                         @endif
 
-                        @if(Auth::user()->hasRole('Super Admin'))
+                       @if(Auth::user()->hasPermission('permissions_edit'))
                         <!-- edição de dados -->
                         <a class='btn btn-warning btn-xs' style="float:left;margin-right: 2px;" href='{{ route("permissions.edit", $p->id)}}' role='button' alt="Edita os dados da permissão" title="Edita os dados da permissão">
                             <i class='fa fa-pencil'></i>
                         </a>
                         @endif
 
-                        @if(Auth::user()->hasRole('Super Admin'))
+                        @if(Auth::user()->hasPermission('permissions_delete'))
                         <!-- exclusão do registro -->
 
                         @php $rota = route("permissions.delete", $p->id); @endphp
@@ -117,5 +117,5 @@
 @stop
 
 @section('js')
-<script src="{{ asset('vendor/vulcan/js/permissions.js') }}"></script>
+<script src="{{ asset('vendor/vulcano/js/permissions.js') }}"></script>
 @stop

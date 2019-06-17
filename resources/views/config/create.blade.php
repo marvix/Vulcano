@@ -4,7 +4,7 @@
 
 @section('content_header')
 <span style="font-size:20px">
-    <i class='fa fa-database'></i> Inclusão de dados de configuração</h1>
+    <i class='fa fa-database'></i> Inclusão de novo parâmetro</h1>
 </span>
 
 <ol class="breadcrumb">
@@ -12,9 +12,9 @@
         <a href="{{ route('home') }}"><i class='fa fa-dashboard'></i> Dashboard</a>
     </li>
     <li>
-        <a href="{{ route('users.index') }}">Configuração</a>
+        <a href="{{ route('config.index') }}">Parâmetros do Sistema</a>
     </li>
-    <li class="active">Inclusão de dados</li>
+    <li class="active">Inclusão</li>
 </ol>
 
 @stop
@@ -39,11 +39,29 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            Formulário de inclusão de dados
+            Formulário de inclusão de parâmetros
         </div> <!-- panel-heading -->
 
         <div class="panel-body">
             <div class="col-sm-12">
+
+                <!-- order -->
+                <div class="form-group">
+                    <div class="input-group col-sm-3">
+                        <label for="name">Ordem
+                            <span class="text-red">*</span>
+                        </label>
+
+                        <input type="number" class="form-control {{ $errors->has('order') ? 'is-invalid' : '' }}" id="order" name="order" required value="{{ old('order') }}" min="1" max="9999">
+
+                        @if($errors->has('order'))
+                        <span class='invalid-feedback text-red'>
+                            {{ $errors->first('order') }}
+                        </span>
+                        @endif
+                    </div>
+                </div>
+
                 <!-- key -->
                 <div class="form-group">
                     <div class="input-group col-sm-3">
@@ -56,49 +74,6 @@
                         @if($errors->has('key'))
                         <span class='invalid-feedback text-red'>
                             {{ $errors->first('key') }}
-                        </span>
-                        @endif
-                    </div>
-                </div>
-
-                <!-- value -->
-                <div class="form-group">
-                    <div class="input-group col-sm-12">
-                        <label for="name">Valor
-                            <span class="text-red">*</span>
-                        </label>
-
-                        <input type="text" class="form-control {{ $errors->has('value') ? 'is-invalid' : '' }}" id="value" name="value" required value="{{ old('value') }}">
-
-                        @if($errors->has('value'))
-                        <span class='invalid-feedback text-red'>
-                            {{ $errors->first('value') }}
-                        </span>
-                        @endif
-                    </div>
-                </div>
-
-                <!-- type -->
-                <div class="form-group">
-                    <div class="input-group col-sm-2">
-                        <label for="name">Tipo
-                            <span class="text-red">*</span>
-                        </label>
-
-                        <select name="type" id="type" class="form-control" required>
-                            <option value="integer">Inteiro</option>
-                            <option value="float">Real</option>
-                            <option value="money">Monetário</option>
-                            <option value="string">Texto</option>
-                            <option value="boolean">Lógico</option>
-                            <option value="date">Data</option>
-                            <option value="datetime">Data/Hora</option>
-                            <option value="time">Hora</option>
-                        </select>
-
-                        @if($errors->has('type'))
-                        <span class='invalid-feedback text-red'>
-                            {{ $errors->first('type') }}
                         </span>
                         @endif
                     </div>
@@ -120,6 +95,39 @@
                         @endif
                     </div>
                 </div>
+
+                <!-- type -->
+                <div class="form-group">
+                    <div class="input-group col-sm-3">
+                        <label for="name">Tipo de Campo
+                            <span class="text-red">*</span>
+                        </label>
+
+                        <select name="type" id="type" class="form-control" required>
+                            <option value="text" selected>Texto</option>
+                            <option value="integer">Inteiro</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- dataenum -->
+                <div class="form-group">
+                    <div class="input-group col-sm-12">
+                        <label for="name">
+                            DataEnum
+                            <small class="text-red"> (formato: param1,param2,param3...)
+
+                        </label>
+
+                        <input type="text" class="form-control {{ $errors->has('dataenum') ? 'is-invalid' : '' }}" id="dataenum" name="dataenum" value="{{ old('dataenum') }}">
+
+                        @if($errors->has('dataenum'))
+                        <span class='invalid-feedback text-red'>
+                            {{ $errors->first('dataenum') }}
+                        </span>
+                        @endif
+                    </div>
+                </div>
             </div>
         </div> <!-- panel-body -->
 
@@ -132,4 +140,8 @@
         </div> <!-- panel-footer -->
     </div> <!-- panel-default -->
 </form>
+@stop
+
+@section('js')
+<script src="{{ asset('vendor/vulcano/js/roles.js') }}"></script>
 @stop

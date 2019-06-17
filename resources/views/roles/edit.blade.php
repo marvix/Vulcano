@@ -100,7 +100,6 @@
                 </div>
             </div>
 
-            <div class="line"></div>
             <div class="col-sm-12" id="roles-permissions" style="display:none">
                 <div class="panel panel-default">
                     <div class="panel panel-heading">
@@ -136,20 +135,46 @@
                                             <input type="checkbox" class="form-group form-check-input" name="acessar[]" value="{{ $m->prefix }}_access" @if(in_array($m->prefix."_access", $permissions)) checked @else "" @endif>
                                         </td>
 
+
+                                        @if(strpos($m->access,'C')===false)
+                                        <td class="text-center">
+                                            <input type="checkbox" class="form-group form-check-input" name="criar[]" value="{{ $m->prefix }}_create" readonly disabled>
+                                        </td>
+                                        @else
                                         <td class="text-center">
                                             <input type="checkbox" class="form-group form-check-input" name="criar[]" value="{{ $m->prefix }}_create" @if(in_array($m->prefix."_create", $permissions)) checked @else "" @endif>
                                         </td>
+                                        @endif
 
+                                        @if(strpos($m->access,'U')===false)
+                                        <td class="text-center">
+                                            <input type="checkbox" class="form-group" name="editar[]" value="{{ $m->prefix }}_edit" readonly disabled>
+                                        </td>
+                                        @else
                                         <td class="text-center">
                                             <input type="checkbox" class="form-group" name="editar[]" value="{{ $m->prefix }}_edit" @if(in_array($m->prefix."_edit", $permissions)) checked @else "" @endif>
                                         </td>
+                                        @endif
 
+                                        @if(strpos($m->access,'R')===false)
                                         <td class="text-center">
-                                            <input type="checkbox" class="form-group" name="visualizar[]" value="{{ $m->prefix }}_show" @if(in_array($m->prefix."_show", $permissions)) checked @else "" @endif>
+                                            <input type="checkbox" class="form-group" name="visualizar[]" value="{{ $m->prefix }}_show" readonly disabled>
                                         </td>
+                                        @else
+                                        <td class="text-center">
+                                            <input type="checkbox" class="form-group" name="visualizar[]" value="{{ $m->prefix }}_show" @if(in_array($m->prefix."_show", $permissions)) checked @else "" @endif @if(strpos($m->access,'R')===false) disabled @endif>
+                                        </td>
+                                        @endif
+
+                                        @if(strpos($m->access,'D')===false)
+                                        <td class="text-center">
+                                            <input type="checkbox" class="form-group" name="excluir[]" value="{{ $m->prefix }}_delete" readonly disabled>
+                                        </td>
+                                        @else
                                         <td class="text-center">
                                             <input type="checkbox" class="form-group" name="excluir[]" value="{{ $m->prefix }}_delete" @if(in_array($m->prefix."_delete", $permissions)) checked @else "" @endif>
                                         </td>
+                                        @endif
                                     </tr>
                                     @php $count++ @endphp
                                     @endforeach
@@ -161,8 +186,6 @@
                     </div>
                 </div>
             </div>
-
-
 
         </div> <!-- panel-body -->
 
@@ -178,5 +201,5 @@
 @stop
 
 @section('js')
-<script src="{{ asset('vendor/vulcan/js/roles.js') }}"></script>
+<script src="{{ asset('vendor/vulcano/js/roles.js') }}"></script>
 @stop

@@ -4,14 +4,14 @@
 
 @section('content_header')
 <span style="font-size:20px">
-    <i class='fa fa-database'></i> Configurações do Sistema
+    <i class='fa fa-database'></i> Parâmetros do Sistema
 </span>
 
 <ol class="breadcrumb">
     <li>
         <a href="{{ route('home') }}"><i class='fa fa-dashboard'></i> Dashboard</a>
     </li>
-    <li class="active">Configurações</li>
+    <li class="active">Parâmetros do Sistema</li>
 </ol>
 
 @stop
@@ -42,83 +42,77 @@
                 <i class="glyphicon glyphicon-refresh"></i> Atualizar a Tela
             </a>
 
-            @can('config_create')
+            @if(Auth::user()->hasPermission('config_create'))
             <a class="btn btn-success btn-sm" href="{{ route('config.create') }}">
                 <i class="fa fa-plus"></i> Inserir um novo registro
             </a>
+            @endif
         </div>
-        @endcan
 
-        <h5>Relação de Configurações do Sistema</h5>
+        <h5>Relação de Parâmetros do Sistema</h5>
     </div>
 
     <div class="panel-body">
         <!-- Table -->
-        <table class="table table-striped table-bordered table-hover table-responsive" id="table-configuracao">
+        <table class="table table-striped table-bordered table-hover table-responsive" id="table-config">
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Ordem</th>
                     <th>Chave</th>
-                    <th>Slug</th>
-                    <th>Valor</th>
-                    <th>Tipo</th>
                     <th>Descrição</th>
+                    <th>Tipo</th>
+                    <th>DataEnum</th>
                     <th class='text-center'>Ações</th>
                 </tr>
             </thead>
 
             <tbody>
-                @foreach($config as $key => $c)
+                @foreach($configs as $key => $c)
                 <tr>
                     <!-- id -->
                     <td>{{ $c->id }}</td>
 
+                    <!-- order -->
+                    <td>{{ $c->order }}</td>
+
                     <!-- key -->
                     <td>{{ $c->key }}</td>
-
-                    <!-- slug -->
-                    <td>{{ $c->slug_key }}</td>
-
-                    <!-- value -->
-                    <td>{{ $c->value }}</td>
-
-                    <!-- type -->
-                    <td>
-                        @if ($c->type == "integer") Inteiro @endif
-                        @if ($c->type == "float") Real @endif
-                        @if ($c->type == "money") Monetário @endif
-                        @if ($c->type == "string") Texto @endif
-                        @if ($c->type == "boolean") Lógico @endif
-                        @if ($c->type == "date") Data @endif
-                        @if ($c->type == "datetime") Data/Hora @endif
-                        @if ($c->type == "time") Hora @endif
-                    </td>
 
                     <!-- description -->
                     <td>{{ $c->description }}</td>
 
+                    <!-- type -->
+                    <td>
+                        @if($c->type == "text") Texto @endif
+                        @if($c->type == "integer") Número @endif
+                    </td>
+
+                    <!-- dataenum -->
+                    <td>{{ $c->dataenum }}</td>
+
                     <!-- ações -->
-                    <td style="width:75px;">
-                        @if(Auth::user()->hasRole('Super Admin'))
+                    <td style="width:110px;">
+                        @if(Auth::user()->hasPermission('config_show'))
                         <!-- visualização de dados-->
-                        <a class='btn btn-info btn-xs' style="float:left; margin-right: 2px;" href='{{ route("config.show", $c->id) }}' role='button' alt="Visualiza os dados da configuração" title="Visualiza os dados da configuração">
+                        <a class='btn btn-info btn-xs' style="float:left; margin-right: 2px;" href='{{ route("config.show", $c->id) }}' role='button' alt="Visualiza detalhes do parâmetro" title="Visualiza detalhes do parâmetro">
                             <i class='fa fa-eye'></i>
                         </a>
                         @endif
 
-                        @if(Auth::user()->hasRole('Super Admin'))
+                        @if(Auth::user()->hasPermission('config_edit'))
                         <!-- edição de dados -->
-                        <a class='btn btn-warning btn-xs' style="float:left;margin-right: 2px;" href='{{ route("config.edit", $c->id)}}' role='button' alt="Edita os dados desta configuração" title="Edita os dados desta configuração">
+                        <a class='btn btn-warning btn-xs' style="float:left;margin-right: 2px;" href='{{ route("config.edit", $c->id)}}' role='button' alt="Edita os dados do parâmetro" title="Edita os dados do parâmetro">
                             <i class='fa fa-pencil'></i>
                         </a>
                         @endif
 
-                        @if(Auth::user()->hasRole('Super Admin'))
+                        @if(Auth::user()->hasPermission('config_delete'))
                         <!-- exclusão do registro -->
 
                         @php $rota = route("config.delete", $c->id); @endphp
 
-                        <a class="btn btn-xs btn-danger" style="float:left;margin-right: 2px;" title="Excluir este registro" href="javascript:;" onclick="deleteConfig('{{ $rota }}');" role="button" alt="Exclui esta configuração" title="Exclui esta configuração">
+                        <a class="btn btn-xs btn-danger" style="float:left;margin-right: 2px;" title="Excluir este parâmetro" href="javascript:;" onclick="deleteConfig('{{ $rota }}');" role="button" alt="Exclui este parâmetro">
                             <i class="fa fa-trash"></i>
                         </a>
                         @endif
@@ -131,12 +125,12 @@
     </div>
 
     <div class=" panel-footer">
-        {{ $config->links()  }}
+        {{ $configs->links()  }}
     </div>
 
 </div>
 @stop
 
 @section('js')
-<script src="{{ asset('vendor/vulcan/js/config.js') }}"></script>
+<script src="{{ asset('vendor/vulcano/js/configs.js') }}"></script>
 @stop

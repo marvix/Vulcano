@@ -19,10 +19,12 @@ class Config extends Model
     ];
 
     protected $fillable = [
+        'order',
         'key',
         'value',
         'type',
         'description',
+        'dataenum',
         'created_at',
         'updated_at',
         'deleted_at',

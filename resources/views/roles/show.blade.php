@@ -13,7 +13,7 @@
     </li>
 
     <li>
-        <a href="{{ route('users.index') }}">Papéis</a>
+        <a href="{{ route('roles.index') }}">Papéis</a>
     </li>
 
     <li class="active">Exibindo dados</li>

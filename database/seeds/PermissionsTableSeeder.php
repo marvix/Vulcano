@@ -39,21 +39,12 @@ class PermissionsTableSeeder extends Seeder
             ['permission' => 'profile_edit', 'description' => 'Edição dos dados do usuário'],
 
             // user model
-            ['permission' => 'user_access', 'description' => 'Acesso à lista de usuários'],
-            ['permission' => 'user_create', 'description' => 'Permite inserir novos usuários'],
-            ['permission' => 'user_edit', 'description' => 'Permite editar dados de um usuário'],
-            ['permission' => 'user_show', 'description' => 'Permite ver os detalhes de um usuário'],
-            ['permission' => 'user_delete', 'description' => 'Permite excluir um usuário'],
-            ['permission' => 'user_active', 'description' => 'Permite ativar/desativar um usuário'],
-
-            // menu admin
-            ['permission' => 'menu_admin', 'description' => 'Exibe o menu de administração'],
-            ['permission' => 'menu_users', 'description' => 'Exibe o menu de usuários'],
-            ['permission' => 'menu_roles', 'description' => 'Exibe o menu de papéis'],
-            ['permission' => 'menu_permissions', 'description' => 'Exibe o menu de permissões'],
-            ['permission' => 'menu_logs', 'description' => 'Exibe o menu de logs'],
-            ['permission' => 'menu_logviewer', 'description' => 'Exibe o log-viewer'],
-            ['permission' => 'menu_telescope', 'description' => 'Exibe o Telescope'],
+            ['permission' => 'users_access', 'description' => 'Acesso à lista de usuários'],
+            ['permission' => 'users_create', 'description' => 'Permite inserir novos usuários'],
+            ['permission' => 'users_edit', 'description' => 'Permite editar dados de um usuário'],
+            ['permission' => 'users_show', 'description' => 'Permite ver os detalhes de um usuário'],
+            ['permission' => 'users_delete', 'description' => 'Permite excluir um usuário'],
+            ['permission' => 'users_active', 'description' => 'Permite ativar/desativar um usuário'],
 
             // menu roles
             ['permission' => 'roles_access', 'description' => 'Exibe a lista de papéis'],
@@ -91,36 +82,23 @@ class PermissionsTableSeeder extends Seeder
         // Atribui as permissões aos papéis
         $this->command->info('Atribuindo as permissões aos papéis...');
 
-        // usuário super admin
-        // Role::find(1)->givePermissionTo([
-        //     'config_access',
-        //     'config_create',
-        //     'config_edit',
-        //     'config_show',
-        //     'config_delete',
-        // ]);
-
         // usuário admin
         Role::find(2)->givePermissionTo([
             'profile_edit',
-            'user_access',
-            'user_create',
-            'user_edit',
-            'user_show',
-            'user_delete',
-            'user_active',
-            'menu_admin',
-            'menu_users',
-            'menu_roles',
-            'menu_permissions',
-            'menu_logs',
-            'menu_logviewer',
-            'menu_telescope',
+
+            'users_access',
+            'users_create',
+            'users_edit',
+            'users_show',
+            'users_delete',
+            'users_active',
+
             'roles_access',
             'roles_create',
             'roles_edit',
             'roles_show',
             'roles_delete',
+
             'permissions_access',
             'permissions_create',
             'permissions_edit',

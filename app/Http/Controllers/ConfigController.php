@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use DB;
-use Str;
 use Auth;
 use Alert;
 use Session;
@@ -24,29 +23,24 @@ class ConfigController extends Controller
     }
 
     /**
-     * ------------------------------------------------------------------------
-     * Utilizado para exibir uma lista de classificações
-     * ------------------------------------------------------------------------.
+     * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
         // Verifica se o usuário tem direito de acesso
-        abort_unless(Auth::user()->hasPermission('config_show'), 403);
+        abort_unless(auth()->user()->hasPermission('config_show'), 403);
 
-        // Obtém todos os registros da tabela de usuários
-        $config = Config::orderBy('id', 'desc')->paginate($this->nroRecordsByPage());
+        // Obtém todos os registros
+        $configs = Config::orderBy('id', 'asc')->paginate($this->nroRecordsByPage());
 
         //  Chama a view passando os dados retornados da tabela
-        return view('config.index', ['config' => $config]);
+        return view('config.index', ['configs' => $configs]);
     }
 
     /**
-     * ------------------------------------------------------------------------
-     * Utilizado para exibir a view com o formulário para a inclusão de
-     * um novo registro
-     * ------------------------------------------------------------------------.
+     * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
@@ -60,12 +54,9 @@ class ConfigController extends Controller
     }
 
     /**
-     * ------------------------------------------------------------------------
-     * Utilizado para inserir os dados do formulário na tabela
-     * ------------------------------------------------------------------------.
+     * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -75,10 +66,11 @@ class ConfigController extends Controller
 
         // Cria as regras de validação dos dados do formulário
         $rules = [
+            'order' => 'required|integer',
             'key' => 'required|string',
-            'value' => 'required|string',
             'type' => 'required|string',
             'description' => 'required|string',
+            'dataenum' => 'nullable|string',
         ];
 
         // Primeiro, vamos validar os dados do formulário
@@ -86,15 +78,17 @@ class ConfigController extends Controller
 
         // Cria um novo registro
         $config = new Config();
+        $config->order = $request->order;
         $config->key = $request->key;
-        $config->slug_key = Str::slug($request->key, '_');
-        $config->value = $request->value;
+        $config->slug_key = str_slug($request->key,"_");
         $config->type = $request->type;
         $config->description = $request->description;
+        $config->dataenum = $request->dataenum;
+        $config->value = null;
+        $config->created_at = now();
 
         // Salva os dados na tabela
         $config->save();
-        $this->sessionUpdate();
 
         // Retorna para view index com uma flash message
         Alert::success('Configuração cadastrada.', 'Sucesso', 'Success')->autoclose(1000);
@@ -103,12 +97,9 @@ class ConfigController extends Controller
     }
 
     /**
-     * ------------------------------------------------------------------------
-     * Exibe os dados de um determinado registro
-     * ------------------------------------------------------------------------.
+     * Display the specified resource.
      *
-     * @param int $id
-     *
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -124,13 +115,9 @@ class ConfigController extends Controller
     }
 
     /**
-     * ------------------------------------------------------------------------
-     * Exibe um formulário com os dados de um determinado registro permitindo
-     * que o usuário faça alterações
-     * ------------------------------------------------------------------------.
+     * Show the form for editing the specified resource.
      *
-     * @param int $id
-     *
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -146,13 +133,10 @@ class ConfigController extends Controller
     }
 
     /**
-     * ------------------------------------------------------------------------
-     * Utilizado para atualizados os dados do formulário na tabela
-     * ------------------------------------------------------------------------.
+     * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -162,29 +146,32 @@ class ConfigController extends Controller
 
         // Cria as regras de validação dos dados do formulário
         $rules = [
-            'key' => 'required',
-            'value' => 'required',
-            'type' => 'required',
-            'description' => 'required',
+            'order' => 'required|integer',
+            'key' => 'required|string',
+            'type' => 'required|string',
+            'description' => 'required|string',
+            'dataenum' => 'nullable|string',
         ];
 
         // Primeiro, vamos validar os dados do formulário
         $request->validate($rules);
 
-        // Le os dados do usuário
+        // Localiza o registro
         $config = Config::findOrFail($id);
+
+        $config->order = $request->order;
         $config->key = $request->key;
-        $config->slug_key = Str::slug($request->key, '_');
-        $config->value = $request->value;
+        $config->slug_key = str_slug($request->key,"_");
         $config->type = $request->type;
         $config->description = $request->description;
+        $config->dataenum = $request->dataenum;
+        $config->updated_at = now();
 
         // Salva os dados na tabela
         $config->save();
-        $this->sessionUpdate();
 
         // Retorna para view index com uma flash message
-        Alert::success('Configuração atualizaca.', 'Sucesso', 'Success')->autoclose(1000);
+        Alert::success('Configuração salva.', 'Sucesso', 'Success')->autoclose(1000);
 
         return redirect()->route('config.index');
     }
@@ -206,14 +193,71 @@ class ConfigController extends Controller
         // Retorna o registro pelo ID fornecido
         $config = Config::findOrFail($id);
         $config->delete();
-        $this->sessionUpdate();
 
         // Retorna para view index com uma flash message
-        Alert::success('Configuração excluída.', 'Sucesso', 'Success')
+        Alert::success("Configuração <span class='text-red text-bold'>excluída</span>.", 'Sucesso', 'Success')
             ->html()
             ->autoclose(1000);
 
         return redirect()->route('config.index');
+    }
+
+    /**
+     * ------------------------------------------------------------------------
+     * Exibe um formulário com os dados de um determinado registro permitindo
+     * que o usuário faça alterações
+     * ------------------------------------------------------------------------.
+     *
+     * @param int $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function editvalues()
+    {
+        // Verifica se o usuário tem direito de acesso
+        abort_unless(auth()->user()->hasPermission('config_edit'), 403);
+
+        // Localiza o registro pelo seu ID
+        // $config = Config::findOrFail($id);
+        $config = Config::orderBy('order', 'asc')->get();
+
+        // Chama a view com o formulário para edição do registro
+        return view('config.editvalues', ['config' => $config]);
+    }
+
+    public function savevalues(Request $request)
+    {
+        // Verifica se o usuário tem direito de acesso
+        abort_unless(auth()->user()->hasPermission('config_edit'), 403);
+
+        // Obtém todos os campos da view
+        $configs = $request->all();
+
+        // Salva os valores da view na tabela
+        foreach ($configs as $key => $value) {
+            // Se for o campo _token, então ignora
+            if ($key == '_token') {
+                continue;
+            }
+
+            // Localiza o registro da configuração
+            $config = Config::where('slug_key', $key)->first();
+
+            // Se encontrou então salva os dados na tabela
+            if (! is_null($config)) {
+                $config->value = $value;
+                $config->save();
+            }
+        }
+
+        // Atualiza os dados na sessão do usuário
+        $this->sessionUpdate();
+
+        // Retorna para view index com uma flash message
+        Alert::success('Configurações atualizadas', 'Sucesso', 'Success')->autoclose(1000);
+
+        // Retorna para o home
+        return redirect()->route('home');
     }
 
     /**

@@ -42,7 +42,7 @@
                 <i class="glyphicon glyphicon-refresh"></i> Atualizar a Tela
             </a>
 
-            @if(Auth::user()->hasPermission('user_create'))
+            @if(Auth::user()->hasPermission('users_create'))
             <a class="btn btn-success btn-sm" href="{{ route('users.create') }}">
                 <i class="fa fa-plus"></i> Inserir um novo registro
             </a>
@@ -136,21 +136,21 @@
                         @endif
                         @endif
 
-                        @if(Auth::user()->hasPermission('user_show') && !$user->isSuperAdmin())
+                        @if(Auth::user()->hasPermission('users_show') && !$user->isSuperAdmin())
                         <!-- visualização de dados-->
                         <a class='btn btn-info btn-xs' style="float:left; margin-right: 2px;" href='{{ route("users.show", $user->id) }}' role='button' alt="Visualiza os dados do usuário" title="Visualiza os dados do usuário">
                             <i class='fa fa-eye'></i>
                         </a>
                         @endif
 
-                        @if(Auth::user()->hasPermission('user_edit') && (Auth::user()->id != $user->id && !$user->isSuperAdmin()))
+                        @if(Auth::user()->hasPermission('users_edit') && (Auth::user()->id != $user->id && !$user->isSuperAdmin()))
                         <!-- edição de dados -->
                         <a class='btn btn-warning btn-xs' style="float:left;margin-right: 2px;" href='{{ route("users.edit", $user->id)}}' role='button' alt="Edita os dados do usuário" title="Edita os dados do usuário">
                             <i class='fa fa-pencil'></i>
                         </a>
                         @endif
 
-                        @if(Auth::user()->hasPermission('user_delete') && (Auth::user()->id != $user->id && !$user->isSuperAdmin()))
+                        @if(Auth::user()->hasPermission('users_delete') && (Auth::user()->id != $user->id && !$user->isSuperAdmin()))
                         <!-- exclusão do registro -->
 
                         @php $rota = route("users.delete", $user->id); @endphp
@@ -175,9 +175,9 @@
 @stop
 
 @section('js')
-<script src="{{ asset('vendor/vulcan/js/users.js') }}"></script>
+<script src="{{ asset('vendor/vulcano/js/users.js') }}"></script>
 @stop
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('vendor/vulcan/css/users.css') }}">
+<link rel="stylesheet" href="{{ asset('vendor/vulcano/css/users.css') }}">
 @stop

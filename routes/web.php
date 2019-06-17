@@ -52,6 +52,9 @@ Route::get('/users/delete/{id}', 'UsersController@getDelete')->name('users.delet
  * Rotas para a tabela de configuração do sistema
  * ----------------------------------------------------------------------------
  */
+Route::get('/config/editvalues', 'ConfigController@editvalues')->name('config.editvalues');
+Route::post('/config/savevalues', 'ConfigController@savevalues')->name('config.savevalues');
+
 Route::get('/config', 'ConfigController@index')->name('config.index');
 Route::get('/config/create', 'ConfigController@create')->name('config.create');
 Route::post('/config', 'ConfigController@store')->name('config.store');
@@ -59,7 +62,6 @@ Route::get('/config/{id}', 'ConfigController@show')->name('config.show');
 Route::get('/config/{id}/edit', 'ConfigController@edit')->name('config.edit');
 Route::put('/config/{id}', 'ConfigController@update')->name('config.update');
 Route::get('/config/delete/{id}', 'ConfigController@getDelete')->name('config.delete');
-
 /*
  * ----------------------------------------------------------------------------
  * Rotas para a tabela de papéis

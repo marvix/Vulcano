@@ -144,58 +144,58 @@ return [
 
         [
             'header' => 'ADMINISTRAÇÃO DO SITE',
-  //          'can' => 'user_access',
+            'can' => ['users_access', 'roles_access', 'permissions_access'],
         ],
         [
             'text' => 'Usuários e Permissões',
             'icon' => 'share',
-            'can' => 'user_access',
+            'can' => ['users_access', 'roles_access', 'permissions_access'],
             'submenu' => [
                 [
                     'text' => 'Usuários',
                     'route'  => 'users.index',
                     'icon' => 'users',
-                    'can' => 'user_access',
+                    'can' => 'users_access',
                 ],
                 [
                     'text' => 'Papéis',
                     'icon' => 'briefcase',
                     'route' => 'roles.index',
-                    'can' => 'menu_roles',
+                    'can' => 'roles_access',
                 ],
                 [
                     'text' => 'Permissões',
                     'icon' => 'lock',
-                    'can' => 'menu_permissions',
+                    'can' => 'permissions_access',
                     'route' => 'permissions.index',
-                ],
-                [
-                    'text' => 'Associa Permissões a Papéis',
-                    'icon' => 'lock',
-                    'can' => 'menu_permissions',
-                    //                'route' => 'permissions.index'
                 ],
             ],
         ],
         [
             'text' => 'Configurações do Sistema',
             'icon' => 'cogs',
-            'can' => 'config_access',
-            'route' => 'config.index',
-        ],
-        [
-            'text' => 'Logs do Sistema',
-            'icon' => 'print',
-            'can' => 'menu_logs',
+            'can' => ['config_access'],
             'submenu' => [
                 [
-                    'text' => 'LogViewer',
-                    'url' => '/log-viewer',
-                    'icon' => 'eye',
-                    'target' => '_blank',
-                    'can' => 'menu_logviewer',
+                    'text' => 'Cadastrar Parâmetros',
+                    'icon' => 'table',
+                    'can' => ['config_access'],
+                    'route' => 'config.index',
+                ],
+                [
+                    'text' => 'Definir Valores',
+                    'icon' => 'cogs',
+                    'can' => ['config_access'],
+                    'route' => 'config.editvalues',
                 ],
             ],
+        ],
+        [
+            'text' => 'Log do Sistema',
+            'url' => '/log-viewer',
+            'icon' => 'eye',
+            'target' => '_blank',
+            'can' => 'log_access',
         ],
     ],
 

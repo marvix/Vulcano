@@ -4,7 +4,7 @@
 
 @section('content_header')
 <span style="font-size:20px">
-    <i class='fa fa-database'></i> Inclusão de um novo papel</h1>
+    <i class='fa fa-briefcase'></i> Cadastra uma nova permissão</h1>
 </span>
 
 <ol class="breadcrumb">
@@ -12,9 +12,9 @@
         <a href="{{ route('home') }}"><i class='fa fa-dashboard'></i> Dashboard</a>
     </li>
     <li>
-        <a href="{{ route('roles.index') }}">Papel</a>
+        <a href="{{ route('permissions.index') }}">Permissão</a>
     </li>
-    <li class="active">Inclusão</li>
+    <li class="active">Cadastramento</li>
 </ol>
 
 @stop
@@ -34,20 +34,21 @@
 </div>
 @endif
 
-<form action="{{ route('roles.store') }}" method="post" role="form" enctype="multipart/form-data">
+<form action="{{ route('permissions.store') }}" method="post" role="form" enctype="multipart/form-data">
     {{ csrf_field() }}
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            Formulário de inclusão de dados
+            <i class="fa fa-table"></i> Formulário de inserção de dados
         </div> <!-- panel-heading -->
 
         <div class="panel-body">
             <div class="col-sm-12">
+
                 <!-- name -->
                 <div class="form-group">
                     <div class="input-group col-sm-3">
-                        <label for="name">Nome do Papel
+                        <label for="name">Nome da Permissão
                             <span class="text-red">*</span>
                         </label>
 
@@ -77,31 +78,12 @@
                         @endif
                     </div>
                 </div>
-
-                <!-- is_superadmin -->
-                <div class="form-group">
-                    <div class="input-group col-sm-2">
-                        <label for="name">É Super Administrador?
-                            <span class="text-red">*</span>
-                        </label>
-
-                        <select id="is_superadmin" name="is_superadmin" class="form-control {{ $errors->has('is_superadmin') ? 'is-invalid' : '' }}" required onchange="changeSuperAdmin();">
-                            <option value="1">Sim</option>
-                            <option value="0" selected>Não</option>
-                        </select>
-
-                        @if($errors->has('is_superadmin'))
-                        <span class='invalid-feedback text-red'>
-                            {{ $errors->first('is_superadmin') }}
-                        </span>
-                        @endif
-                    </div>
-                </div>
             </div>
+
         </div> <!-- panel-body -->
 
         <div class="panel-footer">
-            <a class="btn btn-default" href="{{ route('roles.index') }}">
+            <a class="btn btn-default" href="{{ route('permissions.index') }}">
                 <i class="fa fa-chevron-circle-left"></i> Voltar
             </a>
 
@@ -112,5 +94,5 @@
 @stop
 
 @section('js')
-<script src="{{ asset('vendor/vulcano/js/roles.js') }}"></script>
+<script src="{{ asset('vendor/vulcano/js/permissions.js') }}"></script>
 @stop

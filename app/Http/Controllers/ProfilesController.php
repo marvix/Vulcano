@@ -6,9 +6,10 @@ use Auth;
 use Hash;
 use Alert;
 use Session;
-use App\Role;
+//use App\Role;
 use App\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class ProfilesController extends Controller
 {

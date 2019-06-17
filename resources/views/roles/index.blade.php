@@ -127,5 +127,5 @@
 @stop
 
 @section('js')
-<script src="{{ asset('vendor/vulcan/js/roles.js') }}"></script>
+<script src="{{ asset('vendor/vulcano/js/roles.js') }}"></script>
 @stop

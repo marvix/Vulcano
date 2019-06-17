@@ -4,7 +4,7 @@
 
 @section('content_header')
 <span style="font-size:20px">
-    <i class='fa fa-database'></i> Alteração de dados da configuração</h1>
+    <i class='fa fa-database'></i> Alteração de dados de um parâmetro</h1>
 </span>
 
 <ol class="breadcrumb">
@@ -12,7 +12,7 @@
         <a href="{{ route('home') }}"><i class='fa fa-dashboard'></i> Dashboard</a>
     </li>
     <li>
-        <a href="{{ route('users.index') }}">Configuração</a>
+        <a href="{{ route('config.index') }}">Parâmetros do Sistema</a>
     </li>
     <li class="active">Alteração de dados</li>
 </ol>
@@ -34,18 +34,35 @@
 </div>
 @endif
 
-
 <form action="{{ route('config.update', $config->id) }}" method="post" role="form" enctype="multipart/form-data">
     {{ csrf_field() }}
     <input type="hidden" name="_method" value="PUT">
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            Formulário de alteração de dados
+            Formulário de alteração de parâmetros
         </div> <!-- panel-heading -->
 
         <div class="panel-body">
             <div class="col-sm-12">
+
+                <!-- order -->
+                <div class="form-group">
+                    <div class="input-group col-sm-3">
+                        <label for="name">Ordem
+                            <span class="text-red">*</span>
+                        </label>
+
+                        <input type="number" class="form-control {{ $errors->has('order') ? 'is-invalid' : '' }}" id="order" name="order" required value="{{ old('order', $config->order) }}" min="1" max="9999">
+
+                        @if($errors->has('order'))
+                        <span class='invalid-feedback text-red'>
+                            {{ $errors->first('order') }}
+                        </span>
+                        @endif
+                    </div>
+                </div>
+
                 <!-- key -->
                 <div class="form-group">
                     <div class="input-group col-sm-3">
@@ -53,56 +70,11 @@
                             <span class="text-red">*</span>
                         </label>
 
-                        <input type="text" class="form-control {{ $errors->has('key') ? 'is-invalid' : '' }}" id="key" name="key" value="{{ $config->key }}" required>
+                        <input type="text" class="form-control {{ $errors->has('key') ? 'is-invalid' : '' }}" id="key" name="key" required value="{{ old('key', $config->key) }}">
 
                         @if($errors->has('key'))
                         <span class='invalid-feedback text-red'>
                             {{ $errors->first('key') }}
-                        </span>
-                        @endif
-                    </div>
-                </div>
-
-                <!-- value -->
-                <div class="form-group">
-                    <div class="input-group col-sm-12">
-                        <label for="name">Valor
-                            <span class="text-red">*</span>
-                        </label>
-
-                        <input type="text" class="form-control {{ $errors->has('value') ? 'is-invalid' : '' }}" id="value" name="value" value="{{ $config->value }}" required>
-
-                        @if($errors->has('value'))
-                        <span class='invalid-feedback text-red'>
-                            {{ $errors->first('value') }}
-                        </span>
-                        @endif
-                    </div>
-                </div>
-
-                <!-- type -->
-                <div class="form-group">
-                    <div class="input-group col-sm-3">
-                        <label for="name">Tipo
-                            <span class="text-red">*</span>
-                        </label>
-
-                        <select name="type" id="type" class="form-control" required>
-                            <option value="integer" {{ $config->key =="integer" ? "selected": ""}}>Inteiro</option>
-                            <option value="float" {{ $config->key =="float" ? "selected": ""}}>Real</option>
-                            <option value="money" {{ $config->key =="money" ? "selected": ""}}>Monetário</option>
-                            <option value="string" {{ $config->key =="string" ? "selected": ""}}>Texto</option>
-                            <option value="boolean" {{ $config->key =="boolean" ? "selected": ""}}>Lógico</option>
-                            <option value="date" {{ $config->key =="date" ? "selected": ""}}>Data</option>
-                            <option value="datetime" {{ $config->key =="datetime" ? "selected": ""}}>Data/Hora</option>
-                            <option value="time" {{ $config->key =="time" ? "selected": ""}}>Hora</option>
-                        </select>
-
-                        <!-- <input type="text" class="form-control {{ $errors->has('type') ? 'is-invalid' : '' }}" id="type" name="type" value="{{ $config->type }}" required> -->
-
-                        @if($errors->has('type'))
-                        <span class='invalid-feedback text-red'>
-                            {{ $errors->first('type') }}
                         </span>
                         @endif
                     </div>
@@ -115,11 +87,44 @@
                             <span class="text-red">*</span>
                         </label>
 
-                        <input type="text" class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" id="description" name="description" value="{{ $config->description }}" required>
+                        <input type="text" class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" id="description" name="description" required value="{{ old('description', $config->description) }}">
 
                         @if($errors->has('description'))
                         <span class='invalid-feedback text-red'>
                             {{ $errors->first('description') }}
+                        </span>
+                        @endif
+                    </div>
+                </div>
+
+                <!-- type -->
+                <div class="form-group">
+                    <div class="input-group col-sm-3">
+                        <label for="name">Tipo de Campo
+                            <span class="text-red">*</span>
+                        </label>
+
+                        <select name="type" id="type" class="form-control" required>
+                            <option value="text" @if($config->type=="text") selected @endif>Texto</option>
+                            <option value="integer" @if($config->type=="integer") selected @endif>Inteiro</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- dataenum -->
+                <div class="form-group">
+                    <div class="input-group col-sm-12">
+                        <label for="name">
+                            DataEnum
+                            <small class="text-red"> (formato: param1,param2,param3...)
+
+                        </label>
+
+                        <input type="text" class="form-control {{ $errors->has('dataenum') ? 'is-invalid' : '' }}" id="dataenum" name="dataenum" value="{{ old('dataenum', $config->dataenum) }}">
+
+                        @if($errors->has('dataenum'))
+                        <span class='invalid-feedback text-red'>
+                            {{ $errors->first('dataenum') }}
                         </span>
                         @endif
                     </div>
@@ -136,4 +141,8 @@
         </div> <!-- panel-footer -->
     </div> <!-- panel-default -->
 </form>
+@stop
+
+@section('js')
+<script src="{{ asset('vendor/vulcano/js/roles.js') }}"></script>
 @stop

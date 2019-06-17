@@ -56,16 +56,36 @@ function markAll(item) {
     var excluir = document.getElementsByName('excluir[]');
 
     if (todos[item].checked) {
-        acessar[item].checked = true;
-        criar[item].checked = true;
-        editar[item].checked = true;
-        visualizar[item].checked = true;
-        excluir[item].checked = true;
+        if (typeof acessar[item] != "undefined" && ! acessar[item].disabled) {
+            acessar[item].checked = true;
+        }
+        if (typeof criar[item] != "undefined"  && ! criar[item].disabled) {
+            criar[item].checked = true;
+        }
+        if (typeof editar[item] != "undefined" && ! editar[item].disabled) {
+            editar[item].checked = true;
+        }
+        if (typeof visualizar[item] != "undefined" && ! visualizar[item].disabled) {
+            visualizar[item].checked = true;
+        }
+        if (typeof excluir[item] != "undefined" && ! excluir[item].disabled) {
+            excluir[item].checked = true;
+        }
     } else {
-        acessar[item].checked = false;
-        criar[item].checked = false;
-        editar[item].checked = false;
-        visualizar[item].checked = false;
-        excluir[item].checked = false;
+        if (typeof acessar[item] != "undefined" && ! acessar[item].disabled) {
+            acessar[item].checked = false;
+        }
+        if (typeof criar[item] != "undefined" && ! criar[item].disabled) {
+            criar[item].checked = false;
+        }
+        if (typeof editar[item] != "undefined" && ! editar[item].disabled) {
+            editar[item].checked = false;
+        }
+        if (typeof visualizar[item] != "undefined" && ! visualizar[item].disabled) {
+            visualizar[item].checked = false;
+        }
+        if (typeof excluir[item] != "undefined" && ! excluir[item].disabled) {
+            excluir[item].checked = false;
+        }
     }
 }

@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('#table-configuracao').DataTable({
+    $('#table-permissions').DataTable({
         paging: false,
         info: false,
         searching: false,
@@ -8,10 +8,7 @@ $(document).ready(function() {
         },
         columns: [
             { name: 'ID' },
-            { name: 'Chave' },
-            { name: 'Slug' },
-            { name: 'Valor' },
-            { name: 'Tipo' },
+            { name: 'Nome da Permissão' },
             { name: 'Descrição' },
             { name: 'Ações', orderable: false, searchable: false }
         ],
@@ -19,10 +16,10 @@ $(document).ready(function() {
 });
 
 
-function deleteConfig(route) {
+function deletePermission(route) {
     swal({
         title: 'Atenção',
-        text: 'Deseja realmente excluir esta configuração?',
+        text: 'Deseja realmente excluir esta permissão?',
         icon: 'warning',
         closeModal: false,
         dangerMode: true,

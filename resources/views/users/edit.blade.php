@@ -135,7 +135,7 @@
                             <span class="text-red">*</span>
                         </label>
 
-                        <select class="form-control {{ $errors->has('role') ? 'is-invalid' : '' }}" id="roles" name="role" @if(Auth::user()->hasPermission('user_edit')) required @else disabled @endif>
+                        <select class="form-control {{ $errors->has('role') ? 'is-invalid' : '' }}" id="roles" name="role" @if(Auth::user()->hasPermission('users_edit')) required @else disabled @endif>
                             @foreach($roles as $role)
                             @if($role->is_superadmin)
                             @continue

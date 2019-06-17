@@ -15,19 +15,37 @@ class ModulesTableSeeder extends Seeder
         DB::table('modules')->insert([
             'prefix' => 'users',
             'description' => 'Cadastro de Usuários',
-            'model' => 'App\User',
+            'access' => 'CRUD',
             'created_at' => Carbon::now(),
         ]);
         DB::table('modules')->insert([
             'prefix' => 'roles',
             'description' => 'Cadastro de Papéis',
-            'model' => 'App\Role',
+            'access' => 'CRUD',
             'created_at' => Carbon::now(),
         ]);
         DB::table('modules')->insert([
             'prefix' => 'permissions',
             'description' => 'Cadastro de Permissões',
-            'model' => 'App\Permission',
+            'access' => 'CRUD',
+            'created_at' => Carbon::now(),
+        ]);
+        DB::table('modules')->insert([
+            'prefix' => 'log',
+            'description' => 'Log do Sistema',
+            'access' => 'R',
+            'created_at' => Carbon::now(),
+        ]);
+        DB::table('modules')->insert([
+            'prefix' => 'profile',
+            'description' => 'Perfil do Usuário',
+            'access' => 'U',
+            'created_at' => Carbon::now(),
+        ]);
+        DB::table('modules')->insert([
+            'prefix' => 'config',
+            'description' => 'Configuração do Sistema',
+            'access' => 'RU',
             'created_at' => Carbon::now(),
         ]);
     }

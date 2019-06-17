@@ -63,7 +63,13 @@ $background = Helper::selectBackgroundImage('/img/background/', 'back', '/back[0
                 <span class="icon-bar"></span>
             </button>
             <a href="{{ url('/') }}" class="navbar-brand">
-                <span class="brand">{{ config('adminlte.title') }}</span>
+                <span class="brand">
+                    @if( \Session::has('brand') )
+                        {!! \Session::get('brand') !!}
+                    @else
+                        Vulcano
+                    @endif
+                </span>
             </a>
         </div>
     </div>

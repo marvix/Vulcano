@@ -13,7 +13,13 @@ $background = Helper::selectBackgroundImage('/img/background/', 'back', '/back[0
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-    <title>@yield('title_prefix', config('adminlte.title_prefix', ''))@yield('title', config('adminlte.title', 'AdminLTE 2'))@yield('title_postfix', config('adminlte.title_postfix', ''))</title>
+    <title>
+        @if( \Session::has('title') )
+        {!! \Session::get('title') !!}
+        @else
+        [Vulcano]
+        @endif
+    </title>
 
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/bootstrap/dist/css/bootstrap.min.css') }}">
@@ -84,12 +90,12 @@ $background = Helper::selectBackgroundImage('/img/background/', 'back', '/back[0
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="#" class="navbar-brand">
+                <a href="{{ url('/') }}" class="navbar-brand">
                     <span class="brand">
-                        @if (\Session::get('brand'))
+                        @if (\Session::has('brand'))
                         {!! \Session::get('brand') !!}
                         @else
-                        {!! config('adminlte.title') !!}
+                        Vulcano
                         @endif
                     </span>
                 </a>
@@ -121,18 +127,18 @@ $background = Helper::selectBackgroundImage('/img/background/', 'back', '/back[0
     <div class="row">
         <footer class="main-footer footer">
             <div class="pull-left hidden-xs" style="margin-left:20px;margin-top:13px;">
-                @if(\Session::get('footer_left'))
-                {!! \Session::get('footer_left') !!}
-                @else
-                {!! env('FOOTER_LEFT') !!}
-                @endif
+            @if(\Session::has('footer_left'))
+            {!! \Session::get('footer_left') !!}
+            @else
+            Copyright &copy; 2019. Todos os direitos reservados.
+            @endif
             </div>
             <div class="pull-right hidden-xs" style="margin-right:20px;margin-top:13px;">
-                @if(\Session::get('footer_right'))
-                {!! \Session::get('footer_right') !!}
-                @else
-                {!! env('FOOTER_RIGHT') !!}
-                @endif
+            @if(\Session::has('footer_right'))
+            {!! \Session::get('footer_right') !!}
+            @else
+            Desenvolvido por: <strong> Fernando Salles Claro</strong>
+            @endif
             </div>
         </footer>
     </div>
