@@ -11,6 +11,7 @@
         "php": "^7.1.3",
         "arcanedev/log-viewer": "^4.7",
         "arcanedev/no-captcha": "^9.0",
+        "arrilot/laravel-widgets": "^3.13",
         "creativeorange/gravatar": "^1.0",
         "davejamesmiller/laravel-breadcrumbs": "^5.2",
         "doctrine/dbal": "^2.9",
