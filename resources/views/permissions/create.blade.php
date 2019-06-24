@@ -20,20 +20,6 @@
 @stop
 @section('content')
 
-@if (session('message'))
-<div class="alert alert-{{ session('type') }} alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-    @if(session('type') == 'success')
-    <span style="font-size:24px;">Eba!!!</span>
-    @else
-    <span style="font-size:24px;">Whops!!!</span>
-    @endif
-    <br />{{ session('message') }}
-</div>
-@endif
-
 <form action="{{ route('permissions.store') }}" method="post" role="form" enctype="multipart/form-data">
     {{ csrf_field() }}
 
@@ -48,35 +34,27 @@
                 <!-- name -->
                 <div class="form-group">
                     <div class="input-group col-sm-3">
-                        <label for="name">Nome da Permissão
-                            <span class="text-red">*</span>
-                        </label>
-
+                        <label for="name">Nome da Permissão <span class="text-red">*</span></label>
                         <input type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" id="name" name="name" required value="{{ old('name') }}">
-
-                        @if($errors->has('name'))
-                        <span class='invalid-feedback text-red'>
-                            {{ $errors->first('name') }}
-                        </span>
-                        @endif
                     </div>
+                    @if($errors->has('name'))
+                    <span class='invalid-feedback text-red'>
+                        {{ $errors->first('name') }}
+                    </span>
+                    @endif
                 </div>
 
                 <!-- description -->
                 <div class="form-group">
                     <div class="input-group col-sm-12">
-                        <label for="name">Descrição
-                            <span class="text-red">*</span>
-                        </label>
-
+                        <label for="name">Descrição <span class="text-red">*</span></label>
                         <input type="text" class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" id="description" name="description" required value="{{ old('description') }}">
-
-                        @if($errors->has('description'))
-                        <span class='invalid-feedback text-red'>
-                            {{ $errors->first('description') }}
-                        </span>
-                        @endif
                     </div>
+                    @if($errors->has('description'))
+                    <span class='invalid-feedback text-red'>
+                        {{ $errors->first('description') }}
+                    </span>
+                    @endif
                 </div>
             </div>
 

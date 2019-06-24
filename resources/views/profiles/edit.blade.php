@@ -20,21 +20,6 @@
 @stop
 @section('content')
 
-@if (session('message'))
-<div class="alert alert-{{ session('type') }} alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-    @if(session('type') == 'success')
-    <span style="font-size:24px;">Eba!!!</span>
-    @else
-    <span style="font-size:24px;">Whops!!!</span>
-    @endif
-    <br />{{ session('message') }}
-</div>
-@endif
-
-
 <form action="{{ route('profile.update', $user->id) }}" method="post" role="form" enctype="multipart/form-data">
     {{ csrf_field() }}
     <input type="hidden" name="_method" value="PUT">
@@ -86,26 +71,20 @@
                 <!-- nome do usuário -->
                 <div class="form-group">
                     <div class="input-group col-sm-7">
-                        <label for="name">Nome do Usuário
-                            <span class="text-red">*</span>
-                        </label>
-
+                        <label for="name">Nome do Usuário <span class="text-red">*</span></label>
                         <input type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" id="name" name="name" value="{{ $user->name }}" required>
-
-                        @if($errors->has('name'))
-                        <span class='invalid-feedback text-red'>
-                            {{ $errors->first('name') }}
-                        </span>
-                        @endif
                     </div>
+                    @if($errors->has('name'))
+                    <span class='invalid-feedback text-red'>
+                        {{ $errors->first('name') }}
+                    </span>
+                    @endif
                 </div>
 
                 <!-- gender -->
                 <div class="form-group">
                     <div class="input-group col-sm-5">
-                        <label for="gender">Gênero
-                            <span class="text-red">*</span>
-                        </label>
+                        <label for="gender">Gênero <span class="text-red">*</span></label>
 
                         @if(Auth::user()->isSuperAdmin())
                         <input type="hidden" name="gender" value="{{ $user->gender }}">
@@ -116,21 +95,13 @@
                             <option value="M" {{ $user->gender == "M" ? "selected" : "" }}>Masculino</option>
                             <option value="F" {{ $user->gender == "F" ? "selected" : "" }}>Feminino</option>
                         </select>
-
-                        @if($errors->has('gender'))
-                        <span class='invalid-feedback text-red'>
-                            {{ $errors->first('gender') }}
-                        </span>
-                        @endif
                     </div>
                 </div>
 
                 <!-- roles -->
                 <div class="form-group">
                     <div class="input-group col-sm-7">
-                        <label for="level">Papel atribuído
-                            <span class="text-red">*</span>
-                        </label>
+                        <label for="level">Papel atribuído <span class="text-red">*</span></label>
 
                         <select class="form-control {{ $errors->has('role') ? 'is-invalid' : '' }}" id="roles" name="role" disabled>
                             @foreach($roles as $role)
@@ -139,68 +110,33 @@
                             </option>
                             @endforeach
                         </select>
-
-                        @if($errors->has('role'))
-                        <span class='invalid-feedback text-red'>
-                            {{ $errors->first('role') }}
-                        </span>
-                        @endif
                     </div>
                 </div>
 
                 <!-- active -->
                 <div class="form-group">
                     <div class="input-group col-sm-3">
-                        <label for="level">Deixar o usuário ativo?
-                            <span class="text-red">*</span>
-                        </label>
-
-                        <select class="form-control {{ $errors->has('active') ? 'is-invalid' : '' }}" id="active" name="active" disabled>
-                            <option value="1" {{ $user->active ? "selected" : "" }}>Sim</option>
-                            <option value="0" {{ !$user->active ? "selected" : "" }}>Não</option>
-                        </select>
-
-                        @if($errors->has('active'))
-                        <span class='invalid-feedback text-red'>
-                            {{ $errors->first('active') }}
-                        </span>
-                        @endif
+                        <label for="level">Deixar o usuário ativo? <span class="text-red">*</span></label>
+                        <br>
+                        <input name="active" @if($user->active) checked @else "" @endif type="checkbox" data-toggle="toggle" data-on="Sim" data-off="Não" data-onstyle="success" data-offstyle="danger" data-size="normal" disabled>
                     </div>
                 </div>
 
                 <!-- email -->
                 <div class="form-group">
                     <div class="input-group col-sm-7">
-                        <label for="email">E-mail
-                            <span class="text-red">*</span>
-                        </label>
-
+                        <label for="email">E-mail <span class="text-red">*</span></label>
                         <input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" id="email" name="email" value="{{ $user->email }}" required>
-
-                        @if($errors->has('email'))
-                        <span class='invalid-feedback text-red'>
-                            {{ $errors->first('email') }}
-                        </span>
-                        @endif
                     </div>
+                    @if($errors->has('email'))
+                    <span class='invalid-feedback text-red'>
+                        {{ $errors->first('email') }}
+                    </span>
+                    @endif
                 </div>
 
                 @include('partials.skin_edit')
 
-                <!-- password -->
-                <div class="form-group">
-                    <div class="input-group col-sm-7">
-                        <label for="password">Senha</label>
-
-                        <input type="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" id="password" name="password" placeholder="Deixe em branco para não alterar a senha">
-
-                        @if($errors->has('password'))
-                        <span class='invalid-feedback text-red'>
-                            {{ $errors->first('password') }}
-                        </span>
-                        @endif
-                    </div>
-                </div>
             </div>
         </div> <!-- panel-body -->
 

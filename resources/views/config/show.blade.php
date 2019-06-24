@@ -73,7 +73,7 @@
                 </tr>
 
                 <tr>
-                    <td class='col-sm-2'>Data de Criação</td>
+                    <td class='col-sm-2'>Criado em</td>
                     <td class='col-sm-10'>
                         @if(null != $config->created_at)
                         {{ $config->created_at->format('d/m/Y H:i') }}
@@ -82,7 +82,7 @@
                 </tr>
 
                 <tr>
-                    <td class='col-sm-2'>Data da Última Atualização</td>
+                    <td class='col-sm-2'>Atualizado em</td>
                     <td class='col-sm-10'>
                         @if (null != $config->updated_at)
                         {{ $config->updated_at->format('d/m/Y H:i') }}

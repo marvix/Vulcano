@@ -6,7 +6,6 @@ use Auth;
 use Hash;
 use Alert;
 use Session;
-//use App\Role;
 use App\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
@@ -64,11 +63,10 @@ class ProfilesController extends Controller
 
         // Cria as regras de validação dos dados do formulário
         $rules = [
-            'name' => 'required|string|min:5|max:191',
+            'name' => 'required|string|min:3|max:50',
             'gender' => 'required',
             'email' => 'required|email|max:191',
             'skin' => 'required|string',
-            'password' => 'nullable|string|min:5|max:191',
         ];
 
         // Primeiro, vamos validar os dados do formulário
@@ -82,12 +80,7 @@ class ProfilesController extends Controller
         $user->skin = $request->skin;
 
         if ($request->active) {
-            $user->active = $request->active;
-        }
-
-        // Se foi digitada uma senha ...
-        if ($request->password) {
-            $user->password = Hash::make($request->password);
+            $user->active = ($request->active == 'on') ? 1 : 0;
         }
 
         if (isset($request->avatar)) {
@@ -122,5 +115,59 @@ class ProfilesController extends Controller
         Alert::success('Avatar excluido com sucesso!!', 'Sucesso', 'Success')->autoclose(1000);
 
         return redirect()->route('profile.edit');
+    }
+
+    /**
+     * ------------------------------------------------------------------------
+     * Chama a view para alteração da senha
+     * ------------------------------------------------------------------------.
+     */
+    public function editPassword()
+    {
+        // Verifica se o usuário tem direito de acesso
+        abort_unless(Auth::user()->hasPermission('profile_edit'), 403);
+
+        $user = Auth::user();
+
+        return view('profiles.editpassword', ['user' => $user]);
+    }
+
+    /**
+     * ------------------------------------------------------------------------
+     * Salva a nova senha informada
+     * ------------------------------------------------------------------------.
+     */
+    public function updatePassword(Request $request, $id)
+    {
+        // Verifica se o usuário tem direito de acesso
+        abort_unless(Auth::user()->hasPermission('profile_edit'), 403);
+
+        // Cria as regras de validação dos dados do formulário
+        $rules = [
+            'password' => 'required|string|min:5|max:191',
+            'retypePassword' => 'required|string|min:5|max:191',
+        ];
+
+        $messages = [
+            'password' => 'A senha deve ter pelo menos 5 caracteres.',
+            'retypePassword' => 'A senha redigitada deve ter pelo menos 5 caracteres.',
+        ];
+
+        // Primeiro, vamos validar os dados do formulário
+        $request->validate($rules, $messages);
+
+        $user = User::findOrFail($id);
+
+        if ($request->password === $request->retypePassword) {
+            $user->password = Hash::make($request->password);
+            $user->save();
+            Alert::success('Senha alterada.', 'Sucesso', 'Success')->autoclose(1000);
+        } else {
+            Alert::error('As senhas informadas devem ser iguais', 'Erro', 'Error')->confirmButton('Ok');
+
+            return redirect()->route('profile.password.edit');
+        }
+
+        return view('home');
     }
 }

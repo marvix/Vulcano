@@ -4,7 +4,7 @@
 
 @section('content_header')
 <span style="font-size:20px">
-    <i class='fa fa-database'></i> Inclusão de um novo papel</h1>
+    <i class='fa fa-briefcase'></i> Inserção de um papel</h1>
 </span>
 
 <ol class="breadcrumb">
@@ -14,32 +14,18 @@
     <li>
         <a href="{{ route('roles.index') }}">Papel</a>
     </li>
-    <li class="active">Inclusão</li>
+    <li class="active">Inserção</li>
 </ol>
 
 @stop
 @section('content')
-
-@if (session('message'))
-<div class="alert alert-{{ session('type') }} alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-    @if(session('type') == 'success')
-    <span style="font-size:24px;">Eba!!!</span>
-    @else
-    <span style="font-size:24px;">Whops!!!</span>
-    @endif
-    <br />{{ session('message') }}
-</div>
-@endif
 
 <form action="{{ route('roles.store') }}" method="post" role="form" enctype="multipart/form-data">
     {{ csrf_field() }}
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            Formulário de inclusão de dados
+            <i class="fa fa-table"></i> Formulário de cadastramento de dados
         </div> <!-- panel-heading -->
 
         <div class="panel-body">
@@ -47,57 +33,126 @@
                 <!-- name -->
                 <div class="form-group">
                     <div class="input-group col-sm-3">
-                        <label for="name">Nome do Papel
-                            <span class="text-red">*</span>
-                        </label>
-
-                        <input type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" id="name" name="name" required value="{{ old('name') }}">
-
-                        @if($errors->has('name'))
-                        <span class='invalid-feedback text-red'>
-                            {{ $errors->first('name') }}
-                        </span>
-                        @endif
+                        <label for="name">Nome do Papel <span class="text-red">*</span></label>
+                        <input type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" id="name" name="name" required>
                     </div>
+                    @if($errors->has('name'))
+                    <span class='invalid-feedback text-red'>
+                        {{ $errors->first('name') }}
+                    </span>
+                    @endif
                 </div>
 
                 <!-- description -->
                 <div class="form-group">
                     <div class="input-group col-sm-12">
-                        <label for="name">Descrição
-                            <span class="text-red">*</span>
-                        </label>
-
-                        <input type="text" class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" id="description" name="description" required value="{{ old('description') }}">
-
-                        @if($errors->has('description'))
-                        <span class='invalid-feedback text-red'>
-                            {{ $errors->first('description') }}
-                        </span>
-                        @endif
+                        <label for="name">Descrição <span class="text-red">*</span></label>
+                        <input type="text" class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" id="description" name="description" required>
                     </div>
+                    @if($errors->has('description'))
+                    <span class='invalid-feedback text-red'>
+                        {{ $errors->first('description') }}
+                    </span>
+                    @endif
                 </div>
 
                 <!-- is_superadmin -->
                 <div class="form-group">
                     <div class="input-group col-sm-2">
-                        <label for="name">É Super Administrador?
-                            <span class="text-red">*</span>
-                        </label>
-
-                        <select id="is_superadmin" name="is_superadmin" class="form-control {{ $errors->has('is_superadmin') ? 'is-invalid' : '' }}" required onchange="changeSuperAdmin();">
-                            <option value="1">Sim</option>
-                            <option value="0" selected>Não</option>
-                        </select>
-
-                        @if($errors->has('is_superadmin'))
-                        <span class='invalid-feedback text-red'>
-                            {{ $errors->first('is_superadmin') }}
-                        </span>
-                        @endif
+                        <label for="name">É Super Administrador? <span class="text-red">*</span></label>
+                        <br>
+                        <input type="checkbox" class="form-group form-check-input" id="is_superadmin" name="is_superadmin" data-toggle="toggle" data-on="Sim" data-off="Não" data-onstyle="success" data-offstyle="danger" onchange="changeSuperAdmin();">
                     </div>
                 </div>
             </div>
+
+            <div class="col-sm-12" id="roles-permissions" style="display:none">
+                <div class="panel panel-default">
+                    <div class="panel panel-heading">
+                        <i class="fa fa-unlock"></i> Permissões deste papel
+                    </div>
+
+                    <div class="panel panel-body">
+                        <div class="table table-responsive">
+                            <table class="table table-bordered table-responsive">
+                                <thead class="text-bold">
+                                    <td class="col-sm-1">#</td>
+                                    <td class="col-sm-6">Recursos / Módulos</td>
+                                    <td class="col-sm-1 text-center">Acessar</td>
+                                    <td class="col-sm-1 text-center">Criar</td>
+                                    <td class="col-sm-1 text-center">Editar</td>
+                                    <td class="col-sm-1 text-center">Visualizar</td>
+                                    <td class="col-sm-1 text-center">Excluir</td>
+                                </thead>
+                                <tbody>
+                                    @php $count=0 @endphp
+                                    @foreach($modules as $m)
+                                    <tr>
+                                        <input type="hidden" name="module[]">
+                                        <td>{{ $count+1 }}</td>
+                                        <td>{{ $m->description }}</td>
+
+                                        <!-- access -->
+                                        <td class="text-center">
+                                            <input type="checkbox" class="form-group form-check-input" name="acessar[]" data-toggle="toggle" data-on="Sim" data-off="Não" data-onstyle="success" data-offstyle="danger" data-size="small" value="{{ $m->prefix }}_access">
+                                        </td>
+
+                                        <!-- create -->
+                                        @if(strpos($m->access,'C')===false)
+                                        <td class="text-center">
+                                            <input type="checkbox" class="form-group form-check-input" name="criar[]" readonly disabled data-toggle="toggle" data-on="Sim" data-off="Não" data-offstyle="default" data-size="small">
+                                        </td>
+                                        @else
+                                        <td class="text-center">
+                                            <input type="checkbox" class="form-group form-check-input" name="criar[]" data-toggle="toggle" data-on="Sim" data-off="Não" data-onstyle="success" data-offstyle="danger" data-size="small" value="{{ $m->prefix }}_create">
+                                        </td>
+                                        @endif
+
+                                        <!-- update -->
+                                        @if(strpos($m->access,'U')===false)
+                                        <td class="text-center">
+                                            <input type="checkbox" class="form-group" name="editar[]" readonly disabled data-toggle="toggle" data-on="Sim" data-off="Não" data-offstyle="default" data-size="small">
+                                        </td>
+                                        @else
+                                        <td class="text-center">
+                                            <input type="checkbox" class="form-group" name="editar[]" data-toggle="toggle" data-on="Sim" data-off="Não" data-onstyle="success" data-offstyle="danger" data-size="small" value="{{ $m->prefix }}_edit">
+                                        </td>
+                                        @endif
+
+                                        <!-- read -->
+                                        @if(strpos($m->access,'R')===false)
+                                        <td class="text-center">
+                                            <input type="checkbox" class="form-group" name="visualizar[]" readonly disabled data-toggle="toggle" data-on="Sim" data-off="Não" data-offstyle="default" data-size="small">
+                                        </td>
+                                        @else
+                                        <td class="text-center">
+                                            <input type="checkbox" class="form-group" name="visualizar[]" data-toggle="toggle" data-on="Sim" data-off="Não" data-onstyle="success" data-offstyle="danger" data-size="small" value="{{ $m->prefix }}_show">
+                                        </td>
+                                        </td>
+                                        @endif
+
+                                        <!-- delete -->
+                                        @if(strpos($m->access,'D')===false)
+                                        <td class="text-center">
+                                            <input type="checkbox" class="form-group" name="excluir[]" readonly disabled data-toggle="toggle" data-on="Sim" data-off="Não" data-offstyle="default" data-size="small">
+                                        </td>
+                                        @else
+                                        <td class="text-center">
+                                            <input type="checkbox" class="form-group" name="excluir[]" data-toggle="toggle" data-on="Sim" data-off="Não" data-onstyle="success" data-offstyle="danger" data-size="small" value="{{ $m->prefix }}_delete">
+                                        </td>
+                                        @endif
+                                    </tr>
+                                    @php $count++ @endphp
+                                    @endforeach
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div> <!-- panel-body -->
 
         <div class="panel-footer">

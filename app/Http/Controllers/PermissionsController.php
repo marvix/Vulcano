@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Alert;
+use Session;
 use App\Permission;
 use Illuminate\Http\Request;
-use Session;
-use Alert;
 
 class PermissionsController extends Controller
 {
@@ -75,7 +75,7 @@ class PermissionsController extends Controller
         $permission = new Permission();
         $permission->name = $request->name;
         $permission->description = $request->description;
-        $permission->guard_name = "web";
+        $permission->guard_name = 'web';
         $permission->created_at = now();
 
         // Salva os dados na tabela
@@ -148,7 +148,7 @@ class PermissionsController extends Controller
         $permission = Permission::findOrFail($id);
         $permission->name = $request->name;
         $permission->description = $request->description;
-        $permission->guard_name = "web";
+        $permission->guard_name = 'web';
         $permission->updated_at = now();
 
         // Salva os dados na tabela

@@ -8,7 +8,6 @@ use Hash;
 use Alert;
 use Session;
 use App\User;
-//use App\Role;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 
@@ -98,7 +97,7 @@ class UsersController extends Controller
 
         // Cria as regras de validação dos dados do formulário
         $rules = [
-            'name' => 'required|min:5|max:30',
+            'name' => 'required|min:3|max:50',
             'email' => 'required|email|max:191|unique:users',
             'active' => 'required',
             'skin' => 'required|string',
@@ -113,7 +112,7 @@ class UsersController extends Controller
         $user->name = $request->name;
         $user->gender = $request->gender;
         $user->email = $request->email;
-        $user->active = $request->active;
+        $user->active = ($request->active == 'on') ? 1 : 0;
         $user->password = Hash::make($request->password);
         $user->skin = $request->skin;
 
@@ -204,7 +203,7 @@ class UsersController extends Controller
 
         // Cria as regras de validação dos dados do formulário
         $rules = [
-            'name' => 'required|min:5|max:30',
+            'name' => 'required|min:3|max:50',
             'email' => 'required|email|max:191|unique:users,email,'.$id,
             'gender' => 'required',
             'role' => 'required',
@@ -222,8 +221,8 @@ class UsersController extends Controller
         $user->gender = $request->gender;
         $user->active = $request->active;
         $user->email = $request->email;
-        $user->active = $request->active;
         $user->skin = $request->skin;
+        $user->active = ($request->active == 'on') ? 1 : 0;
 
         // Se foi digitada uma senha ...
         if ($request->password) {
@@ -302,51 +301,5 @@ class UsersController extends Controller
             ->autoclose(1000);
 
         return redirect()->back();
-    }
-
-    /**
-     * ------------------------------------------------------------------------
-     * Muda o status do usuário para ativo
-     * ------------------------------------------------------------------------.
-     *
-     * @param int $id
-     */
-    public function activeUser($id)
-    {
-        // Verifica se o usuário tem direito de acesso
-        abort_unless(auth()->user()->hasPermission('users_active'), 403);
-
-        DB::table('users')
-            ->where('id', $id)
-            ->update(['active' => 1]);
-
-        Alert::success("Este usuário agora está <span class='text-red text-bold'>ativo</span>.", 'Sucesso', 'Success')
-            ->html()
-            ->autoclose(1000);
-
-        return redirect()->route('users.index');
-    }
-
-    /**
-     * ------------------------------------------------------------------------
-     * Muda o status do usuário para inativo
-     * ------------------------------------------------------------------------.
-     *
-     * @param int $id
-     */
-    public function desactiveUser($id)
-    {
-        // Verifica se o usuário tem direito de acesso
-        abort_unless(auth()->user()->hasPermission('users_active'), 403);
-
-        DB::table('users')
-            ->where('id', $id)
-            ->update(['active' => 0]);
-
-        Alert::success("Este usuário agora está <span class='text-red text-bold'>inativo</span> no sistema.", 'Sucesso', 'Success')
-            ->html()
-            ->autoclose(1000);
-
-        return redirect()->route('users.index');
     }
 }

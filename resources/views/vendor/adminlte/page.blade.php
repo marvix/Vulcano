@@ -4,10 +4,10 @@
 
 @php
 if(\Session::has('skin')) {
-    $skin = \Session::get('skin');
+$skin = \Session::get('skin');
 }
 else {
-    $skin = "blue";
+$skin = "blue";
 }
 @endphp
 
@@ -81,23 +81,63 @@ else {
                     @endif
                     <!-- Navbar Right Menu -->
                     <div class="navbar-custom-menu">
-
                         <ul class="nav navbar-nav">
-                            <li>
-                                @if(config('adminlte.logout_method') == 'GET' || !config('adminlte.logout_method') && version_compare(\Illuminate\Foundation\Application::VERSION, '5.3.0', '<')) <a href="{{ url(config('adminlte.logout_url', 'auth/logout')) }}">
-                                    <i class="fa fa-fw fa-power-off"></i> {{ trans('adminlte::adminlte.log_out') }}
-                                    </a>
+                            <li class="dropdown user user-menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    @if(auth()->user()->hasMedia('avatars'))
+                                    <img src="{{ asset(Auth::user()->getFirstMediaUrl('avatars')) }}" alt="avatar" class="img-circle" style="width:24px;">
+                                    @elseif(Gravatar::exists(Auth::user()->email))
+                                    <img src="{{ Gravatar::get(Auth::user()->email) }}" alt="avatar" class="img-circle" style="width:24px;">
                                     @else
-                                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        <i class="fa fa-fw fa-power-off"></i> {{ trans('adminlte::adminlte.log_out') }}
-                                    </a>
-                                    <form id="logout-form" action="{{ url(config('adminlte.logout_url', 'auth/logout')) }}" method="POST" style="display: none;">
-                                        @if(config('adminlte.logout_method'))
-                                        {{ method_field(config('adminlte.logout_method')) }}
-                                        @endif
-                                        {{ csrf_field() }}
-                                    </form>
+                                    <img src="{{ asset('img/avatar/no-photo.png') }}" alt="avatar" class="img-circle" style="width:24px;">
                                     @endif
+
+                                    <span class="hidden-xs">{{ Auth::user()->name }}</span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <!-- User image -->
+                                    <li class="user-header">
+                                        @if(auth()->user()->hasMedia('avatars'))
+                                        <img src="{{ asset(Auth::user()->getFirstMediaUrl('avatars')) }}" alt="avatar" class="img-circle">
+                                        @elseif(Gravatar::exists(Auth::user()->email))
+                                        <img src="{{ Gravatar::get(Auth::user()->email) }}" alt="avatar" class="img-circle">
+                                        @else
+                                        <img src="{{ asset('img/avatar/no-photo.png') }}" alt="avatar" class="img-circle">
+                                        @endif
+                                        <p>
+                                            @php
+                                            $user = explode(" ", Auth::user()->name);
+                                            @endphp
+                                            {{ $user[0] }} - {{ Auth::user()->roles[0]->description }}
+                                            <small>Membro desde: {{ Auth::user()->created_at->format("d/m/Y") }}</small>
+                                            <small>Hoje: {{ ucfirst(Date::now()->format('l, d/m/Y')) }}</small>
+                                        </p>
+                                    </li>
+
+                                    <!-- Menu Footer-->
+                                    <li class="user-footer">
+                                        <div class="pull-left">
+                                            <a href="{{ route('profile.edit') }}" class="btn btn-default btn-flat" title="Perfil" alt="Perfil">
+                                                <i class="fa fa-user"></i> Perfil
+                                            </a>
+
+                                        </div>
+                                        <div class="pull-right">
+                                            <a href="{{ route('profile.password.edit') }}" class="btn btn-default btn-flat" title="Alterar Senha" alt="Alterar Senha">
+                                                <i class="fa fa-key"></i>
+                                            </a>
+                                            <a href="#" class="btn btn-danger btn-flat" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" title="Sair do Sistema">
+                                                <i class="fa fa-fw fa-power-off"></i>
+                                            </a>
+                                            <form id="logout-form" action="{{ url(config('adminlte.logout_url', 'auth/logout')) }}" method="POST" style="display: none;">
+                                                @if(config('adminlte.logout_method'))
+                                                {{ method_field(config('adminlte.logout_method')) }}
+                                                @endif
+                                                {{ csrf_field() }}
+                                            </form>
+                                        </div>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                     </div>
@@ -127,8 +167,7 @@ else {
             <div class="pull-left info">
                 <p>{{ str_limit(Auth::user()->name,22) }}</p>
                 <a href="#">
-                    <i class="fa fa-home"></i>
-                    <span class="text-lime text-bold"><i>{{ Auth::user()->roles[0]->description }}</i></span>
+                    <i class="fa fa-circle text-lime"></i> Online
                 </a>
             </div>
         </div>

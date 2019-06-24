@@ -45,7 +45,7 @@
 
 
                 <tr>
-                    <td class='col-sm-2'>Data de Criação</td>
+                    <td class='col-sm-2'>Criado em</td>
                     <td class='col-sm-10'>
                         @if(null != $permission->created_at)
                         {{ $permission->created_at->format('d/m/Y H:i') }}
@@ -54,7 +54,7 @@
                 </tr>
 
                 <tr>
-                    <td class='col-sm-2'>Data da Última Atualização</td>
+                    <td class='col-sm-2'>Atualizado em</td>
                     <td class='col-sm-10'>
                         @if (null != $permission->updated_at)
                         {{ $permission->updated_at->format('d/m/Y H:i') }}

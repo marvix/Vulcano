@@ -20,21 +20,6 @@
 @stop
 @section('content')
 
-@if (session('message'))
-<div class="alert alert-{{ session('type') }} alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-    @if(session('type') == 'success')
-    <span style="font-size:24px;">Eba!!!</span>
-    @else
-    <span style="font-size:24px;">Whops!!!</span>
-    @endif
-    <br />{{ session('message') }}
-</div>
-@endif
-
-
 <form action="{{ route('users.store') }}" method="post" role="form" enctype="multipart/form-data">
     {{ csrf_field() }}
 
@@ -71,10 +56,7 @@
                 <!-- nome do usuário -->
                 <div class="form-group">
                     <div class="input-group col-sm-7">
-                        <label for="name">Nome do Usuário
-                            <span class="text-red">*</span>
-                        </label>
-
+                        <label for="name">Nome do Usuário <span class="text-red">*</span></label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user"></i></span>
                             <input type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" id="name" name="name" required value="{{ old('name') }}">
@@ -90,10 +72,7 @@
                 <!-- gender -->
                 <div class="form-group">
                     <div class="input-group col-sm-5">
-                        <label for="gender">Gênero
-                            <span class="text-red">*</span>
-                        </label>
-
+                        <label for="gender">Gênero <span class="text-red">*</span></label>
                         <select class="form-control {{ $errors->has('gender') ? 'is-invalid' : '' }}" id="gender" name="gender" required>
                             <option value="N">Prefiro não responder</option>
                             <option value="M">Masculino</option>
@@ -110,10 +89,7 @@
                 <!-- roles -->
                 <div class="form-group">
                     <div class="input-group col-sm-7">
-                        <label for="level">Papel atribuído
-                            <span class="text-red">*</span>
-                        </label>
-
+                        <label for="level">Papel Atribuído <span class="text-red">*</span></label>
                         <select class="form-control {{ $errors->has('role') ? 'is-invalid' : '' }}" id="roles" name="role" required>
                             @foreach($roles as $role)
                             <option value="{{ $role->id }}">
@@ -131,29 +107,17 @@
 
                 <!-- active -->
                 <div class="form-group">
-                    <div class="input-group col-sm-3">
-                        <label for="level">Deixar o usuário ativo?
-                            <span class="text-red">*</span>
-                        </label>
-
-                        <select class="form-control {{ $errors->has('active') ? 'is-invalid' : '' }}" id="active" name="active" required>
-                            <option value="1">Sim</option>
-                            <option value="0" selected>Não</option>
-                        </select>
+                    <div class="input-group col-sm-4">
+                        <label for="level">Deixar o usuário ativo? <span class="text-red">*</span></label>
+                        <br>
+                        <input name="active" type="checkbox" data-toggle="toggle" data-on="Sim" data-off="Não" data-onstyle="success" data-offstyle="danger" data-size="normal">
                     </div>
-                    @if($errors->has('active'))
-                    <span class='invalid-feedback text-red'>
-                        {{ $errors->first('active') }}
-                    </span>
-                    @endif
                 </div>
 
                 <!-- email -->
                 <div class="form-group">
                     <div class="input-group col-sm-7">
-                        <label for="email">E-mail
-                            <span class="text-red">*</span>
-                        </label>
+                        <label for="email">E-mail<span class="text-red">*</span></label>
 
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
@@ -172,10 +136,7 @@
                 <!-- password -->
                 <div class="form-group">
                     <div class="input-group col-sm-7">
-                        <label for="password">Senha
-                            <span class="text-red">*</span>
-                        </label>
-
+                        <label for="password">Senha <span class="text-red">*</span></label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-lock"></i></span>
                             <input type="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" id="password" name="password" value="{{ old('password') }}" placeholder="A senha deve ter pelo menos 6 caracteres">

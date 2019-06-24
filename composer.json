@@ -16,6 +16,7 @@
         "davejamesmiller/laravel-breadcrumbs": "^5.2",
         "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
+        "garygreen/pretty-routes": "^1.0",
         "igorescobar/jquery-mask-plugin": "^1.14",
         "jenssegers/date": "^3.5",
         "jeroennoten/laravel-adminlte": "^1.25",

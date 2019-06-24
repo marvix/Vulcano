@@ -2,8 +2,8 @@
 
 namespace App\Widgets;
 
-use Arrilot\Widgets\AbstractWidget;
 use App\User;
+use Arrilot\Widgets\AbstractWidget;
 
 class DashboardWidget extends AbstractWidget
 {
@@ -16,9 +16,8 @@ class DashboardWidget extends AbstractWidget
         'color' => 'bg-yellow',
         'title' => 'Nº de Usuários',
         'icon' => 'fa fa-users',
-        'route' => 'users.index'
+        'route' => 'users.index',
     ];
-
 
     /**
      * Treat this method as a controller action.

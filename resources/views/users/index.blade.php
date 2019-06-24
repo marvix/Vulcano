@@ -18,20 +18,6 @@
 
 @section('content')
 
-@if (session('message'))
-<div class="alert alert-{{ session('type') }} alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-    @if(session('type') == 'success')
-    <span style="font-size:24px;">Eba!!!</span>
-    @else
-    <span style="font-size:24px;">Whops!!!</span>
-    @endif
-    <br />{{ session('message') }}
-</div>
-@endif
-
 <div class="panel panel-default">
     <!-- Default panel contents -->
     <div class="panel-heading clearfix">
@@ -121,21 +107,6 @@
 
                     <!-- ações -->
                     <td style="width:100px;">
-                        <!-- ativa/desativa usuário -->
-                        @if(Auth::user()->isSuperAdmin() && Auth::user()->id != $user->id)
-                        <!-- ativar o usuário -->
-                        @if(!$user->active)
-                        <a class='btn btn-active btn-xs' style="float:left; margin-right: 2px;" href="javascript:active('{{route('users.active', $user->id)}}');" role='button' alt="Ativa o usuário" title="Ativa o usuário" id="user-active" name="user-active">
-                            <i class='glyphicon glyphicon-ok-circle'></i>
-                        </a>
-                        @else
-                        <!-- desativar o usuário -->
-                        <a class='btn btn-desactive btn-xs' style="float:left; margin-right: 2px;" href="javascript:desactive('{{route('users.desactive', $user->id)}}');" role='button' alt="Desativa o usuário" title="Desativa o usuário">
-                            <i class='glyphicon glyphicon-ban-circle'></i>
-                        </a>
-                        @endif
-                        @endif
-
                         @if(Auth::user()->hasPermission('users_show') && !$user->isSuperAdmin())
                         <!-- visualização de dados-->
                         <a class='btn btn-info btn-xs' style="float:left; margin-right: 2px;" href='{{ route("users.show", $user->id) }}' role='button' alt="Visualiza os dados do usuário" title="Visualiza os dados do usuário">

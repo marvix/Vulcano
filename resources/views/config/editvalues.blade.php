@@ -17,21 +17,6 @@
 @stop
 @section('content')
 
-@if (session('message'))
-<div class="alert alert-{{ session('type') }} alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-    @if(session('type') == 'success')
-    <span style="font-size:24px;">Eba!!!</span>
-    @else
-    <span style="font-size:24px;">Whops!!!</span>
-    @endif
-    <br />{{ session('message') }}
-</div>
-@endif
-
-
 <form action="{{ route('config.savevalues') }}" method="post" role="form" enctype="multipart/form-data">
     {{ csrf_field() }}
     <!-- <input type="hidden" name="_method" value="PUT"> -->
@@ -43,51 +28,42 @@
 
         <div class="panel-body">
             @foreach($config as $c)
-
             @if($c->type == "text")
             <div class="row">
                 <div class="col-sm-7">
                     <div class="form-group">
-                        <label for="{{ $c->slug_key }}">{{ $c->description }}
-                            <span class="text-red">*</span>
-                        </label>
-
+                        <label for="{{ $c->slug_key }}">{{ $c->description }} <span class="text-red">*</span></label>
                         <input type="text" class="form-control {{ $errors->has('$c->slug_key') ? 'is-invalid' : '' }}" id="{{ $c->slug_key }}" name="{{ $c->slug_key }}" value="{{ $c->value }}" required>
                     </div>
-                    @if($errors->has('$c->slug_key'))
-                    <span class='invalid-feedback text-red'>
-                        {{ $errors->first('$c->slug_key') }}
-                    </span>
-                    @endif
                 </div>
-
+                @if($errors->has('$c->slug_key'))
+                <span class='invalid-feedback text-red'>
+                    {{ $errors->first('$c->slug_key') }}
+                </span>
+                @endif
             </div>
             @endif
 
             @if($c->type == "integer")
             @php
-            if($c->dataenum) {
-            $range = explode(',', $c->dataenum);
-            }
+                if($c->dataenum) {
+                    $range = explode(',', $c->dataenum);
+                }
             @endphp
-            <div class="row">
 
+            <div class="row">
                 <div class="col-sm-3">
                     <div class="form-group">
-                        <label for="{{ $c->slug_key }}">{{ $c->description }}
-                            <span class="text-red">*</span>
-                        </label>
-
+                        <label for="{{ $c->slug_key }}">{{ $c->description }} <span class="text-red">*</span></label>
                         <input type="number" class="form-control {{ $errors->has('$c->slug_key') ? 'is-invalid' : '' }}" id="{{ $c->slug_key }}" name="{{ $c->slug_key }}" value="{{ $c->value }}" required @if(isset($range[0])) min="{{$range[0]}}" @endif @if(isset($range[1])) max="{{$range[1]}}" @endif>
                     </div>
-                    @if($errors->has('$c->slug_key'))
-                    <span class='invalid-feedback text-red'>
-                        {{ $errors->first('$c->slug_key') }}
-                    </span>
-                    @endif
                 </div>
+                @if($errors->has('$c->slug_key'))
+                <span class='invalid-feedback text-red'>
+                    {{ $errors->first('$c->slug_key') }}
+                </span>
+                @endif
             </div>
-
             @endif
             @endforeach
         </div> <!-- panel-body -->

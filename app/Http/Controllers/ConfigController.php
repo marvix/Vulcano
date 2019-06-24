@@ -80,7 +80,7 @@ class ConfigController extends Controller
         $config = new Config();
         $config->order = $request->order;
         $config->key = $request->key;
-        $config->slug_key = str_slug($request->key,"_");
+        $config->slug_key = str_slug($request->key, '_');
         $config->type = $request->type;
         $config->description = $request->description;
         $config->dataenum = $request->dataenum;
@@ -161,7 +161,7 @@ class ConfigController extends Controller
 
         $config->order = $request->order;
         $config->key = $request->key;
-        $config->slug_key = str_slug($request->key,"_");
+        $config->slug_key = str_slug($request->key, '_');
         $config->type = $request->type;
         $config->description = $request->description;
         $config->dataenum = $request->dataenum;

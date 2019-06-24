@@ -68,6 +68,14 @@
                 </tr>
 
                 <tr>
+                    <td class="col-sm-2">É Super Admin?</td>
+                    <td class="col-sm-10">
+                        @if($user->is_superadmin)<span class="label label-success">Sim</span>@endif
+                        @if(!$user->is_superadmin)<span class="label label-danger">Não</span>@endif
+                    </td>
+                </tr>
+
+                <tr>
                     <td class='col-sm-2'>E-mail</td>
                     <td class='col-sm-10'><a href="mailto:{{ $user->email }}">{{ $user->email }}</a></td>
                 </tr>
@@ -86,7 +94,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class='col-sm-2'>Data de Criação</td>
+                    <td class='col-sm-2'>Criado em</td>
                     <td class='col-sm-10'>
                         @if(null != $user->created_at)
                         {{ $user->created_at->format('d/m/Y H:i') }}
@@ -95,7 +103,7 @@
                 </tr>
 
                 <tr>
-                    <td class='col-sm-2'>Data da Última Atualização</td>
+                    <td class='col-sm-2'>Atualizado em</td>
                     <td class='col-sm-10'>
                         @if (null != $user->updated_at)
                         {{ $user->updated_at->format('d/m/Y H:i') }}

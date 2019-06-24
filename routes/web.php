@@ -28,7 +28,9 @@ Route::get('/home', 'HomeController@index')->name('home');
  */
 Route::get('/profile/edit', 'ProfilesController@edit')->name('profile.edit');
 Route::put('/profile/{id}', 'ProfilesController@update')->name('profile.update');
-Route::get('/profile/deleteAvatarProfile/', 'ProfilesController@deleteAvatarProfile')->name('delete.avatar.profile');
+Route::get('/profile/deleteAvatarProfile', 'ProfilesController@deleteAvatarProfile')->name('delete.avatar.profile');
+Route::get('/profile/password', 'ProfilesController@editPassword')->name('profile.password.edit');
+Route::put('/profile/password/{id}', 'ProfilesController@updatePassword')->name('profile.password.save');
 
 /*
  * ----------------------------------------------------------------------------
@@ -43,8 +45,6 @@ Route::get('/users/{id}/edit', 'UsersController@edit')->name('users.edit');
 Route::put('/users/{id}', 'UsersController@update')->name('users.update');
 //Route::delete('/users/{id}/delete', 'UsersController@destroy')->name('users.destroy');
 Route::get('/users/deleteavataruser/{id}', 'UsersController@deleteAvatarUser')->name('delete.avatar.user');
-Route::get('/users/active/{id}', 'UsersController@activeUser')->name('users.active');
-Route::get('/users/desactive/{id}', 'UsersController@desactiveUser')->name('users.desactive');
 Route::get('/users/delete/{id}', 'UsersController@getDelete')->name('users.delete');
 
 /*
@@ -87,3 +87,16 @@ Route::get('/permissions/{id}', 'PermissionsController@show')->name('permissions
 Route::get('/permissions/{id}/edit', 'PermissionsController@edit')->name('permissions.edit');
 Route::put('/permissions/{id}', 'PermissionsController@update')->name('permissions.update');
 Route::get('/permissions/delete/{id}', 'PermissionsController@getDelete')->name('permissions.delete');
+
+/*
+ * ----------------------------------------------------------------------------
+ * Rotas para a tabela de modules
+ * ----------------------------------------------------------------------------
+ */
+Route::get('/modules', 'ModulesController@index')->name('modules.index');
+Route::get('/modules/create', 'ModulesController@create')->name('modules.create');
+Route::post('/modules', 'ModulesController@store')->name('modules.store');
+Route::get('/modules/{id}', 'ModulesController@show')->name('modules.show');
+Route::get('/modules/{id}/edit', 'ModulesController@edit')->name('modules.edit');
+Route::put('/modules/{id}', 'ModulesController@update')->name('modules.update');
+Route::get('/modules/delete/{id}', 'ModulesController@getDelete')->name('modules.delete');

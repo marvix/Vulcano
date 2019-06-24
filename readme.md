@@ -21,6 +21,7 @@ The **Vulcano Project** is intended to be a starting point for other projects ba
 - creativeorange/gravatar: ^1.0
 - davejamesmiller/laravel-breadcrumbs: ^5.2
 - doctrine/dbal: ^2.9
+- garygreen/pretty-routes: ^1.0
 - igorescobar/jquery-mask-plugin: ^1.14
 - jenssegers/date: ^3.5
 - jeroennoten/laravel-adminlte: ^1.25

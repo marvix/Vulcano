@@ -116,18 +116,11 @@ return [
     */
 
     'menu' => [
-        'PRINCIPAL',
         [
             'text' => 'Dashboard',
             'route'  => 'home',
             'icon' => 'dashboard',
         ],
-        [
-            'text' => 'Meus Dados',
-            'route'  => 'profile.edit',
-            'icon' => 'user',
-        ],
-
         'GESTÃO',
         [
             'text'    => 'Cadastro 1',
@@ -188,14 +181,34 @@ return [
                     'can' => ['config_access'],
                     'route' => 'config.editvalues',
                 ],
+                [
+                    'text' => 'Módulos',
+                    'icon' => 'cogs',
+                    'can' => ['modules_access'],
+                    'route' => 'modules.index',
+                ],
             ],
         ],
         [
-            'text' => 'Log do Sistema',
-            'url' => '/log-viewer',
-            'icon' => 'eye',
-            'target' => '_blank',
-            'can' => 'log_access',
+            'text' => 'Utilitários',
+            'icon' => 'cogs',
+            'can' => ['log_access', 'routes_access'],
+            'submenu' => [
+                [
+                    'text' => 'Log do Sistema',
+                    'url' => '/log-viewer',
+                    'icon' => 'eye',
+                    'target' => '_blank',
+                    'can' => 'log_access',
+                ],
+                [
+                    'text' => 'Rotas do Sistema',
+                    'url' => '/routes',
+                    'icon' => 'eye',
+                    'target' => '_blank',
+                    'can' => 'routes_access',
+                ],
+            ],
         ],
     ],
 
@@ -237,5 +250,6 @@ return [
         'chartjs'    => true,
         'bootstrap-select' => true,
         'sweetalert2' => true,
+        'bootstrap-toggle' => true,
     ],
 ];

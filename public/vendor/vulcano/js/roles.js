@@ -37,10 +37,12 @@ function deleteRole(route) {
 }
 
 function changeSuperAdmin() {
-    var is_superadmin = document.getElementById("is_superadmin").value;
+//    var is_superadmin = document.getElementById("is_superadmin").value;
+    var is_superadmin = document.querySelector('input[id="is_superadmin"]');
+
     var panel = document.getElementById("roles-permissions");
 
-    if (is_superadmin == 1) {
+    if (is_superadmin.checked) {
         panel.style.display="none";
     } else {
         panel.style.display="block";

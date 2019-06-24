@@ -47,8 +47,11 @@ class RolesController extends Controller
         // Verifica se o usuário tem direito de acesso
         abort_unless(auth()->user()->hasPermission('roles_create'), 403);
 
+        // Obtém todas os módulos do sistema
+        $modules = Module::all();
+
         // Chama a view com o formulário para inserir um novo registro
-        return view('roles.create');
+        return view('roles.create', ['modules' => $modules]);
     }
 
     /**
@@ -64,8 +67,8 @@ class RolesController extends Controller
 
         // Cria as regras de validação dos dados do formulário
         $rules = [
-            'name' => 'required|min:5|max:191',
-            'is_superadmin' => 'required',
+            'name' => 'required|min:3|max:191',
+//            'is_superadmin' => 'required',
             'description' => 'required|min:6|max:191',
         ];
 
@@ -76,11 +79,32 @@ class RolesController extends Controller
         $role = new Role();
         $role->name = $request->name;
         $role->description = $request->description;
-        $role->is_superadmin = $request->is_superadmin;
+        $role->is_superadmin = ($request->is_superadmin == 'on') ? 1 : 0;
         $role->guard_name = 'web';
 
         // Salva os dados na tabela
         $role->save();
+
+        $permission = [];
+        for ($i = 0; $i < count($request->module); $i++) {
+            if (isset($request->acessar[$i])) {
+                $permission[] = $request->acessar[$i];
+            }
+            if (isset($request->criar[$i])) {
+                $permission[] = $request->criar[$i];
+            }
+            if (isset($request->editar[$i])) {
+                $permission[] = $request->editar[$i];
+            }
+            if (isset($request->visualizar[$i])) {
+                $permission[] = $request->visualizar[$i];
+            }
+            if (isset($request->excluir[$i])) {
+                $permission[] = $request->excluir[$i];
+            }
+        }
+
+        $role->syncPermissions($permission);
 
         // Retorna para view index com uma flash message
         Alert::success('Papel cadastrado.', 'Sucesso', 'Success')->autoclose(1000);
@@ -102,8 +126,18 @@ class RolesController extends Controller
         // Localiza e retorna os dados de um registro pelo ID
         $role = Role::findOrFail($id);
 
+        // Obtém todas os módulos do sistema
+        $modules = Module::all();
+
+        // Obtém todas as permissões de um determinado papel
+        $role_permissions = $role->permissions()->orderBy('name')->get();
+        $permissions = [];
+        foreach ($role_permissions as $rp) {
+            $permissions[] = $rp->name;
+        }
+
         // Chama a view para exibir os dados na tela
-        return view('roles.show', ['role' => $role]);
+        return view('roles.show', ['role' => $role,'modules' => $modules, 'permissions' => $permissions]);
     }
 
     /**
@@ -117,11 +151,11 @@ class RolesController extends Controller
         // Verifica se o usuário tem direito de acesso
         abort_unless(auth()->user()->hasPermission('roles_edit'), 403);
 
-        // Localiza o registro pelo seu ID
-        $role = Role::findOrFail($id);
-
         // Obtém todas os módulos do sistema
         $modules = Module::all();
+
+        // Localiza o registro pelo seu ID
+        $role = Role::findOrFail($id);
 
         // Obtém todas as permissões de um determinado papel
         $role_permissions = $role->permissions()->get();
@@ -148,8 +182,8 @@ class RolesController extends Controller
 
         // Cria as regras de validação dos dados do formulário
         $rules = [
-            'name' => 'required|min:5|max:191',
-            'is_superadmin' => 'required',
+            'name' => 'required|min:3|max:191',
+//            'is_superadmin' => 'required',
             'description' => 'required|min:6|max:191',
         ];
 
@@ -160,7 +194,7 @@ class RolesController extends Controller
         $role = Role::findOrFail($id);
         $role->name = $request->name;
         $role->description = $request->description;
-        $role->is_superadmin = $request->is_superadmin;
+        $role->is_superadmin = ($request->is_superadmin == 'on') ? 1 : 0;
         $role->guard_name = 'web';
 
         // Salva os dados na tabela
@@ -191,17 +225,6 @@ class RolesController extends Controller
         Alert::success('Dados atualizados.', 'Sucesso', 'Success')->autoclose(1000);
 
         return redirect()->route('roles.index');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 
     /**
