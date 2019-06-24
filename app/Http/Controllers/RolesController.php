@@ -34,7 +34,7 @@ class RolesController extends Controller
         $roles = Role::orderBy('id', 'asc')->paginate(5);
 
         //  Chama a view passando os dados retornados da tabela
-        return view('roles.index', ['roles' => $roles]);
+        return view('admin.roles.index', ['roles' => $roles]);
     }
 
     /**
@@ -51,7 +51,7 @@ class RolesController extends Controller
         $modules = Module::all();
 
         // Chama a view com o formulário para inserir um novo registro
-        return view('roles.create', ['modules' => $modules]);
+        return view('admin.roles.create', ['modules' => $modules]);
     }
 
     /**
@@ -137,7 +137,7 @@ class RolesController extends Controller
         }
 
         // Chama a view para exibir os dados na tela
-        return view('roles.show', ['role' => $role,'modules' => $modules, 'permissions' => $permissions]);
+        return view('admin.roles.show', ['role' => $role,'modules' => $modules, 'permissions' => $permissions]);
     }
 
     /**
@@ -165,7 +165,7 @@ class RolesController extends Controller
         }
 
         // Chama a view com o formulário para edição do registro
-        return view('roles.edit', ['role' => $role, 'permissions' => $permissions, 'modules' => $modules]);
+        return view('admin.roles.edit', ['role' => $role, 'permissions' => $permissions, 'modules' => $modules]);
     }
 
     /**

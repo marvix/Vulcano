@@ -17,7 +17,9 @@
 @stop
 
 @section('content')
-
+<div class="row">
+    @widget('modules_widget')
+</div>
 <div class="panel panel-default">
     <!-- Default panel contents -->
     <div class="panel-heading clearfix">

@@ -37,7 +37,7 @@ class ModulesController extends Controller
         $modules = Module::orderBy('id', 'asc')->paginate(Session::get('records_by_page'));
 
         //  Chama a view passando os dados retornados da tabela
-        return view('modules.index', ['modules' => $modules]);
+        return view('admin.modules.index', ['modules' => $modules]);
     }
 
     /**
@@ -53,7 +53,7 @@ class ModulesController extends Controller
         abort_unless(auth()->user()->hasPermission('modules_create'), 403);
 
         // Chama a view com o formulário para inserir um novo registro
-        return view('modules.create');
+        return view('admin.modules.create');
     }
 
     /**
@@ -118,7 +118,7 @@ class ModulesController extends Controller
         $module = Module::findOrFail($id);
 
         // Chama a view para exibir os dados na tela
-        return view('modules.show', ['module' => $module]);
+        return view('admin.modules.show', ['module' => $module]);
     }
 
     /**
@@ -138,7 +138,7 @@ class ModulesController extends Controller
         $module = Module::findOrFail($id);
 
         // Chama a view com o formulário para edição do registro
-        return view('modules.edit', ['module' => $module]);
+        return view('admin.modules.edit', ['module' => $module]);
     }
 
     /**

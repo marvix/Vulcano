@@ -34,7 +34,7 @@ class PermissionsController extends Controller
         $permissions = Permission::orderBy('id', 'asc')->paginate(Session::get('records_by_page'));
 
         //  Chama a view passando os dados retornados da tabela
-        return view('permissions.index', ['permissions' => $permissions]);
+        return view('admin.permissions.index', ['permissions' => $permissions]);
     }
 
     /**
@@ -48,7 +48,7 @@ class PermissionsController extends Controller
         abort_unless(auth()->user()->hasPermission('permissions_create'), 403);
 
         // Chama a view com o formulário para inserir um novo registro
-        return view('permissions.create');
+        return view('admin.permissions.create');
     }
 
     /**
@@ -102,7 +102,7 @@ class PermissionsController extends Controller
         $permission = Permission::findOrFail($id);
 
         // Chama a view para exibir os dados na tela
-        return view('permissions.show', ['permission' => $permission]);
+        return view('admin.permissions.show', ['permission' => $permission]);
     }
 
     /**
@@ -120,7 +120,7 @@ class PermissionsController extends Controller
         $permission = Permission::findOrFail($id);
 
         // Chama a view com o formulário para edição do registro
-        return view('permissions.edit', ['permission' => $permission]);
+        return view('admin.permissions.edit', ['permission' => $permission]);
     }
 
     /**

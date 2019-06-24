@@ -58,7 +58,7 @@ class UsersController extends Controller
         // dd($users,$users->hasAnyRole(Role::all()))  ;
 
         //  Chama a view passando os dados retornados da tabela
-        return view('users.index', ['users' => $users]);
+        return view('admin.users.index', ['users' => $users]);
     }
 
     /**
@@ -78,7 +78,7 @@ class UsersController extends Controller
         $roles = Role::where('name', '!=', 'Super Admin')->get();
 
         // Chama a view com o formulário para inserir um novo registro
-        return view('users.create', ['roles' => $roles]);
+        return view('admin.users.create', ['roles' => $roles]);
     }
 
     /**
@@ -153,7 +153,7 @@ class UsersController extends Controller
         $avatar = $user->getFirstMediaUrl('avatars');
 
         // Chama a view para exibir os dados na tela
-        return view('users.show', ['user' => $user, 'avatar' => $avatar]);
+        return view('admin.users.show', ['user' => $user, 'avatar' => $avatar]);
     }
 
     /**
@@ -183,7 +183,7 @@ class UsersController extends Controller
         }
 
         // Chama a view com o formulário para edição do registro
-        return view('users.edit', ['user' => $user, 'avatar' => $avatar, 'avatar_id' => $avatar_id, 'roles' => $roles]);
+        return view('admin.users.edit', ['user' => $user, 'avatar' => $avatar, 'avatar_id' => $avatar_id, 'roles' => $roles]);
     }
 
     /**

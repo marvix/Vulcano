@@ -45,7 +45,7 @@ class ProfilesController extends Controller
             $avatar_id = Auth::user()->getMedia('avatars')->first()->id;
         }
 
-        return view('profiles.edit', ['user' => $user, 'avatar' => $avatar, 'avatar_id' => $avatar_id, 'roles' => $roles]);
+        return view('admin.profiles.edit', ['user' => $user, 'avatar' => $avatar, 'avatar_id' => $avatar_id, 'roles' => $roles]);
     }
 
     /**
@@ -129,7 +129,7 @@ class ProfilesController extends Controller
 
         $user = Auth::user();
 
-        return view('profiles.editpassword', ['user' => $user]);
+        return view('admin.profiles.editpassword', ['user' => $user]);
     }
 
     /**

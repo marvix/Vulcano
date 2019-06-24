@@ -16,15 +16,15 @@
 @stop
 
 @section('content')
-<div class="jumbotron text-center bg-gray">
+<!-- <div class="jumbotron text-center bg-gray">
     <div class="container">
         <img src="{{ asset('img/logos/logo.png') }}" width="70px" ;alt="Vulcano">
         <h2>Bem vindo</h2>
         <h3>Você agora está logado no sistema!!</h3>
     </div>
-</div>
+</div> -->
 
 <div class="row">
-        @widget('dashboard_widget')
+        @widget('users_widget')
 </div>
 @stop

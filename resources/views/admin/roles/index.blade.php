@@ -17,6 +17,9 @@
 @stop
 
 @section('content')
+<div class="row">
+    @widget('roles_widget')
+</div>
 
 <div class="panel panel-default">
     <!-- Default panel contents -->

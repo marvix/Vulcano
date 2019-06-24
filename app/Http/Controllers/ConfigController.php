@@ -36,7 +36,7 @@ class ConfigController extends Controller
         $configs = Config::orderBy('id', 'asc')->paginate($this->nroRecordsByPage());
 
         //  Chama a view passando os dados retornados da tabela
-        return view('config.index', ['configs' => $configs]);
+        return view('admin.config.index', ['configs' => $configs]);
     }
 
     /**
@@ -50,7 +50,7 @@ class ConfigController extends Controller
         abort_unless(auth()->user()->hasPermission('config_create'), 403);
 
         // Chama a view com o formulário para inserir um novo registro
-        return view('config.create');
+        return view( 'admin.config.create');
     }
 
     /**
@@ -111,7 +111,7 @@ class ConfigController extends Controller
         $config = Config::findOrFail($id);
 
         // Chama a view para exibir os dados na tela
-        return view('config.show', ['config' => $config]);
+        return view( 'admin.config.show', ['config' => $config]);
     }
 
     /**
@@ -129,7 +129,7 @@ class ConfigController extends Controller
         $config = Config::findOrFail($id);
 
         // Chama a view com o formulário para edição do registro
-        return view('config.edit', ['config' => $config]);
+        return view( 'admin.config.edit', ['config' => $config]);
     }
 
     /**
@@ -222,7 +222,7 @@ class ConfigController extends Controller
         $config = Config::orderBy('order', 'asc')->get();
 
         // Chama a view com o formulário para edição do registro
-        return view('config.editvalues', ['config' => $config]);
+        return view( 'admin.config.editvalues', ['config' => $config]);
     }
 
     public function savevalues(Request $request)

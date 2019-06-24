@@ -3,6 +3,7 @@
 namespace App\Widgets;
 
 use Arrilot\Widgets\AbstractWidget;
+use App\User;
 
 class UsersWidget extends AbstractWidget
 {
@@ -11,7 +12,11 @@ class UsersWidget extends AbstractWidget
      *
      * @var array
      */
-    protected $config = [];
+    protected $config = [
+        'title' => 'Usuários',
+        'color' => 'green',
+        'icon' => 'people',
+    ];
 
     /**
      * Treat this method as a controller action.
@@ -19,10 +24,11 @@ class UsersWidget extends AbstractWidget
      */
     public function run()
     {
-        //
+        $rows = User::count();
 
-        return view('widgets.users_widget', [
+        return view('widgets.infobox_widget', [
             'config' => $this->config,
+            'value' => $rows
         ]);
     }
 }

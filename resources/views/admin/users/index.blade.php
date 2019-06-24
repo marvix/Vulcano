@@ -17,6 +17,12 @@
 @stop
 
 @section('content')
+<div class="row">
+    @widget('admins_widget')
+    @widget('users_widget')
+    @widget('users_actives_widget')
+    @widget('users_inactives_widget')
+</div>
 
 <div class="panel panel-default">
     <!-- Default panel contents -->
