@@ -7,7 +7,7 @@ The **Vulcano Project** is intended to be a starting point for other projects ba
 
 ## Laravel Environment
 
-- PHP Version: ^7.1
+- PHP Version: ^7.2
 - Laravel Version: 5.8.*
 - Timezone: America/Sao_Paulo
 - Locale: pt_BR
@@ -30,6 +30,8 @@ The **Vulcano Project** is intended to be a starting point for other projects ba
 - spatie/laravel-medialibrary: ^7.0.0
 - spatie/laravel-permission: ^2.37
 - uxweb/sweet-alert: ^2.0
+- yajra/laravel-datatables-oracle: ^9.4
+
 
 ## Third-party Packages for Development Mode included
 
@@ -38,6 +40,7 @@ The **Vulcano Project** is intended to be a starting point for other projects ba
 - beyondcode/laravel-dump-server: ^1.0,
 - deployer/deployer: ^6.4,
 - matt-allan/laravel-code-style: ^0.3.0
+- nunomaduro/phpinsights: ^1.7
 
 ## Cloning this project
 
