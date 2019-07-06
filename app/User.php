@@ -103,10 +103,10 @@ class User extends Authenticatable implements HasMedia
         }
 
         $permissions = $this->getPermissionsViaRoles();
-        foreach ($permissions as $p) {
-            if (is_array($permission) && in_array($p->name, $permission)) {
+        foreach ($permissions as $per) {
+            if (is_array($permission) && in_array($per->name, $permission)) {
                 return true;
-            } elseif ($p->name == $permission) {
+            } elseif ($per->name == $permission) {
                 return true;
             }
         }

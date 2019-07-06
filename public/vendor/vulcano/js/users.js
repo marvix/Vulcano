@@ -1,8 +1,13 @@
 $(document).ready(function() {
     $('#table-usuarios').DataTable({
-        paging: false,
-        info: false,
-        searching: false,
+        paging: true,
+        info: true,
+        searching: true,
+        serverside: true,
+        processing: true,
+        ajax: {
+            url: "{{ route('users.index') }}",
+        },
         language: {
             url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
         },
@@ -11,6 +16,7 @@ $(document).ready(function() {
             { name: 'Usuário' },
             { name: 'E-mail' },
             { name: 'Papel' },
+            { name: 'Super Admin?'},
             { name: 'Ativo?' },
             { name: 'Avatar', orderable: false, searchable: false },
             { name: 'Ações', orderable: false, searchable: false }

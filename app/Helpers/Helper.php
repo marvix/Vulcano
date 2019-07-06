@@ -44,8 +44,7 @@ class Helper
     {
         $imgNumber = self::countFiles(public_path().$path, $pattern);
         $path = asset($path).'/'.$prefix;
-        $backgroundImage = $path.rand(1, $imgNumber).'.jpg';
 
-        return $backgroundImage;
+        return $path.rand(1, $imgNumber).'.jpg';
     }
 }

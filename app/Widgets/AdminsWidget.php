@@ -17,8 +17,8 @@ class AdminsWidget extends AbstractWidget
     {
         $users = User::all();
         $count = 0;
-        foreach ($users as $u) {
-            $roles = $u->roles;
+        foreach ($users as $user) {
+            $roles = $user->roles;
             if($roles[0]->is_superadmin) {
                 $count++;
             }

@@ -10,7 +10,7 @@ class VulcanoGateFilter implements FilterInterface
 {
     public function transform($item, Builder $builder)
     {
-        $permission = [];
+        $permissions = [];
         if (isset($item['can'])) {
             $permissions = $item['can'];
         }

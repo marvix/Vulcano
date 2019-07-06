@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use DB;
 use Auth;
 use Hash;
 use Alert;
@@ -10,6 +9,7 @@ use Session;
 use App\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
+use Datatables;
 
 class UsersController extends Controller
 {
@@ -25,22 +25,6 @@ class UsersController extends Controller
     }
 
     /**
-     * Define o nº de registros por página a serem exibidos.
-     *
-     * @return int $nroRecorByPage
-     */
-    public function nroRecordsByPage()
-    {
-        $nroRecordByPage = Session::get('records_by_page');
-
-        if ($nroRecordByPage) {
-            return $nroRecordByPage;
-        } else {
-            return 10;
-        }
-    }
-
-    /**
      * ------------------------------------------------------------------------
      * Utilizado para exibir uma lista de classificações
      * ------------------------------------------------------------------------.
@@ -52,13 +36,27 @@ class UsersController extends Controller
         // Verifica se o usuário tem direito de acesso
         abort_unless(Auth::user()->hasPermission('users_access'), 403);
 
+        if (request()->ajax()) {
+            $query = User::select(['id', 'name', 'email', 'active']);
+            $datatable = Datatables::of($query);
+                // ->addIndexColumn()
+                // ->addColumn('action', 'action_button')
+                // ->rawColumns(['action'])
+                // ->make();
+                // ->toJson();
+            return $datatable->blacklist(['action'])->make(true);
+            // return $users;
+        }
+
+        return view('admin.users.index2');
+
         // Obtém todos os registros da tabela de usuários
-        $users = User::orderBy('id', 'desc')->paginate($this->nroRecordsByPage());
+        // $users = User::orderBy('id', 'desc')->paginate($this->nroRecordsByPage());
 
         // dd($users,$users->hasAnyRole(Role::all()))  ;
 
         //  Chama a view passando os dados retornados da tabela
-        return view('admin.users.index', ['users' => $users]);
+        // return view('admin.users.index', ['users' => $users]);
     }
 
     /**
@@ -302,4 +300,22 @@ class UsersController extends Controller
 
         return redirect()->back();
     }
+
+    /**
+     * Define o nº de registros por página a serem exibidos.
+     *
+     * @return int $nroRecorByPage
+     */
+    public function nroRecordsByPage()
+    {
+        $nroRecordByPage = Session::get('records_by_page');
+
+        if ($nroRecordByPage) {
+            return $nroRecordByPage;
+        } else {
+            return 10;
+        }
+    }
+
+
 }

@@ -268,11 +268,11 @@ class ConfigController extends Controller
     public static function sessionUpdate()
     {
         $configs = DB::table('config')->get();
-        foreach ($configs as $c) {
-            if (Session::has($c->slug_key)) {
-                Session::forget($c->slug_key);
+        foreach ($configs as $config) {
+            if (Session::has($config->slug_key)) {
+                Session::forget($config->slug_key);
             }
-            Session::put($c->slug_key, $c->value);
+            Session::put($config->slug_key, $config->value);
         }
     }
 

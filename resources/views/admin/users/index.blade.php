@@ -152,7 +152,10 @@
 @stop
 
 @section('js')
-<script src="{{ asset('vendor/vulcano/js/users.js') }}"></script>
+<!-- <script src="{{ asset('vendor/vulcano/js/users.js') }}"></script> -->
+<script>
+@include('admin.assets.js.users')
+</script>
 @stop
 
 @section('css')

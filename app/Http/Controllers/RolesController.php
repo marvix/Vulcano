@@ -86,7 +86,8 @@ class RolesController extends Controller
         $role->save();
 
         $permission = [];
-        for ($i = 0; $i < count($request->module); $i++) {
+        $items = count($request->module);
+        for ($i = 0; $i < $items; $i++) {
             if (isset($request->acessar[$i])) {
                 $permission[] = $request->acessar[$i];
             }
@@ -132,8 +133,8 @@ class RolesController extends Controller
         // Obtém todas as permissões de um determinado papel
         $role_permissions = $role->permissions()->orderBy('name')->get();
         $permissions = [];
-        foreach ($role_permissions as $rp) {
-            $permissions[] = $rp->name;
+        foreach ($role_permissions as $role_perm) {
+            $permissions[] = $role_perm->name;
         }
 
         // Chama a view para exibir os dados na tela
@@ -160,8 +161,8 @@ class RolesController extends Controller
         // Obtém todas as permissões de um determinado papel
         $role_permissions = $role->permissions()->get();
         $permissions = [];
-        foreach ($role_permissions as $rp) {
-            $permissions[] = $rp->name;
+        foreach ($role_permissions as $rol_perm) {
+            $permissions[] = $rol_perm->name;
         }
 
         // Chama a view com o formulário para edição do registro
@@ -201,7 +202,8 @@ class RolesController extends Controller
         $role->save();
 
         $permission = [];
-        for ($i = 0; $i < count($request->module); $i++) {
+        $items = count($request->module);
+        for ($i = 0; $i < $items; $i++) {
             if (isset($request->acessar[$i])) {
                 $permission[] = $request->acessar[$i];
             }
