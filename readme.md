@@ -49,7 +49,6 @@ The **Vulcano Project** is intended to be a starting point for other projects ba
 - beyondcode/laravel-dump-server: ^1.0,
 - deployer/deployer: ^6.4,
 - matt-allan/laravel-code-style: ^0.3.0
-- nunomaduro/phpinsights: ^1.7
 
 ## Cloning this project
 
