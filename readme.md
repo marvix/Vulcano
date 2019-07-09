@@ -16,7 +16,7 @@ The **Vulcano Project** is intended to be a starting point for other projects ba
 
 ## Laravel Environment
 
-- PHP Version: ^7.2
+- PHP Version: ^7.1
 - Laravel Version: 5.8.*
 - Timezone: America/Sao_Paulo
 - Locale: pt_BR
