@@ -1,13 +1,13 @@
 <p align="center">
 <img src="https://github.com/fsclaro/Vulcano/blob/master/public/img/logos/project_logo.png" width="400px">
+</p>
+
 [![Latest Stable Version](https://poser.pugx.org/fsclaro/vulcano/v/stable)](https://packagist.org/packages/fsclaro/vulcano)
 [![Total Downloads](https://poser.pugx.org/fsclaro/vulcano/downloads)](https://packagist.org/packages/fsclaro/vulcano)
 [![Latest Unstable Version](https://poser.pugx.org/fsclaro/vulcano/v/unstable)](https://packagist.org/packages/fsclaro/vulcano)
 [![Monthly Downloads](https://poser.pugx.org/fsclaro/vulcano/d/monthly)](https://packagist.org/packages/fsclaro/vulcano)
 [![Daily Downloads](https://poser.pugx.org/fsclaro/vulcano/d/daily)](https://packagist.org/packages/fsclaro/vulcano)
 [![License](https://poser.pugx.org/fsclaro/vulcano/license)](https://packagist.org/packages/fsclaro/vulcano)
-
-</p>
 
 
 ## About this project
