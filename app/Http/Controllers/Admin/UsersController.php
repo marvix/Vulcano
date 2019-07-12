@@ -37,17 +37,17 @@ class UsersController extends Controller
         // Verifica se o usuário tem direito de acesso
         abort_unless(Auth::user()->hasPermission('users_access'), 403);
 
-        if (request()->ajax()) {
-            $query = User::select(['id', 'name', 'email', 'active']);
-            $datatable = Datatables::of($query);
-                // ->addIndexColumn()
-                // ->addColumn('action', 'action_button')
-                // ->rawColumns(['action'])
-                // ->make();
-                // ->toJson();
-            return $datatable->blacklist(['action'])->make(true);
-            // return $users;
-        }
+        // if (request()->ajax()) {
+        //     $query = User::select(['id', 'name', 'email', 'active']);
+        //     $datatable = Datatables::of($query);
+        //         // ->addIndexColumn()
+        //         // ->addColumn('action', 'action_button')
+        //         // ->rawColumns(['action'])
+        //         // ->make();
+        //         // ->toJson();
+        //     return $datatable->blacklist(['action'])->make(true);
+        //     // return $users;
+        // }
 
         return view('admin.users.index2');
 
@@ -60,6 +60,11 @@ class UsersController extends Controller
         // return view('admin.users.index', ['users' => $users]);
     }
 
+    public function getData() {
+        $query = User::select( ['id', 'name', 'email', 'active', 'gender', 'skin' ]);
+
+        return Datatables::of($query)->make();
+    }
     /**
      * ------------------------------------------------------------------------
      * Utilizado para exibir a view com o formulário para a inclusão de

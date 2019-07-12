@@ -5,22 +5,18 @@ $(document).ready(function() {
         searching: true,
         serverside: true,
         processing: true,
-        ajax: {
-            url: "{{ route('users.index') }}",
-        },
+        ajax: "{{ route('users.getdata') }}",
         language: {
             url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
         },
         columns: [
-            { data: 'id', name: 'ID' },
-            { data: 'name', name: 'Usuário' },
-            { data: 'email', name: 'E-mail' },
-            // { data: 'roles', name: 'Papel' },
-        //     { data: 'is_superadmin', name: 'Super Admin?'},
-            { data: 'active', name: 'Ativo?' },
-        //     { name: 'Avatar', orderable: false, searchable: false },
-        //     { data: 'action', name: 'Ações', orderable: false, searchable: false }
-        ],
+            { data:0, name: "id" },
+            { data:1, name: "name" },
+            { data:2, name: "email" },
+            { data:3, name: "active" },
+            { data:4, name: "gender" },
+            { data:4, name: "skin" }
+        ]
     });
 });
 

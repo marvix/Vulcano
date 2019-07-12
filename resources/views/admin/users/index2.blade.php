@@ -52,14 +52,11 @@
                     <th>ID</th>
                     <th>Usuário</th>
                     <th>E-mail</th>
-                    <th class='text-center'>Papel</th>
-                    <th class='text-center'>Super Admin?</th>
-                    <th class='text-center'>Ativo?</th>
-                    <th class='text-center'>Avatar</th>
-                    <th class='text-center'>Ações</th>
+                    <th>Ativo?</th>
+                    <th>Gênero</th>
+                    <th>Skin</th>
                 </tr>
             </thead>
-
             <tbody>
             </tbody>
         </table>
