@@ -3,7 +3,7 @@
 namespace App\Widgets;
 
 use Arrilot\Widgets\AbstractWidget;
-use App\Module;
+use App\Models\Module;
 
 class ModulesWidget extends AbstractWidget
 {
