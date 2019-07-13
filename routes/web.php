@@ -37,7 +37,6 @@ Route::put('/profile/password/{id}', 'Admin\ProfilesController@updatePassword')-
  * Rotas para a tabela de usuários
  * ----------------------------------------------------------------------------
  */
-Route::get('/users/getdata',  'Admin\UsersController@getData')->name('users.getdata');
 Route::get('/users', 'Admin\UsersController@index')->name('users.index');
 Route::get('/users/create', 'Admin\UsersController@create')->name('users.create');
 Route::post('/users', 'Admin\UsersController@store')->name('users.store');

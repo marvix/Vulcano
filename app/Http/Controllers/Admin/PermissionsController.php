@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use Alert;
 use Session;
-#use App\Models\Permission;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
