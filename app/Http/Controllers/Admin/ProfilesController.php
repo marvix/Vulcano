@@ -9,7 +9,7 @@ use Session;
 use App\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
-use App\Http\Controllers\Controller as Controller;
+use App\Http\Controllers\Controller;
 
 class ProfilesController extends Controller
 {

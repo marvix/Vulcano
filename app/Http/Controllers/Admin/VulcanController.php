@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use DB;
 use Session;
-use App\Http\Controllers\Controller as Controller;
+use App\Http\Controllers\Controller;
 
 class VulcanController extends Controller
 {

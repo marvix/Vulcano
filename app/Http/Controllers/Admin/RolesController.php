@@ -6,7 +6,7 @@ use Alert;
 use App\Models\Module;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
-use App\Http\Controllers\Controller as Controller;
+use App\Http\Controllers\Controller;
 
 class RolesController extends Controller
 {

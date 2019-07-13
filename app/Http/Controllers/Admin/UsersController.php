@@ -10,7 +10,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Datatables;
-use App\Http\Controllers\Controller as Controller;
+use App\Http\Controllers\Controller;
 
 class UsersController extends Controller
 {

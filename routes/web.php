@@ -43,7 +43,6 @@ Route::post('/users', 'Admin\UsersController@store')->name('users.store');
 Route::get('/users/{id}', 'Admin\UsersController@show')->name('users.show');
 Route::get('/users/{id}/edit', 'Admin\UsersController@edit')->name('users.edit');
 Route::put('/users/{id}', 'Admin\UsersController@update')->name('users.update');
-//Route::delete('/users/{id}/delete', 'UsersController@destroy')->name('users.destroy');
 Route::get('/users/deleteavataruser/{id}', 'Admin\UsersController@deleteAvatarUser')->name('delete.avatar.user');
 Route::get('/users/delete/{id}', 'Admin\UsersController@getDelete')->name('users.delete');
 

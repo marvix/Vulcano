@@ -7,7 +7,7 @@ use Session;
 use App\Models\Module;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use App\Http\Controllers\Controller as Controller;
+use App\Http\Controllers\Controller;
 
 class ModulesController extends Controller
 {

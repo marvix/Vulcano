@@ -6,7 +6,7 @@ use Alert;
 use Session;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller as Controller;
+use App\Http\Controllers\Controller;
 
 class PermissionsController extends Controller
 {
