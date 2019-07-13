@@ -3,7 +3,7 @@
 namespace App\Widgets;
 
 use Arrilot\Widgets\AbstractWidget;
-use App\Config;
+use App\Models\Config;
 
 class ParametersWidget extends AbstractWidget
 {

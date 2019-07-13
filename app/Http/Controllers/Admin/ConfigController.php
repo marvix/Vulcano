@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use DB;
-use Auth;
+#use Auth;
 use Alert;
 use Session;
 use App\Models\Config;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller as Controller;
 
+use App\Http\Controllers\Controller;
 
 class ConfigController extends Controller
 {
