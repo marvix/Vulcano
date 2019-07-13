@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Alert;
 use Session;
-use App\Module;
+use App\Models\Module;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Http\Controllers\Controller as Controller;
 
 class ModulesController extends Controller
 {

@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use DB;
 use Session;
+use App\Http\Controllers\Controller as Controller;
 
 class VulcanController extends Controller
 {
